@@ -1,0 +1,6 @@
+C:\Users\cnlwhuib\Documents\Visual Studio 2010\Projects\RelayServer\RelayServer\bin\Debug\RelayServer.exe.config
+C:\Users\cnlwhuib\Documents\Visual Studio 2010\Projects\RelayServer\RelayServer\bin\Debug\RelayServer.exe
+C:\Users\cnlwhuib\Documents\Visual Studio 2010\Projects\RelayServer\RelayServer\bin\Debug\RelayServer.pdb
+C:\Users\cnlwhuib\Documents\Visual Studio 2010\Projects\RelayServer\RelayServer\obj\x86\Debug\RelayServer.exe
+C:\Users\cnlwhuib\Documents\Visual Studio 2010\Projects\RelayServer\RelayServer\obj\x86\Debug\RelayServer.pdb
+C:\Users\cnlwhuib\Documents\Visual Studio 2010\Projects\RelayServer\RelayServer\obj\x86\Debug\RelayServer.csprojResolveAssemblyReference.cache
