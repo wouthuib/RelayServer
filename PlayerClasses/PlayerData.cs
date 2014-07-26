@@ -24,6 +24,9 @@ namespace RelayServer.PlayerClasses
         public string facespr { get; set; }
         public string hairspr { get; set; }
         public string hailcol { get; set; }
+        public string armor { get; set; }
+        public string headgear { get; set; }
+        public string weapon { get; set; }
 
         public playerData() { }
 
@@ -45,6 +48,9 @@ namespace RelayServer.PlayerClasses
             facespr = (string)info.GetValue("facespr", typeof(string));
             hairspr = (string)info.GetValue("hairspr", typeof(string));
             hailcol = (string)info.GetValue("hailcol", typeof(string));
+            armor = (string)info.GetValue("armor", typeof(string));
+            headgear = (string)info.GetValue("headgear", typeof(string));
+            weapon = (string)info.GetValue("weapon", typeof(string));
 
         }
 
@@ -69,6 +75,9 @@ namespace RelayServer.PlayerClasses
             info.AddValue("facespr", facespr);
             info.AddValue("hairspr", hairspr);
             info.AddValue("hailcol", hailcol);
+            info.AddValue("armor", armor);
+            info.AddValue("headgear", headgear);
+            info.AddValue("weapon", weapon);
         }
     }
 }
