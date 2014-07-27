@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RelayServer.PlayerClasses
+namespace RelayServer.ClientObjects
 {
     public class PlayerStore
     {

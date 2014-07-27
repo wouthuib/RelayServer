@@ -37,16 +37,17 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1B52500F34503E78362FE62ADC3F3AEF23C56125</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2381741C408F429D9D53ACCE8A395F136163428B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>XNA_ScreenManager_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>RelayServer_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>XNA_ScreenManager_1_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -69,10 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="ClientObjects\ChatData.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Listener.cs" />
-    <Compile Include="PlayerClasses\PlayerData.cs" />
-    <Compile Include="PlayerClasses\PlayerStore.cs" />
+    <Compile Include="ClientObjects\PlayerData.cs" />
+    <Compile Include="ClientObjects\PlayerStore.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -90,8 +92,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="XNA_ScreenManager_1_TemporaryKey.pfx" />
-    <None Include="XNA_ScreenManager_TemporaryKey.pfx" />
+    <None Include="RelayServer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

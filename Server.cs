@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 using System.Runtime.Serialization.Formatters.Binary;
-using RelayServer.PlayerClasses;
+using RelayServer.ClientObjects;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Linq;
@@ -250,7 +250,7 @@ namespace RelayServer
             string xmlDoc = encoder.GetString(byteArray, 0, byteArray.Length).ToString();
             XDocument doc = XDocument.Parse(xmlDoc);
             string rootelement = doc.Root.Name.ToString();
-            Type elementType = Type.GetType("RelayServer.PlayerClasses." + rootelement);
+            Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
 
             Object obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);
 
@@ -277,6 +277,11 @@ namespace RelayServer
 
                 Console.Write(player.Name + "'s Position X:" + player.PositionX.ToString() + "\t");
                 Console.Write("Position Y:" + player.PositionY.ToString() + "\n");
+            }
+            else if (obj is ChatData)
+            {
+                ChatData chatdata = (ChatData)obj;
+                Console.Write(chatdata.Name + "'s says:" + chatdata.Text + "\n");
             }
         }
 

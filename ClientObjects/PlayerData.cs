@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace RelayServer.PlayerClasses
+namespace RelayServer.ClientObjects
 {
     [Serializable]
     public class playerData : ISerializable
