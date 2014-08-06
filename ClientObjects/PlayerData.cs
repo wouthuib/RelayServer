@@ -15,6 +15,7 @@ namespace RelayServer.ClientObjects
         public int PositionY { get; set; }
         public string spritename { get; set; }
         public string spritestate { get; set; }
+        public string direction { get; set; }
         public int prevspriteframe { get; set; }
         public int maxspriteframe { get; set; }
         public string attackSprite { get; set; }
@@ -38,7 +39,8 @@ namespace RelayServer.ClientObjects
             PositionX = (int)info.GetValue("PositionX", typeof(int));
             PositionX = (int)info.GetValue("PositionY", typeof(int));
             spritename = (string)info.GetValue("spritename", typeof(string));
-            spritestate = (string)info.GetValue("spritestate", typeof(int));
+            spritestate = (string)info.GetValue("spritestate", typeof(string));
+            direction = (string)info.GetValue("direction", typeof(string));
             prevspriteframe = (int)info.GetValue("prevspriteframe", typeof(int));
             maxspriteframe = (int)info.GetValue("maxspriteframe", typeof(int));
             attackSprite = (string)info.GetValue("attackSprite", typeof(string));
@@ -66,6 +68,7 @@ namespace RelayServer.ClientObjects
             info.AddValue("PositionX", PositionX);
             info.AddValue("spritename", spritename);
             info.AddValue("spritestate", spritestate);
+            info.AddValue("direction", direction);
             info.AddValue("prevspriteframe", prevspriteframe);
             info.AddValue("maxspriteframe", maxspriteframe);
             info.AddValue("attackSprite", attackSprite);

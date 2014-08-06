@@ -37,10 +37,11 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2381741C408F429D9D53ACCE8A395F136163428B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>3AEA352A74CBF70249E1032BCDD5598340A58D24</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>RelayServer_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
