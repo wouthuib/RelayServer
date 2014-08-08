@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
+using RelayServer.WorldObjects.Structures;
+using System.Xml.Serialization;
+using RelayServer.ClientObjects;
 
 namespace RelayServer
 {
@@ -106,7 +109,7 @@ namespace RelayServer
             if (bytesRead == 0)
             {
                 Disconnect();
-                Console.WriteLine("Client {0}:  {1}\n{2}", IP, "Bad data", "Disconnecting");
+                OutputManager.WriteLine("Error! Client {0}:  {1}\n{2}", new string[]{IP, "Bad data", "Disconnecting"});
                 return;
             }
 
@@ -141,7 +144,7 @@ namespace RelayServer
             }
             catch (Exception e)
             {
-                Console.WriteLine("Client {0}:  {1}", IP, e.ToString());
+                OutputManager.WriteLine("Error! Sending data to Client {0}:  {1}", new string[] { IP, e.ToString() });
             }
         }
 
@@ -159,6 +162,35 @@ namespace RelayServer
                 ms.Position = 0;
                 ms.Read(result, 0, bytesWritten);
                 SendData(result);
+            }
+        }
+
+        /// <summary>
+        /// By Wouter Code to actually send the Object to the client
+        /// </summary>
+        /// <param name="b">Data to send</param>
+        public void SendObject(Object obj)
+        {
+            //Try to send the data.  If an exception is thrown, disconnect the client
+            try
+            {
+                lock (client.GetStream())
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(Object));
+
+                    if (obj is MonsterData)
+                        xmlSerializer = new XmlSerializer(typeof(MonsterData));
+
+                    if (client.GetStream().CanWrite)
+                    {
+                        xmlSerializer.Serialize(client.GetStream(), obj);
+                    }
+                    client.GetStream().Flush();
+                }
+            }
+            catch (Exception e)
+            {
+                OutputManager.WriteLine("Error! Sending data to Client {0}:  {1}", new string[] { IP, e.ToString() });
             }
         }
 

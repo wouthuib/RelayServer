@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="182" height="34" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="Name" value="Henesys"/>
+  <property name="Background" value="background1"/>
+ </properties>
+ <tileset firstgid="1" name="henesys_01" tilewidth="32" tileheight="32">
+  <image source="gfx/Henesys/henesys/henesys_01.png" width="1200" height="1190"/>
+ </tileset>
+ <tileset firstgid="1370" name="henesys_02" tilewidth="32" tileheight="32">
+  <image source="gfx/Henesys/henesys/henesys_02.png" width="1248" height="1190"/>
+ </tileset>
+ <tileset firstgid="2813" name="henesys_03" tilewidth="32" tileheight="32">
+  <image source="gfx/Henesys/henesys/henesys_03.png" width="1200" height="1190"/>
+ </tileset>
+ <tileset firstgid="4182" name="henesys_04" tilewidth="32" tileheight="32">
+  <image source="gfx/Henesys/henesys/henesys_04.png" width="1200" height="1190"/>
+ </tileset>
+ <tileset firstgid="5551" name="henesys_05" tilewidth="32" tileheight="32">
+  <image source="gfx/Henesys/henesys/henesys_05.png" width="1148" height="1190"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="182" height="34">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <objectgroup name="Hero" width="182" height="34">
+  <object name="hero" x="1792" y="672">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Walls" width="182" height="34">
+   <object name="wall1" x="0" y="688" width="544" height="6"/>
+   <object name="wall2" x="640" y="748" width="2336" height="6"/>
+   <object name="wall3" x="3072" y="806" width="96" height="6"/>
+   <object name="wall4" x="3245" y="867" width="2611" height="6"/>
+   <object name="wall5" x="4064" y="358" width="848" height="6"/>
+   <object name="wall6" x="2912" y="540" width="909" height="6"/>
+   <object name="wall7" x="3821" y="598" width="83" height="6"/>
+   <object name="wall8" x="3904" y="659" width="96" height="6"/>
+   <object name="wall9" x="4000" y="720" width="96" height="6"/>
+   <object name="wall10" x="4096" y="777" width="96" height="6"/>
+   <object name="wall11" x="4912" y="448" width="141" height="6"/>
+   <object name="wall12" x="4832" y="508" width="134" height="6"/>
+   <object name="wall13" x="4912" y="566" width="138" height="6"/>
+   <object name="wall14" x="525" y="508" width="134" height="6"/>
+   <object name="wall15" x="704" y="569" width="141" height="6"/>
+   <object name="wall16" x="883" y="508" width="141" height="6"/>
+   <object name="wall17" x="2278" y="601" width="134" height="6"/>
+   <object name="wall18" x="2726" y="601" width="134" height="6"/>
+   <object name="wall19" x="3789" y="476" width="134" height="6"/>
+   <object name="wall20" x="3885" y="419" width="128" height="6"/>
+   <object name="wall22" x="4832" y="390" width="125" height="6"/>
+   <object name="wall23" x="4160" y="838" width="118" height="6"/>
+ </objectgroup>
+ <objectgroup name="Slopes" width="182" height="34">
+  <object name="slope1" x="544" y="688" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope2" x="2976" y="748" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope3" x="3168" y="806" width="77" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Climbing" width="182" height="34">
+  <object name="ladder1" x="4976" y="565" width="42" height="208"/>
+  <object name="ladder2" x="2944" y="540" width="38" height="192"/>
+ </objectgroup>
+ <objectgroup name="NPCS" width="182" height="34">
+  <object name="npc1" x="2685" y="666">
+   <properties>
+    <property name="Face" value="rang"/>
+    <property name="Frames" value="1"/>
+    <property name="Name" value="Young Man"/>
+    <property name="OffsetX" value="58"/>
+    <property name="OffsetY" value="18"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="npc01"/>
+    <property name="spriteSizeX" value="60"/>
+    <property name="spriteSizeY" value="78"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc2" x="2336" y="672">
+   <properties>
+    <property name="Face" value="npc01"/>
+    <property name="Frames" value="1"/>
+    <property name="Name" value="Ranger"/>
+    <property name="OffsetX" value="600"/>
+    <property name="OffsetY" value="25"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="npc01"/>
+    <property name="spriteSizeX" value="60"/>
+    <property name="spriteSizeY" value="70"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc3" x="1408" y="675">
+   <properties>
+    <property name="Face" value="rang"/>
+    <property name="Frames" value="7"/>
+    <property name="Name" value="Lucas"/>
+    <property name="OffsetX" value="0"/>
+    <property name="OffsetY" value="0"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="lucas"/>
+    <property name="spriteSizeX" value="66"/>
+    <property name="spriteSizeY" value="70"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc4" x="576" y="425">
+   <properties>
+    <property name="Face" value="npc01"/>
+    <property name="Frames" value="1"/>
+    <property name="Name" value="Herman"/>
+    <property name="OffsetX" value="16"/>
+    <property name="OffsetY" value="380"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="npc01"/>
+    <property name="spriteSizeX" value="65"/>
+    <property name="spriteSizeY" value="71"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc5" x="4352" y="278">
+   <properties>
+    <property name="Face" value="rang"/>
+    <property name="Frames" value="10"/>
+    <property name="Name" value="Mai"/>
+    <property name="OffsetX" value="0"/>
+    <property name="OffsetY" value="0"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="mai"/>
+    <property name="spriteSizeX" value="60"/>
+    <property name="spriteSizeY" value="80"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc6" x="4640" y="803">
+   <properties>
+    <property name="Face" value="npc01"/>
+    <property name="Frames" value="7"/>
+    <property name="Name" value="Pan"/>
+    <property name="OffsetX" value="0"/>
+    <property name="OffsetY" value="0"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="pan"/>
+    <property name="spriteSizeX" value="75"/>
+    <property name="spriteSizeY" value="69"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc7" x="5504" y="803">
+   <properties>
+    <property name="Face" value="rang"/>
+    <property name="Frames" value="3"/>
+    <property name="Name" value="Mina"/>
+    <property name="OffsetX" value="0"/>
+    <property name="OffsetY" value="0"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="mina"/>
+    <property name="spriteSizeX" value="59"/>
+    <property name="spriteSizeY" value="69"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="npc8" x="4680" y="278">
+   <properties>
+    <property name="Face" value="rang"/>
+    <property name="Frames" value="2"/>
+    <property name="Name" value="Chief Stan"/>
+    <property name="OffsetX" value="0"/>
+    <property name="OffsetY" value="0"/>
+    <property name="Script" value="victoria01"/>
+    <property name="Texture" value="chief stan"/>
+    <property name="spriteSizeX" value="51"/>
+    <property name="spriteSizeY" value="73"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Monsters" width="182" height="34">
+  <object name="mob01" x="1592" y="662">
+   <properties>
+    <property name="BorderL" value="40"/>
+    <property name="BorderR" value="60"/>
+    <property name="monsterID" value="1201"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob02" x="1592" y="662">
+   <properties>
+    <property name="BorderL" value="40"/>
+    <property name="BorderR" value="60"/>
+    <property name="monsterID" value="1201"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob03" x="1592" y="662">
+   <properties>
+    <property name="BorderL" value="40"/>
+    <property name="BorderR" value="60"/>
+    <property name="monsterID" value="1201"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob04" x="1592" y="662">
+   <properties>
+    <property name="BorderL" value="40"/>
+    <property name="BorderR" value="60"/>
+    <property name="monsterID" value="1201"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob05" x="1592" y="662">
+   <properties>
+    <property name="BorderL" value="40"/>
+    <property name="BorderR" value="60"/>
+    <property name="monsterID" value="1201"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob06" x="1592" y="662">
+   <properties>
+    <property name="BorderL" value="40"/>
+    <property name="BorderR" value="60"/>
+    <property name="monsterID" value="1201"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob07" x="3200" y="726">
+   <properties>
+    <property name="BorderL" value="90"/>
+    <property name="BorderR" value="110"/>
+    <property name="monsterID" value="1202"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob08" x="4480" y="774">
+   <properties>
+    <property name="BorderL" value="130"/>
+    <property name="BorderR" value="150"/>
+    <property name="monsterID" value="1203"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob09" x="672" y="662">
+   <properties>
+    <property name="BorderL" value="10"/>
+    <property name="BorderR" value="30"/>
+    <property name="monsterID" value="1204"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob10" x="5120" y="774">
+   <properties>
+    <property name="BorderL" value="140"/>
+    <property name="BorderR" value="170"/>
+    <property name="monsterID" value="1205"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob11" x="3360" y="454">
+   <properties>
+    <property name="BorderL" value="95"/>
+    <property name="BorderR" value="115"/>
+    <property name="monsterID" value="1206"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <layer name="Tile Layer 2" width="182" height="34">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbwZ9kS4asGAAAA==
+  </data>
+ </layer>
+ <objectgroup name="Warps" width="182" height="34">
+  <object name="warp1" x="72" y="662">
+   <properties>
+    <property name="camposx" value="133"/>
+    <property name="camposy" value="21"/>
+    <property name="newmap" value="maps\victoria02.tmx"/>
+    <property name="newposx" value="139"/>
+    <property name="newposy" value="21"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

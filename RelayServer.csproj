@@ -72,6 +72,9 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="ClientObjects\ChatData.cs" />
+    <Compile Include="ClientObjects\MonsterData.cs" />
+    <Compile Include="Database\Monsters\Monster.cs" />
+    <Compile Include="Database\Monsters\MonsterStore.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="ClientObjects\PlayerData.cs" />
@@ -84,10 +87,35 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Server.cs" />
+    <Compile Include="WorldObjects\Entities\Entity.cs" />
+    <Compile Include="WorldObjects\Entities\MonsterSprite.cs" />
+    <Compile Include="WorldObjects\GameWorld.cs" />
+    <Compile Include="WorldObjects\Structures\OutputManager.cs" />
+    <Compile Include="WorldObjects\Structures\Randomizer.cs" />
+    <Compile Include="WorldObjects\Structures\SpriteOffset.cs" />
+    <Compile Include="WorldObjects\Tiled.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Import\monstertable.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\henesys.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\maple_map002.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\victoria01.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\victoria02.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\victoria02_inn01.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -96,6 +124,9 @@
     <None Include="RelayServer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using RelayServer.WorldObjects;
+using RelayServer.WorldObjects.Structures;
 
 namespace RelayServer
 {
@@ -17,6 +19,7 @@ namespace RelayServer
             try
             {
                 Server server = new Server(Properties.Settings.Default.Port);
+                GameWorld world = new GameWorld();
 
                 while (true) { Thread.Sleep(1000); }
             }
@@ -33,17 +36,16 @@ namespace RelayServer
         /// </summary>
         private static void WriteSettings()
         {
-            Console.WriteLine("Server Settings: ");
-            Console.WriteLine("SendBackToOriginalClient = " + Properties.Settings.Default.SendBackToOriginalClient);
-            Console.WriteLine("Port = " + Properties.Settings.Default.Port);
-            Console.WriteLine("ReadBufferSize = " + Properties.Settings.Default.ReadBufferSize);
-            Console.WriteLine("MaxNumberOfClients = " + Properties.Settings.Default.MaxNumberOfClients);
-            Console.WriteLine("NewPlayerByteProtocol = " + Properties.Settings.Default.NewPlayerByteProtocol);
-            Console.WriteLine("DisconnectedPlayerByteProtocol = " + Properties.Settings.Default.DisconnectedPlayerByteProtocol);
-            Console.WriteLine("SendMessageToClientsWhenAUserIsAdded = " + Properties.Settings.Default.SendMessageToClientsWhenAUserIsAdded);
-            Console.WriteLine("SendMessageToClientsWhenAUserIsRemoved = " + Properties.Settings.Default.SendMessageToClientsWhenAUserIsRemoved);
-            Console.WriteLine("EnableSendingIPAndIDWithEveryMessage = " + Properties.Settings.Default.EnableSendingIPAndIDWithEveryMessage);
-            Console.WriteLine("\nIf these settings are incorrect, please close the server and open the config file");
+            OutputManager.WriteLine("- Loading Server Settings:");
+            OutputManager.WriteLine("\t SendBackToOriginalClient = " + Properties.Settings.Default.SendBackToOriginalClient);
+            OutputManager.WriteLine("\t Port = " + Properties.Settings.Default.Port);
+            OutputManager.WriteLine("\t ReadBufferSize = " + Properties.Settings.Default.ReadBufferSize);
+            OutputManager.WriteLine("\t MaxNumberOfClients = " + Properties.Settings.Default.MaxNumberOfClients);
+            OutputManager.WriteLine("\t NewPlayerByteProtocol = " + Properties.Settings.Default.NewPlayerByteProtocol);
+            OutputManager.WriteLine("\t DisconnectedPlayerByteProtocol = " + Properties.Settings.Default.DisconnectedPlayerByteProtocol);
+            OutputManager.WriteLine("\t SendMessageToClientsWhenAUserIsAdded = " + Properties.Settings.Default.SendMessageToClientsWhenAUserIsAdded);
+            OutputManager.WriteLine("\t SendMessageToClientsWhenAUserIsRemoved = " + Properties.Settings.Default.SendMessageToClientsWhenAUserIsRemoved);
+            OutputManager.WriteLine("\t EnableSendingIPAndIDWithEveryMessage = " + Properties.Settings.Default.EnableSendingIPAndIDWithEveryMessage);
         }
     }
 }

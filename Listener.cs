@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using RelayServer.WorldObjects.Structures;
 
 namespace RelayServer
 {
     public class Listener
     {
         private TcpListener listener;
+        public bool Active;
 
         //send an even once we receive a user
         public event ConnectionEvent userAdded;
@@ -38,6 +40,7 @@ namespace RelayServer
         {
             listener.Start();
             ListenForNewClient();
+            Active = true;
         }
 
         /// <summary>
@@ -46,6 +49,7 @@ namespace RelayServer
         public void Stop()
         {
             listener.Stop();
+            Active = false;
         }
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace RelayServer
             //If the id is still -1, the client what wants to connect cannot (probably because we have reached the maximum number of clients
             if (id == -1)
             {
-                Console.WriteLine("Client " + client.Client.RemoteEndPoint.ToString() + " cannot connect. ");
+                OutputManager.WriteLine("Client " + client.Client.RemoteEndPoint.ToString() + " cannot connect. ");
                 return;
             }
 

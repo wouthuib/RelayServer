@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="65" height="69" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="Background" value="background1"/>
+ </properties>
+ <tileset firstgid="1" name="000000012" tilewidth="32" tileheight="32">
+  <image source="gfx/gameobjects/maps/000000012.png" width="2110" height="2220"/>
+ </tileset>
+ <tileset firstgid="4486" name="trees" tilewidth="32" tileheight="32">
+  <image source="gfx/gameobjects/maps/trees.png" width="400" height="250"/>
+ </tileset>
+ <tileset firstgid="4570" name="trees2" tilewidth="32" tileheight="32">
+  <image source="gfx/gameobjects/maps/trees2.png" width="320" height="120"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="65" height="69">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <objectgroup name="Hero" width="65" height="69"/>
+ <objectgroup name="Walls" width="65" height="69">
+  <object name="wall1" x="1344" y="1760" width="720" height="6"/>
+  <object name="wall2" x="48" y="1760" width="208" height="32"/>
+  <object name="wall3" x="320" y="1824" width="960" height="32"/>
+  <object name="wall4" x="944" y="1702" width="656" height="6"/>
+  <object name="wall5" x="352" y="1638" width="512" height="6"/>
+  <object name="wall6" x="128" y="1702" width="144" height="6"/>
+  <object name="wall7" x="352" y="1478" width="144" height="6"/>
+  <object name="wall8" x="576" y="1414" width="480" height="6"/>
+  <object name="wall9" x="1120" y="1350" width="224" height="6"/>
+  <object name="wall10" x="1344" y="1293" width="512" height="6"/>
+  <object name="wall11" x="1920" y="1232" width="96" height="6"/>
+  <object name="wall12" x="1472" y="954" width="416" height="6"/>
+  <object name="wall13" x="928" y="896" width="512" height="6"/>
+  <object name="wall14" x="416" y="832" width="480" height="6"/>
+  <object name="wall15" x="160" y="1392" width="224" height="6"/>
+  <object name="wall16" x="624" y="467" width="768" height="6"/>
+  <object name="wall17" x="1472" y="406" width="352" height="6"/>
+  <object name="wall18" x="144" y="774" width="208" height="6"/>
+  <object name="wall19" x="272" y="528" width="352" height="6"/>
+  <object name="wall20" x="1888" y="877" width="144" height="6"/>
+  <object name="wall21" x="1888" y="470" width="134" height="6"/>
+  <object name="wall22" x="1776" y="198" width="230" height="6"/>
+ </objectgroup>
+ <objectgroup name="Slopes" width="65" height="69">
+  <object name="slope1" x="256" y="1760" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope2" x="1248" y="1760" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="1"/>
+    <property name="SlopeY" value="0"/>
+   </properties>
+  </object>
+  <object name="slope3" x="1600" y="1702" width="96" height="58">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope4" x="864" y="1638" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope5" x="256" y="1638" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="1"/>
+    <property name="SlopeY" value="0"/>
+   </properties>
+  </object>
+  <object name="slope6" x="480" y="1414" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="1"/>
+    <property name="SlopeY" value="0"/>
+   </properties>
+  </object>
+  <object name="slope7" x="1024" y="1350" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="1"/>
+    <property name="SlopeY" value="0"/>
+   </properties>
+  </object>
+  <object name="slope8" x="1824" y="1232" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="1"/>
+    <property name="SlopeY" value="0"/>
+   </properties>
+  </object>
+  <object name="slope9" x="1440" y="896" width="64" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope10" x="896" y="832" width="64" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope11" x="352" y="774" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+  <object name="slope12" x="1376" y="406" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="1"/>
+    <property name="SlopeY" value="0"/>
+   </properties>
+  </object>
+  <object name="slope13" x="1824" y="406" width="96" height="64">
+   <properties>
+    <property name="SlopeX" value="0"/>
+    <property name="SlopeY" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="Tile Layer 2" width="65" height="69">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QVVJYURQF0TcFJo27u3twTXB3h+AJ7hCC/9KToKAu3VXr/+wTRWZmZmZmZmZmZmZmZmZmZmZmZmZm9hXbjYmiPezjD/7iAIc4wjFOYj77yo/tlH1nOMcFLnGFa9zgFneB/+Af++7xHw94xBOe8YJXvAX6g1h2xSEeCUhEEpKRglSkIR0Zgf4gk11ZyEYOcpGHfBSgEEUoRkmgPyhlVxnKUYFKVKEaNahFHerREOgPGtn1A01oRgta0YZ2dKATXegO9Ac97OrFT/xCH/oxgEEMYRgjGA30B2PsGscEJjGFacxgFnOYxwIWA/3BEruWsYJVrGEdG/iNTWxhGzuB/sDMzMzMzMzMzL5P7y2J424URgAA
+  </data>
+ </layer>
+ <objectgroup name="Climbing" width="65" height="69">
+  <object name="rope1" x="1581" y="416" width="6" height="480"/>
+  <object name="rope2" x="1965" y="880" width="6" height="294"/>
+  <object name="rope3" x="726" y="845" width="6" height="509"/>
+  <object name="rope4" x="1184" y="1363" width="6" height="205"/>
+  <object name="rope5" x="266" y="1402" width="6" height="147"/>
+  <object name="rope6" x="330" y="538" width="6" height="134"/>
+  <object name="ladder1" x="1930" y="202" width="32" height="192"/>
+  <object name="rope7" x="1824" y="0" width="6" height="157"/>
+ </objectgroup>
+ <objectgroup name="NPCS" width="65" height="69"/>
+ <objectgroup name="Monsters" width="65" height="69">
+  <object name="mob01" x="736" y="320">
+   <properties>
+    <property name="BorderL" value="20"/>
+    <property name="BorderR" value="61"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob02" x="1024" y="320">
+   <properties>
+    <property name="BorderL" value="20"/>
+    <property name="BorderR" value="61"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob03" x="1280" y="320">
+   <properties>
+    <property name="BorderL" value="20"/>
+    <property name="BorderR" value="61"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob04" x="1600" y="320">
+   <properties>
+    <property name="BorderL" value="28"/>
+    <property name="BorderR" value="61"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob05" x="480" y="448">
+   <properties>
+    <property name="BorderL" value="10"/>
+    <property name="BorderR" value="15"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob06" x="736" y="736">
+   <properties>
+    <property name="BorderL" value="7"/>
+    <property name="BorderR" value="58"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob07" x="1120" y="800">
+   <properties>
+    <property name="BorderL" value="12"/>
+    <property name="BorderR" value="55"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob08" x="480" y="736">
+   <properties>
+    <property name="BorderL" value="7"/>
+    <property name="BorderR" value="55"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="mob09" x="1248" y="800">
+   <properties>
+    <property name="BorderL" value="30"/>
+    <property name="BorderR" value="55"/>
+    <property name="Texture" value="monster001"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Warps" width="65" height="69"/>
+</map>

@@ -9,6 +9,9 @@ using RelayServer.ClientObjects;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Linq;
+using RelayServer.WorldObjects.Structures;
+using RelayServer.WorldObjects;
+using RelayServer.WorldObjects.Entities;
 
 namespace RelayServer
 {
@@ -87,10 +90,20 @@ namespace RelayServer
             user.UserDisconnected += new ConnectionEvent(user_UserDisconnected);
 
             //Print the new player message to the server window.
-            Console.WriteLine(user.ToString() + " connected\tConnected Clients:  " + connectedClients + "\n");
+            OutputManager.WriteLine(user.ToString() + " connected\tConnected Clients:  " + connectedClients + "\n");
 
             //Add to the client array
             client[user.id] = user;
+
+            // send monsters
+            foreach (var entity in GameWorld.Instance.listEntity)
+            {
+                if (entity is MonsterSprite)
+                {
+                    MonsterSprite monster = (MonsterSprite)entity;
+                    monster.sendtoClient(user);
+                }
+            }
         }
 
         /// <summary>
@@ -116,7 +129,7 @@ namespace RelayServer
             }
 
             //Print the removed player message to the server window.
-            Console.WriteLine(user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
+            OutputManager.WriteLine(user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
 
             //Clear the array's index
             client[user.id] = null;
@@ -240,6 +253,27 @@ namespace RelayServer
         }
         
         // Wouter's methods
+        public void SendObject(Object obj)
+        {
+            foreach (Client c in client)
+            {
+                if (c != null)
+                    c.SendObject(obj);
+            }
+
+            //Reset the writestream's position
+            writeStream.Position = 0;
+        }
+
+        // Wouter's methods
+        public void SendObject(Object obj, Client user)
+        {
+            if (user != null)
+                client[user.id].SendObject(obj);
+
+            //Reset the writestream's position
+            writeStream.Position = 0;
+        }
 
         private void ReadUserData(byte[] byteArray)
         {
@@ -275,13 +309,13 @@ namespace RelayServer
                 if (!found) // add new player
                     PlayerStore.Instance.addPlayer(player);
 
-                Console.Write(player.Name + "'s Position X:" + player.PositionX.ToString() + "\t");
-                Console.Write("Position Y:" + player.PositionY.ToString() + "\n");
+                OutputManager.Write(player.Name + "'s Position X:" + player.PositionX.ToString() + "\t");
+                OutputManager.Write("Position Y:" + player.PositionY.ToString() + "\n");
             }
             else if (obj is ChatData)
             {
                 ChatData chatdata = (ChatData)obj;
-                Console.Write(chatdata.Name + "'s says:" + chatdata.Text + "\n");
+                OutputManager.Write(chatdata.Name + "'s says:" + chatdata.Text + "\n");
             }
         }
 

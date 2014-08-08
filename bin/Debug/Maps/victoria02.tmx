@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="146" height="31" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="Background" value="background1"/>
+ </properties>
+ <tileset firstgid="1" name="victoria2_1" tilewidth="32" tileheight="32">
+  <image source="gfx/gameobjects/maps/victoria/victoria2_1.png" width="2432" height="995"/>
+ </tileset>
+ <tileset firstgid="2357" name="victoria2_2" tilewidth="32" tileheight="32">
+  <image source="gfx/gameobjects/maps/victoria/victoria2_2.png" width="2269" height="992"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="146" height="31">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <objectgroup name="Walls" width="146" height="31">
+  <object name="wall1" x="0" y="528" width="832" height="6"/>
+  <object name="wall2" x="800" y="586" width="128" height="6"/>
+  <object name="wall3" x="653" y="496" width="672" height="6"/>
+  <object name="wall4" x="1370" y="438" width="141" height="6"/>
+  <object name="wall5" x="1549" y="378" width="224" height="6"/>
+  <object name="wall6" x="1821" y="317" width="224" height="6"/>
+  <object name="wall7" x="2000" y="442" width="128" height="6"/>
+  <object name="wall8" x="2000" y="618" width="102" height="6"/>
+  <object name="wall9" x="2093" y="557" width="83" height="6"/>
+  <object name="wall10" x="2176" y="496" width="320" height="6"/>
+  <object name="wall11" x="2496" y="560" width="96" height="6"/>
+  <object name="wall12" x="2592" y="618" width="96" height="6"/>
+  <object name="wall13" x="2541" y="438" width="134" height="6"/>
+  <object name="wall14" x="896" y="646" width="2464" height="6"/>
+  <object name="wall15" x="3216" y="410" width="410" height="6"/>
+  <object name="wall16" x="3328" y="707" width="205" height="6"/>
+  <object name="wall17" x="3520" y="768" width="1152" height="6"/>
+  <object name="wall18" x="800" y="537" width="32" height="61">
+   <properties>
+    <property name="Block" value="1"/>
+   </properties>
+  </object>
+  <object name="wall19" x="896" y="595" width="32" height="64">
+   <properties>
+    <property name="Block" value="1"/>
+   </properties>
+  </object>
+  <object name="wall20" x="3322" y="656" width="32" height="64">
+   <properties>
+    <property name="Block" value="1"/>
+   </properties>
+  </object>
+  <object name="wall21" x="3498" y="717" width="32" height="64">
+   <properties>
+    <property name="Block" value="1"/>
+   </properties>
+  </object>
+  <object name="wall22" x="1312" y="557" width="96" height="6"/>
+ </objectgroup>
+ <objectgroup name="Slopes" width="146" height="31"/>
+ <objectgroup name="NPCS" width="146" height="31"/>
+ <objectgroup name="Climbing" width="146" height="31">
+  <object name="ladder1" x="3274" y="416" width="32" height="224"/>
+ </objectgroup>
+ <objectgroup name="Warps" width="146" height="31">
+  <object name="warp1" x="4608" y="739">
+   <properties>
+    <property name="camposx" value="12"/>
+    <property name="camposy" value="19"/>
+    <property name="newmap" value="maps\victoria01.tmx"/>
+    <property name="newposx" value="3"/>
+    <property name="newposy" value="19"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="warp2" x="72" y="499">
+   <properties>
+    <property name="camposx" value="51"/>
+    <property name="camposy" value="10"/>
+    <property name="newmap" value="maps\maple_map002.tmx"/>
+    <property name="newposx" value="51"/>
+    <property name="newposy" value="10"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object name="warp3" x="3955" y="739">
+   <properties>
+    <property name="camposx" value="13"/>
+    <property name="camposy" value="21"/>
+    <property name="newmap" value="maps\victoria02_inn01.tmx"/>
+    <property name="newposx" value="13"/>
+    <property name="newposy" value="21"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
