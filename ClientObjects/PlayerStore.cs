@@ -8,12 +8,10 @@ namespace RelayServer.ClientObjects
     public class PlayerStore
     {
         private static PlayerStore instance;
-        private int maxplayers = 10, playercounter;
-        public playerData[] playerStore;
+        public List<playerData> playerStore = new List<playerData>();
 
         private PlayerStore()
         {
-            playerStore = new playerData[maxplayers];
         }
 
         public static PlayerStore Instance
@@ -30,11 +28,7 @@ namespace RelayServer.ClientObjects
 
         public void addPlayer(playerData player)
         {
-            if (playercounter < maxplayers)
-            {
-                playerStore[playercounter] = player;
-                playercounter++;
-            }
+            playerStore.Add(player);
         }
     }
 }

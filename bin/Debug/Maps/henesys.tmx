@@ -191,47 +191,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Monsters" width="182" height="34">
-  <object name="mob01" x="1592" y="662">
-   <properties>
-    <property name="BorderL" value="40"/>
-    <property name="BorderR" value="60"/>
-    <property name="monsterID" value="1201"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object name="mob02" x="1592" y="662">
-   <properties>
-    <property name="BorderL" value="40"/>
-    <property name="BorderR" value="60"/>
-    <property name="monsterID" value="1201"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object name="mob03" x="1592" y="662">
-   <properties>
-    <property name="BorderL" value="40"/>
-    <property name="BorderR" value="60"/>
-    <property name="monsterID" value="1201"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object name="mob04" x="1592" y="662">
-   <properties>
-    <property name="BorderL" value="40"/>
-    <property name="BorderR" value="60"/>
-    <property name="monsterID" value="1201"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object name="mob05" x="1592" y="662">
-   <properties>
-    <property name="BorderL" value="40"/>
-    <property name="BorderR" value="60"/>
-    <property name="monsterID" value="1201"/>
-   </properties>
-   <ellipse/>
-  </object>
+ <objectgroup name="Monsters" width="182" height="34">  
   <object name="mob06" x="1592" y="662">
    <properties>
     <property name="BorderL" value="40"/>

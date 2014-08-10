@@ -151,7 +151,7 @@ namespace RelayServer.WorldObjects.Entities
 
                 case EntityState.Walk:
 
-                    previousIdleTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    previousWalkTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     if (previousWalkTimeSec <= 0)
                     {
@@ -167,10 +167,6 @@ namespace RelayServer.WorldObjects.Entities
 
         private void update_animation(GameTime gameTime)
         {
-            bool debug;
-            if (state != EntityState.Spawn)
-                debug = true;
-
             switch (state)
             {
                 #region stand
@@ -187,7 +183,7 @@ namespace RelayServer.WorldObjects.Entities
                     OldPosition = Position;
 
                     // Apply Gravity 
-                    // Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     break;
                 #endregion
@@ -221,7 +217,7 @@ namespace RelayServer.WorldObjects.Entities
                     Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // Apply Gravity 
-                    // Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // Walking Border for monster
                     if (Position.X <= Borders.Min)
@@ -246,7 +242,7 @@ namespace RelayServer.WorldObjects.Entities
                         OldPosition = Position;
 
                         // Apply Gravity 
-                        // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     }
                     else
                         state = EntityState.Stand;
@@ -300,7 +296,7 @@ namespace RelayServer.WorldObjects.Entities
                 case EntityState.Frozen:
 
                     // Apply Gravity 
-                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // reduce timer
                     previousFrozenTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -317,7 +313,7 @@ namespace RelayServer.WorldObjects.Entities
                 case EntityState.Died:
 
                     // Apply Gravity 
-                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // reduce timer
                     previousDiedTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -346,7 +342,7 @@ namespace RelayServer.WorldObjects.Entities
                 case EntityState.Spawn:
 
                     // Apply Gravity 
-                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // reduce timer
                     previousSpawnTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;

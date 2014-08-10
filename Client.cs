@@ -204,23 +204,26 @@ namespace RelayServer
                     XmlWriter writer = XmlWriter.Create(sww);
                     xmlSerializer.Serialize(writer, obj);
 
-                    if (obj is MonsterData)
+                    if (debug)
                     {
-                        MonsterData monster = (MonsterData)obj; // cast
+                        if (obj is MonsterData)
+                        {
+                            MonsterData monster = (MonsterData)obj; // cast
 
-                        // write xml output
-                        OutputManager.WriteLine("- Monster {0} : ", new string[] { monster.InstanceID });
-                        OutputManager.Write("\n");
-                        OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
-                    }
-                    else if (obj is playerData)
-                    {
-                        playerData player = (playerData)obj; // cast
+                            // write xml output
+                            OutputManager.WriteLine("- Monster {0} : ", new string[] { monster.InstanceID });
+                            OutputManager.WriteLine(" ");
+                            OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                        }
+                        else if (obj is playerData)
+                        {
+                            playerData player = (playerData)obj; // cast
 
-                        // write xml output
-                        OutputManager.WriteLine("- Player {0} : ", new string[] { player.Name });
-                        OutputManager.Write("\n");
-                        OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                            // write xml output
+                            OutputManager.WriteLine("- Player {0} : ", new string[] { player.Name });
+                            OutputManager.WriteLine(" ");
+                            OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                        }
                     }
 
                 }

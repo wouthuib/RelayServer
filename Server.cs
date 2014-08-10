@@ -133,6 +133,13 @@ namespace RelayServer
             //Print the removed player message to the server window.
             OutputManager.WriteLine(user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
 
+            // send remove player command to other clients
+            PlayerStore.Instance.playerStore.Find(p => p.IP == user.IP).Action = "Remove";
+            SendObject(PlayerStore.Instance.playerStore.Find(p => p.IP == user.IP));
+
+            // remove player from playerstore
+            PlayerStore.Instance.playerStore.RemoveAll(p => p.IP == user.IP);
+
             //Clear the array's index
             client[user.id] = null;
         }
@@ -154,11 +161,11 @@ namespace RelayServer
                 data = CombineData(data, writeStream);
             }
 
-            ReadUserData(data);
+            ReadUserData(data, sender);
 
             //If we want the original sender to receive the same message it sent, we call a different method
             if (Properties.Settings.Default.SendBackToOriginalClient)
-            {                
+            {
                 SendData(data);
             }
             else
@@ -277,7 +284,7 @@ namespace RelayServer
             // writeStream.Position = 0;
         }
 
-        private void ReadUserData(byte[] byteArray)
+        private void ReadUserData(byte[] byteArray, Client sender)
         {
             //message has successfully been received
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -309,7 +316,10 @@ namespace RelayServer
                 }
 
                 if (!found) // add new player
+                {
+                    player.IP = sender.IP.ToString();
                     PlayerStore.Instance.addPlayer(player);
+                }
 
                 OutputManager.Write(player.Name + "'s Position X:" + player.PositionX.ToString() + "\t");
                 OutputManager.Write("Position Y:" + player.PositionY.ToString() + "\n");
