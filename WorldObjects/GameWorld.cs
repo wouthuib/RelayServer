@@ -9,10 +9,11 @@ using Microsoft.Xna.Framework;
 using RelayServer.WorldObjects.Entities;
 using RelayServer.Database.Monsters;
 using RelayServer.WorldObjects.Structures;
+using System.Windows.Forms;
 
 namespace RelayServer.WorldObjects
 {
-    public class GameWorld
+    public class GameWorld : Microsoft.Xna.Framework.Game
     {
         public System.Timers.Timer gameTime;
         public static GameWorld Instance;
@@ -28,11 +29,21 @@ namespace RelayServer.WorldObjects
 
         public GameWorld()
         {
-            LoadObjects();
-            GameWorld.Instance = this;
+            GameWorld.Instance = this; // singleton
+
+            Form MyGameForm = (Form)Form.FromHandle(Window.Handle);
+            MyGameForm.FormBorderStyle = FormBorderStyle.None;
+            MyGameForm.Opacity = 0;
+            MyGameForm.ShowInTaskbar = false;
+            MyGameForm.Visible = false;
+            MyGameForm.Hide();
         }
 
-        private void LoadObjects()
+        protected override void LoadContent()
+        {            
+        }
+
+        protected override void Initialize()
         {
             OutputManager.WriteLine("- Loading maps:");
 
@@ -42,7 +53,7 @@ namespace RelayServer.WorldObjects
             {
                 Squared.Tiled.Map map = Squared.Tiled.Map.Load(file);
                 maps.Add(map);
-                OutputManager.WriteLine("\t Loaded map {0}", new string[]{map.Name});
+                OutputManager.WriteLine("\t Loaded map {0}", new string[] { map.Name });
             }
 
             OutputManager.WriteLine("- Loading Import tables:");
@@ -54,21 +65,12 @@ namespace RelayServer.WorldObjects
             OutputManager.WriteLine("- Map Entities Loaded!");
 
             OutputManager.WriteLine("- Starting Game World");
-            StartGameWorld();
             OutputManager.WriteLine("- Game World Started!");
+
+            base.Initialize();
         }
 
-        private void StartGameWorld()
-        {
-            // Create a timer with a one milisecond interval.
-            gameTime = new System.Timers.Timer(1);
-
-            // Hook up the Elapsed event for the timer. 
-            gameTime.Elapsed += UpdateGameWorld;
-            gameTime.Enabled = true;
-        }
-
-        private static void UpdateGameWorld(Object source, ElapsedEventArgs e)
+        protected override void Update(GameTime gameTime)
         {
             if (Server.singleton.Listener.Active)
             {
@@ -83,13 +85,15 @@ namespace RelayServer.WorldObjects
                     if(entity is MonsterSprite)
                     {
                         MonsterSprite monster = (MonsterSprite)entity;
-                        monster.Update(e);
+                        monster.Update(gameTime);
                     }
                 }
 
                 // Update all enitities map collisions
                 GameWorld.Instance.UpdateMapEntities();
             }
+
+            base.Update(gameTime);
         }
 
         public void UpdateMapEntities()

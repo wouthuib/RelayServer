@@ -110,25 +110,32 @@ namespace RelayServer.WorldObjects.Entities
         }
 
         #region update
-        public override void Update(ElapsedEventArgs e)
+        public override void Update(GameTime gameTime)
         {
             if (Active)
             {
-                update_movement(e);
-                update_animation(e);
-                update_collision(e);
+                previousState = state;
+
+                update_movement(gameTime);
+                update_animation(gameTime);
+                // update_collision(gameTime);
+
+                if (previousState != state)
+                    sendtoClient();
             }
         }
 
-        private void update_movement(ElapsedEventArgs e)
+        private void update_movement(GameTime gameTime)
         {
             switch (state)
             {
                 case EntityState.Stand:
 
-                    if (previousIdleTimeSec <= (float)e.SignalTime.Second)
+                    previousIdleTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (previousIdleTimeSec <= 0)
                     {
-                        previousWalkTimeSec = (float)e.SignalTime.Second + Randomizer.Instance.generateRandom(6, 12);
+                        previousWalkTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + Randomizer.Instance.generateRandom(6, 12);
 
                         // temporary random generator
                         if (Randomizer.Instance.generateRandom(0, 2) == 1)
@@ -144,9 +151,11 @@ namespace RelayServer.WorldObjects.Entities
 
                 case EntityState.Walk:
 
-                    if (previousWalkTimeSec <= (float)e.SignalTime.Second)
+                    previousIdleTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (previousWalkTimeSec <= 0)
                     {
-                        previousIdleTimeSec = (float)e.SignalTime.Second + Randomizer.Instance.generateRandom(6, 12);
+                        previousIdleTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + Randomizer.Instance.generateRandom(6, 12);
 
                         // reset sprite frame and change state
                         state = EntityState.Stand;
@@ -156,9 +165,11 @@ namespace RelayServer.WorldObjects.Entities
             }
         }
 
-        private void update_animation(ElapsedEventArgs e)
+        private void update_animation(GameTime gameTime)
         {
-            previousState = state;
+            bool debug;
+            if (state != EntityState.Spawn)
+                debug = true;
 
             switch (state)
             {
@@ -176,7 +187,7 @@ namespace RelayServer.WorldObjects.Entities
                     OldPosition = Position;
 
                     // Apply Gravity 
-                    Position += new Vector2(0, 1) * 200 * (float)e.SignalTime.Second;
+                    // Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     break;
                 #endregion
@@ -207,10 +218,10 @@ namespace RelayServer.WorldObjects.Entities
                     OldPosition = Position;
 
                     // Walk speed
-                    Position += Direction * Speed * 0.0166f;
+                    Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // Apply Gravity 
-                    Position += new Vector2(0, 1) * 200 * (float)e.SignalTime.Second;
+                    // Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // Walking Border for monster
                     if (Position.X <= Borders.Min)
@@ -235,7 +246,7 @@ namespace RelayServer.WorldObjects.Entities
                         OldPosition = Position;
 
                         // Apply Gravity 
-                        Position += new Vector2(0, 1) * 250 * 0.0166f;
+                        // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     }
                     else
                         state = EntityState.Stand;
@@ -245,19 +256,21 @@ namespace RelayServer.WorldObjects.Entities
                 #region hit
                 case EntityState.Hit:
 
-                    if (previousHitTimeSec <= (float)e.SignalTime.Second)
+                    previousHitTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (previousHitTimeSec <= 0)
                     {
                         // Start Hit timer (Avoid rapid hit)
-                        previousHitTimeSec = (float)e.SignalTime.Second + 0.1f;
+                        previousHitTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.1f;
 
                         // Start freeze timer 
-                        previousFrozenTimeSec = (float)e.SignalTime.Second + 0.7f;
+                        previousFrozenTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.7f;
 
                         // change state (freeze or kill)
                         if (this.HP <= 0)
                         {
                             // Monster respawn timer
-                            previousDiedTimeSec = (float)e.SignalTime.Second + RESPAWN_TIME;
+                            previousDiedTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + RESPAWN_TIME;
 
                             // Monster Item Drops
                             //foreach (var drop in ItemDrop)
@@ -287,9 +300,13 @@ namespace RelayServer.WorldObjects.Entities
                 case EntityState.Frozen:
 
                     // Apply Gravity 
-                    Position += new Vector2(0, 1) * 250 * (float)e.SignalTime.Second;
+                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    if (previousFrozenTimeSec <= (float)e.SignalTime.Second)
+                    // reduce timer
+                    previousFrozenTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    previousHitTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (previousFrozenTimeSec <= 0)
                     {
                         // reset sprite frame
                         state = EntityState.Stand;
@@ -300,13 +317,13 @@ namespace RelayServer.WorldObjects.Entities
                 case EntityState.Died:
 
                     // Apply Gravity 
-                    Position += new Vector2(0, 1) * 250 * 0.0166f;
+                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    // monster animation
-                    spriteFrame.Y = 270;
+                    // reduce timer
+                    previousDiedTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // removing counter
-                    if (previousDiedTimeSec <= (float)e.SignalTime.Second)
+                    if (previousDiedTimeSec <= 0)
                     {
                         // link to world
                         if (world == null)
@@ -329,10 +346,13 @@ namespace RelayServer.WorldObjects.Entities
                 case EntityState.Spawn:
 
                     // Apply Gravity 
-                    Position += new Vector2(0, 1) * 250 * 0.0166f;
+                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    // reduce timer
+                    previousSpawnTimeSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     // Monster Spawn Timer
-                    if (previousSpawnTimeSec <= (float)e.SignalTime.Second)
+                    if (previousSpawnTimeSec <= 0)
                     {
                         if (spawn)
                         {
@@ -341,16 +361,13 @@ namespace RelayServer.WorldObjects.Entities
                         else
                         {
                             spawn = true;
-                            previousSpawnTimeSec = (float)e.SignalTime.Second + 1.1f;
+                            previousSpawnTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + 1.1f;
                         }
                     }
 
                     break;
                 #endregion
             }
-
-            if (previousState != state)
-                sendtoClient();
         }
 
         public void sendtoClient(Client user = null)
@@ -360,8 +377,8 @@ namespace RelayServer.WorldObjects.Entities
                 MonsterID = this.MonsterID,
                 InstanceID = (string)this.InstanceID.ToString(),
                 MapName = (string)this.MapName,
-                PositionX = (int)this.PositionX,
-                PositionY = (int)this.PositionY,
+                PositionX = (int)this.Position.X,
+                PositionY = (int)this.Position.Y,
                 BorderMin = (int)this.Borders.Min,
                 BorderMax = (int)this.Borders.Max,
                 spritestate = (string)this.State.ToString(),
@@ -375,7 +392,7 @@ namespace RelayServer.WorldObjects.Entities
 
         }
 
-        private void update_collision(ElapsedEventArgs e)
+        private void update_collision(GameTime gameTime)
         {
             // Monster attacks the player method
 

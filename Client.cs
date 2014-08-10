@@ -6,6 +6,11 @@ using System.Net.Sockets;
 using RelayServer.WorldObjects.Structures;
 using System.Xml.Serialization;
 using RelayServer.ClientObjects;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Threading;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace RelayServer
 {
@@ -16,6 +21,9 @@ namespace RelayServer
 
         //Byte array that is populated when a user receives data
         private byte[] readBuffer;
+
+        // client stream
+        private NetworkStream networkstream;
 
         //Create the events
         public event ConnectionEvent UserDisconnected;
@@ -37,11 +45,13 @@ namespace RelayServer
         /// <param name="id">ID to give to the client</param>
         public Client(TcpClient client, byte id)
         {
-            readBuffer = new byte[Properties.Settings.Default.ReadBufferSize];
+            readBuffer = new byte[1024];
             this.id = id;
             this.client = client;
             IP = client.Client.RemoteEndPoint.ToString();
-            client.NoDelay = true;
+            //client.NoDelay = true;
+
+            networkstream = client.GetStream();
 
             StartListening();
             connected = true;
@@ -85,7 +95,7 @@ namespace RelayServer
         /// </summary>
         private void StartListening()
         {
-            client.GetStream().BeginRead(readBuffer, 0, Properties.Settings.Default.ReadBufferSize, StreamReceived, null);
+            networkstream.BeginRead(readBuffer, 0, StateObject.BufferSize, StreamReceived, null);
         }
 
         /// <summary>
@@ -97,9 +107,9 @@ namespace RelayServer
             int bytesRead = 0;
             try
             {
-                lock (client.GetStream())
+                lock (networkstream)
                 {
-                    bytesRead = client.GetStream().EndRead(ar);
+                    bytesRead = networkstream.EndRead(ar);
                 }
             }
 
@@ -137,9 +147,9 @@ namespace RelayServer
             //Try to send the data.  If an exception is thrown, disconnect the client
             try
             {
-                lock (client.GetStream())
+                lock (networkstream)
                 {
-                    client.GetStream().BeginWrite(b, 0, b.Length, null, null);
+                    networkstream.BeginWrite(b, 0, b.Length, null, null);
                 }
             }
             catch (Exception e)
@@ -171,27 +181,74 @@ namespace RelayServer
         /// <param name="b">Data to send</param>
         public void SendObject(Object obj)
         {
-            //Try to send the data.  If an exception is thrown, disconnect the client
+            // Try to send the data.  If an exception is thrown, disconnect the client
             try
             {
-                lock (client.GetStream())
+                lock (networkstream)
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(Object));
 
                     if (obj is MonsterData)
                         xmlSerializer = new XmlSerializer(typeof(MonsterData));
+                    else if (obj is playerData)
+                        xmlSerializer = new XmlSerializer(typeof(playerData));
 
-                    if (client.GetStream().CanWrite)
+                    // Send NetworkStream with XML data
+                    if (networkstream.CanWrite && obj != null)
+                        xmlSerializer.Serialize(networkstream, obj);
+
+                    networkstream.Flush();
+
+                    // start stringwriter, xmlwriter and serialize
+                    StringWriter sww = new StringWriter();
+                    XmlWriter writer = XmlWriter.Create(sww);
+                    xmlSerializer.Serialize(writer, obj);
+
+                    if (obj is MonsterData)
                     {
-                        xmlSerializer.Serialize(client.GetStream(), obj);
+                        MonsterData monster = (MonsterData)obj; // cast
+
+                        // write xml output
+                        OutputManager.WriteLine("- Monster {0} : ", new string[] { monster.InstanceID });
+                        OutputManager.Write("\n");
+                        OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
                     }
-                    client.GetStream().Flush();
+                    else if (obj is playerData)
+                    {
+                        playerData player = (playerData)obj; // cast
+
+                        // write xml output
+                        OutputManager.WriteLine("- Player {0} : ", new string[] { player.Name });
+                        OutputManager.Write("\n");
+                        OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                    }
+
                 }
             }
             catch (Exception e)
             {
-                OutputManager.WriteLine("Error! Sending data to Client {0}:  {1}", new string[] { IP, e.ToString() });
+                OutputManager.WriteLine("Error! Sending data to Client {0}: \n\n {1}", new string[] { IP, e.ToString() });
             }
+        }
+
+        public byte[] ObjectToByteArray(Object obj)
+        {
+            if (obj == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, obj);
+            return ms.ToArray();
+        }
+
+        public System.IO.MemoryStream ObjectToMemoryStream(Object obj)
+        {
+            if (obj == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, obj);
+            return ms;
         }
 
         /// <summary>
@@ -202,5 +259,17 @@ namespace RelayServer
         {
             return IP;
         }
+    }
+
+    public class StateObject
+    {
+        // Client  socket.
+        public Socket workSocket = null;
+        // Size of receive buffer.
+        public const int BufferSize = 1024;
+        // Receive buffer.
+        public byte[] buffer = new byte[BufferSize];
+        // Received data string.
+        public StringBuilder sb = new StringBuilder();
     }
 }

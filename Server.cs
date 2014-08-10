@@ -97,13 +97,15 @@ namespace RelayServer
 
             // send monsters
             foreach (var entity in GameWorld.Instance.listEntity)
-            {
                 if (entity is MonsterSprite)
                 {
                     MonsterSprite monster = (MonsterSprite)entity;
                     monster.sendtoClient(user);
                 }
-            }
+
+            // send players
+            foreach (var data in PlayerStore.Instance.playerStore)
+                SendObject(data);
         }
 
         /// <summary>
@@ -262,7 +264,7 @@ namespace RelayServer
             }
 
             //Reset the writestream's position
-            writeStream.Position = 0;
+            // writeStream.Position = 0;
         }
 
         // Wouter's methods
@@ -272,7 +274,7 @@ namespace RelayServer
                 client[user.id].SendObject(obj);
 
             //Reset the writestream's position
-            writeStream.Position = 0;
+            // writeStream.Position = 0;
         }
 
         private void ReadUserData(byte[] byteArray)

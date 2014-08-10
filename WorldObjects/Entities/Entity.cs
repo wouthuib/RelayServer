@@ -247,7 +247,7 @@ namespace RelayServer.WorldObjects.Entities
         {
         }
 
-        public virtual void Update(ElapsedEventArgs e)
+        public virtual void Update(GameTime gameTime)
         {
         }
 

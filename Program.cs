@@ -19,7 +19,22 @@ namespace RelayServer
             try
             {
                 Server server = new Server(Properties.Settings.Default.Port);
-                GameWorld world = new GameWorld();
+
+                using (GameWorld world = new GameWorld())
+                {
+                    try
+                    {
+                        world.Run();
+                    }
+                    catch (Exception ee)
+                    {
+                        OutputManager.WriteLine("Error! {0}", new string[] { ee.ToString() });
+                    }
+                    finally
+                    {
+                        OutputManager.WriteLine("Error! GameWorld was stopped for an unknown reason!");
+                    }
+                }
 
                 while (true) { Thread.Sleep(1000); }
             }

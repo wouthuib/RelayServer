@@ -18,7 +18,3 @@ C:\Users\Wouter\Documents\GitHub\RelayServer\bin\Debug\RelayServer.exe
 C:\Users\Wouter\Documents\GitHub\RelayServer\bin\Debug\RelayServer.pdb
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\monstertable.bin
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Maps\henesys.tmx
-C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Maps\maple_map002.tmx
-C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Maps\victoria01.tmx
-C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Maps\victoria02.tmx
-C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Maps\victoria02_inn01.tmx
