@@ -1,0 +1,44 @@
+1000; None;0;0;0;0;0;0;0; Weapon; All; Weapon; Dagger;
+800; Red Potion;0;0;0;0;10;0;0; Consumable; All; None; None;{ heal(100,50). effect(heal).}
+801; Orange Potion;0;0;0;0;10;0;0; Consumable; All; None; None;{}
+802; Yellow Potion;0;0;0;0;10;0;0; Consumable; All; None; None;{}
+803; White Potion;0;0;0;0;10;0;0; Consumable; All; None; None;{}
+804; Blue Potion;0;0;0;0;10;0;0; Consumable; All; None; None;{}
+1100; Shell;0;0;0;0;20;0;0; Collectable; All; None; None;{}
+1101; Shining Scale;0;0;0;0;60;0;0; Collectable; All; None; None;{}
+1102; Shoot;0;0;0;0;30;0;0; Collectable; All; None; None;{}
+1103; Empty Bottle;0;0;0;0;26;0;0; Collectable; All; None; None;{}
+1104; Young Twig;0;0;0;0;36;0;0; Collectable; All; None; None;{}
+1105; Red Ribbon;0;0;0;0;40;0;0; Collectable; All; None; None;{}
+1106; Blue Ribbon;0;0;0;0;46;0;0; Collectable; All; None; None;{}
+1107; Conch;0;0;0;0;48;0;0; Collectable; All; None; None;{}
+1108; Fabric;0;0;0;0;50;0;0; Collectable; All; None; None;{}
+1109; Part of a Report;0;0;0;0;52;0;0; Collectable; All; None; None;{}
+1110; Pearl;0;0;0;0;100;0;0; Collectable; All; None; None;{}
+1111; Dragon Canine;0;0;0;0;56;0;0; Collectable; All; None; None;{}
+1112; Dragon Scale;0;0;0;0;60;0;0; Collectable; All; None; None;{}
+1113; Horseshoe;0;0;0;0;40;0;0; Collectable; All; None; None;{}
+1114; Jellopy;0;0;0;0;10;0;0; Collectable; All; None; None;{}
+1115; Mineral Water;0;0;0;0;10;0;0; KeyItem; All; None; None;{}
+1200; Knife;0;17;0;0;50;0;0; Weapon; All; Weapon; Dagger;{}
+1201; Cutter;0;30;0;0;1250;0;0; Weapon; All; Weapon; Dagger;{}
+1202; Main Gauche;0;43;0;0;2400;0;0; Weapon; All; Weapon; Dagger;{}
+1203; Dirk;0;59;0;0;8500;0;0; Weapon; All; Weapon; Dagger;{}
+1204; Dagger;0;73;0;0;14000;0;0; Weapon; All; Weapon; Dagger;{}
+1205; Combat Knife;0;80;0;0;17000;0;0; Weapon; Warrior; Weapon; Dagger;{}
+1206; Stiletto;0;87;0;0;19500;0;0; Weapon; Warrior; Weapon; Dagger;{}
+1207; Gladius;0;105;0;0;43000;0;0; Weapon; Warrior; Weapon; Dagger;{}
+1208; Damascus;0;118;0;0;49000;0;0; Weapon; Warrior; Weapon; Dagger;{}
+1209; Cinquedea;0;110;0;0;40000;0;0; Weapon; Warrior; Weapon; Dagger;{}
+1210; Sucsamad;0;140;0;0;64000;0;0; Weapon; Warrior; Weapon; Dagger;{}
+1300; Hunter Bow;0;125;0;0;64000;0;0; Weapon; Bowman; Weapon; Bow;{}
+1301; Gladius Sword;0;125;0;0;64000;0;0; Weapon; Warrior; Weapon; One_handed_Sword;{}
+1302; Two Handed Sword;0;125;0;0;64000;0;0; Weapon; Warrior; Weapon; Two_handed_Sword;{}
+2300; Hunter Clothes;6;0;0;0;71000;0;0; Armor; Bowman; Bodygear; None;{}
+2301; Beginner Clothes;0;0;0;0;10;0;0; Armor; All; Bodygear; None;{}
+2302; Cruseader Chainmail;6;0;0;0;71000;0;0; Armor; Warrior; Bodygear; None;{}
+2303; Feather Hat;0;0;0;0;10;0;0; Armor; All; Headgear; None;{}
+2304; Hawkeye Hat;0;0;0;0;10;0;0; Armor; All; Headgear; None;{}
+2305; Robin Hat;0;0;0;0;10;0;0; Armor; All; Headgear; None;{}
+2306; Steel Helmet;0;0;0;0;10;0;0; Armor; Warrior; Headgear; None;{}
+2307; Steel Sharp Helm;0;0;0;0;10;0;0; Armor; Warrior; Headgear; None;{}

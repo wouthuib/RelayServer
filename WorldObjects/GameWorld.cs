@@ -10,6 +10,9 @@ using RelayServer.WorldObjects.Entities;
 using RelayServer.Database.Monsters;
 using RelayServer.WorldObjects.Structures;
 using System.Windows.Forms;
+using RelayServer.WorldObjects.Effects;
+using RelayServer.Database.Items;
+using RelayServer.Database.Skills;
 
 namespace RelayServer.WorldObjects
 {
@@ -24,8 +27,8 @@ namespace RelayServer.WorldObjects
         // Map entities
         public List<Entity> listEntity = new List<Entity>();
         public List<Entity> newEntity = new List<Entity>();
-        //public List<GameEffect> listEffect = new List<GameEffect>();
-        //public List<GameEffect> newEffect = new List<GameEffect>();
+        public List<GameEffect> listEffect = new List<GameEffect>();
+        public List<GameEffect> newEffect = new List<GameEffect>();
 
         public GameWorld()
         {
@@ -57,8 +60,36 @@ namespace RelayServer.WorldObjects
             }
 
             OutputManager.WriteLine("- Loading Import tables:");
-            MonsterStore.Instance.loadMonster(Directory.GetCurrentDirectory() + @"\Import\", "monstertable.bin");
-            OutputManager.WriteLine("\t Monster table '\\Import\\monstertable.bin' loaded!");
+            try
+            {
+                MonsterStore.Instance.loadMonster(Directory.GetCurrentDirectory() + @"\Import\", "monstertable.csv");
+                OutputManager.WriteLine("\t Monster table '\\Import\\monstertable.csv' loaded!");
+            }
+            catch
+            {
+                OutputManager.Write("\t ");
+                OutputManager.WriteLine("Error in Monster table '\\Import\\monstertable.csv', unable to load!");
+            }
+            try
+            {
+                ItemStore.Instance.loadItems(Directory.GetCurrentDirectory() + @"\Import\", "itemtable.csv");
+                OutputManager.WriteLine("\t Item table '\\Import\\itemtable.csv' loaded!");
+            }
+            catch
+            {
+                OutputManager.Write("\t ");
+                OutputManager.WriteLine("Error in Item table '\\Import\\itemtable.csv', unable to load!");
+            }
+            try
+            {
+                SkillStore.Instance.loadSkills(Directory.GetCurrentDirectory() + @"\Import\", "skilltable.csv");
+                OutputManager.WriteLine("\t Skill table '\\Import\\skilltable.csv' loaded!");
+            }
+            catch
+            {
+                OutputManager.Write("\t ");
+                OutputManager.WriteLine("Error in Skill table '\\Import\\skilltable.csv', unable to load!");
+            }
 
             OutputManager.WriteLine("- Loading Map Entities:");
             LoadEntities();
@@ -80,6 +111,22 @@ namespace RelayServer.WorldObjects
                 //    Console.WriteLine(GameWorld.Instance.previousTime);
                 //}
 
+                // Create new Entity instances
+                if (newEntity.Count > 0)
+                {
+                    foreach (var entity in newEntity)
+                        listEntity.Add(entity);
+                    newEntity.Clear();
+                }
+
+                // Create new Effect instances
+                if (newEffect.Count > 0)
+                {
+                    foreach (var effect in newEffect)
+                        listEffect.Add(effect);
+                    newEffect.Clear();
+                }
+
                 foreach(var entity in GameWorld.Instance.listEntity)
                 {
                     if(entity is MonsterSprite)
@@ -89,8 +136,30 @@ namespace RelayServer.WorldObjects
                     }
                 }
 
+                // Update Effect objects (Warps, items, damage)
+                foreach (GameEffect obj in listEffect)
+                    obj.Update(gameTime);
+
                 // Update all enitities map collisions
                 GameWorld.Instance.UpdateMapEntities();
+
+                // remove timeout entities
+                for (int i = 0; i < listEntity.Count; i++)
+                {
+                    var obj = listEntity[i];
+
+                    if (obj.KeepAliveTime == 0)
+                        listEntity.Remove(obj);
+                }
+
+                // remove timeout effects
+                for (int i = 0; i < listEffect.Count; i++)
+                {
+                    var obj = listEffect[i];
+
+                    if (obj.KeepAliveTimer == 0)
+                        listEffect.Remove(obj);
+                }
             }
 
             base.Update(gameTime);

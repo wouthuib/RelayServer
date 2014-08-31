@@ -12,6 +12,9 @@ using System.Xml.Linq;
 using RelayServer.WorldObjects.Structures;
 using RelayServer.WorldObjects;
 using RelayServer.WorldObjects.Entities;
+using RelayServer.WorldObjects.Effects;
+using Microsoft.Xna.Framework;
+using RelayServer.Database.Accounts;
 
 namespace RelayServer
 {
@@ -113,7 +116,7 @@ namespace RelayServer
         /// </summary>
         /// <param name="sender">The object that sent this message</param>
         /// <param name="user">The user that needs to be disconnected</param>
-        private void user_UserDisconnected(object sender, Client user)
+        public void user_UserDisconnected(object sender, Client user)
         {
             connectedClients--;
 
@@ -131,14 +134,18 @@ namespace RelayServer
             }
 
             //Print the removed player message to the server window.
-            OutputManager.WriteLine(user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
+            OutputManager.WriteLine("Player: " + PlayerStore.Instance.playerStore.Find(p => p.AccountID == user.AccountID).Name +
+                                    "\t IP: " + user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
+            
+            // Set player offline
+            PlayerStore.Instance.playerStore.Find(p => p.AccountID == user.AccountID).Online = false;
 
             // send remove player command to other clients
-            PlayerStore.Instance.playerStore.Find(p => p.IP == user.IP).Action = "Remove";
-            SendObject(PlayerStore.Instance.playerStore.Find(p => p.IP == user.IP));
-
-            // remove player from playerstore
-            PlayerStore.Instance.playerStore.RemoveAll(p => p.IP == user.IP);
+            SendObject(new playerData() 
+            { 
+                AccountID = user.AccountID, 
+                Action = "Remove" 
+            });
 
             //Clear the array's index
             client[user.id] = null;
@@ -161,7 +168,10 @@ namespace RelayServer
                 data = CombineData(data, writeStream);
             }
 
-            ReadUserData(data, sender);
+            if (sender.Autenticated)
+                ReadUserData(data, sender);
+            else
+                ReadAccountData(data, sender);
 
             //If we want the original sender to receive the same message it sent, we call a different method
             if (Properties.Settings.Default.SendBackToOriginalClient)
@@ -260,8 +270,11 @@ namespace RelayServer
             //Reset the writestream's position
             writeStream.Position = 0;
         }
-        
+
+        #region Wouter's Methods
         // Wouter's methods
+
+        // Send object to all clients
         public void SendObject(Object obj)
         {
             foreach (Client c in client)
@@ -274,7 +287,7 @@ namespace RelayServer
             // writeStream.Position = 0;
         }
 
-        // Wouter's methods
+        // Send object to one client
         public void SendObject(Object obj, Client user)
         {
             if (user != null)
@@ -284,6 +297,7 @@ namespace RelayServer
             // writeStream.Position = 0;
         }
 
+        // Read incoming client objects
         private void ReadUserData(byte[] byteArray, Client sender)
         {
             //message has successfully been received
@@ -309,8 +323,8 @@ namespace RelayServer
                         if (entry.Name == player.Name)
                         {
                             found = true; // update existing player
-                            entry.PositionX = player.PositionX;
-                            entry.PositionY = player.PositionY;
+                            entry.Position.X = player.PositionX;
+                            entry.Position.Y = player.PositionY;
                         }
                     }
                 }
@@ -318,6 +332,7 @@ namespace RelayServer
                 if (!found) // add new player
                 {
                     player.IP = sender.IP.ToString();
+                    player.AccountID = sender.AccountID;
                     PlayerStore.Instance.addPlayer(player);
                 }
 
@@ -329,8 +344,67 @@ namespace RelayServer
                 ChatData chatdata = (ChatData)obj;
                 OutputManager.Write(chatdata.Name + "'s says:" + chatdata.Text + "\n");
             }
+            else if (obj is DmgAreaData)
+            {
+                DmgAreaData dmgarea = (DmgAreaData)obj;
+
+                GameWorld.Instance.newEffect.Add(
+                    new DamageArea(
+                        dmgarea.Owner,
+                        new Vector2(dmgarea.PositionX, dmgarea.PositionY), 
+                        new Rectangle(0, 0, dmgarea.AreaWidth, dmgarea.AreaHeigth),
+                        Boolean.Parse(dmgarea.Permanent),
+                        dmgarea.MobHitCount,
+                        dmgarea.Timer, 
+                        dmgarea.DmgPercent));
+            }
         }
 
+        // Authentication method
+        private void ReadAccountData(byte[] byteArray, Client sender)
+        {
+            //message has successfully been received
+            ASCIIEncoding encoder = new ASCIIEncoding();
+            System.Diagnostics.Debug.WriteLine(encoder.GetString(byteArray, 0, byteArray.Length));
+
+            string xmlDoc = encoder.GetString(byteArray, 0, byteArray.Length).ToString();
+            XDocument doc = XDocument.Parse(xmlDoc);
+            string rootelement = doc.Root.Name.ToString();
+            Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
+
+            Object obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);
+
+            if (obj is AccountData)
+            {
+                AccountData account = (AccountData)obj;
+
+                AccountData a = new AccountData()
+                {
+                    Username = account.Username,
+                    Password = account.Password
+                };
+
+                if (AccountStore.Instance.FindAccount(account.Username, account.Password) != 0)
+                {
+                    sender.AccountID = AccountStore.Instance.FindAccount(account.Username, account.Password);
+                    sender.Autenticated = true;
+                    a.Connected = "true";
+                    SendObject(a, sender);
+                }
+                else
+                {
+                    a.Connected = "false";
+                    SendObject(a, sender);
+                }
+
+                if (!sender.Autenticated)
+                    OutputManager.WriteLine(account.Username + ", with IP " + sender.IP + " cannot be autenticated.");
+                else
+                    OutputManager.WriteLine(account.Username + ", with IP " + sender.IP + " autenticated! \t Account ID: " + sender.AccountID.ToString());
+            }
+        }
+
+        // XML Deserialization
         public static T DeserializeFromXml<T>(string xml, Type type)
         {
             T result;
@@ -341,5 +415,6 @@ namespace RelayServer
             }
             return result;
         }
+        #endregion
     }
 }

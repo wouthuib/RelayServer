@@ -35,8 +35,13 @@ namespace RelayServer
         //IP of the connected client
         public string IP;
 
+        //Account Autentication
+        public long AccountID;
+        public bool Autenticated = false;
+
         //Is this client disconnected?
         bool connected = false;
+        int logoutput = 0;
 
         /// <summary>
         /// Create a new client
@@ -192,6 +197,8 @@ namespace RelayServer
                         xmlSerializer = new XmlSerializer(typeof(MonsterData));
                     else if (obj is playerData)
                         xmlSerializer = new XmlSerializer(typeof(playerData));
+                    else if (obj is AccountData)
+                        xmlSerializer = new XmlSerializer(typeof(AccountData));
 
                     // Send NetworkStream with XML data
                     if (networkstream.CanWrite && obj != null)
@@ -204,7 +211,19 @@ namespace RelayServer
                     XmlWriter writer = XmlWriter.Create(sww);
                     xmlSerializer.Serialize(writer, obj);
 
-                    if (debug)
+                    // new send encrypted message (in process) !!!
+                    string encrypted = RijndaelSimple.Encrypt(
+                        sww.ToString(),
+                        "Pas5pr@se",
+                        "s@1tValue",
+                        "SHA1",
+                        2,
+                        "@1B2c3D4e5F6g7H8",
+                        256);
+
+                    //SendData(StringToBytes(encrypted));
+
+                    if (logoutput == 1)
                     {
                         if (obj is MonsterData)
                         {
@@ -242,6 +261,13 @@ namespace RelayServer
             MemoryStream ms = new MemoryStream();
             bf.Serialize(ms, obj);
             return ms.ToArray();
+        }
+
+        static byte[] StringToBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
         }
 
         public System.IO.MemoryStream ObjectToMemoryStream(Object obj)

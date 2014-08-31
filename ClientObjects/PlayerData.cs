@@ -12,6 +12,8 @@ namespace RelayServer.ClientObjects
     {
         public string Name { get; set; }
         public string IP { get; set; }
+        public long AccountID { get; set; }
+        public long CharacterID { get; set; }
         public string Action { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
@@ -39,6 +41,8 @@ namespace RelayServer.ClientObjects
                 throw new System.ArgumentNullException("info");
             Name = (string)info.GetValue("Name", typeof(string));
             IP = (string)info.GetValue("IP", typeof(string));
+            AccountID = (long)info.GetValue("AccountID", typeof(long));
+            CharacterID = (long)info.GetValue("CharacterID", typeof(long));
             Action = (string)info.GetValue("Action", typeof(string));
             PositionX = (int)info.GetValue("PositionX", typeof(int));
             PositionX = (int)info.GetValue("PositionY", typeof(int));
@@ -68,6 +72,8 @@ namespace RelayServer.ClientObjects
                 throw new System.ArgumentNullException("info");
             info.AddValue("Name", Name);
             info.AddValue("IP", IP);
+            info.AddValue("AccountID", AccountID);
+            info.AddValue("CharacterID", CharacterID);
             info.AddValue("Action", Action);
             info.AddValue("PositionX", PositionX);
             info.AddValue("PositionY", PositionY);

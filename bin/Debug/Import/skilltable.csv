@@ -1,0 +1,9 @@
+[0] - ID;[1] - name;[2] - sp;[3] - casttime;[4] - cooltime;[5] - maxlevel;[6] - reqskill1;[7] - skill1lvl;[8] - reqskill2;[9] - skill2lvl;[10] - reqskill3;[11] - skill3lvl;[12] - reqskill4;[13] - skill4lvl;[14] - type;[15] - jobclass
+1000;Archery Mastery;0;120;60;5;0;0;0;0;0;0;0;0;Passive;Bowman
+1001;Critical Shot;0;210;80;5;0;0;0;0;0;0;0;0;Passive;Bowman
+1002;Arrow Blow;0;210;80;10;0;0;0;0;0;0;0;0;Passive;Bowman
+1003;Double Jump;0;210;80;10;0;0;0;0;0;0;0;0;Passive;Bowman
+1004;HP Boost;0;210;80;10;0;0;0;0;0;0;0;0;Passive;Warrior
+1005;Iron Body;0;210;80;20;0;0;0;0;0;0;0;0;Active;Warrior
+1006;Power Strike;70;0;80;20;0;0;0;0;0;0;0;0;Active;Warrior
+1007;Slash Blast;70;210;80;20;Power Strike;1;0;0;0;0;0;0;Active;Warrior

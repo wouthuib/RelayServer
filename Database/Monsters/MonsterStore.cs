@@ -65,7 +65,7 @@ namespace RelayServer.Database.Monsters
 
                         // Trim and fix sprite path
                         monster.monsterSprite = @"" + Regex.Replace(values[2], "\"", "");
-                        //monster.monsterSprite = Regex.Replace(monster.monsterSprite, " ", "");
+                        monster.monsterSprite = Regex.Replace(monster.monsterSprite, " ", "");
 
                         // Monster battle inforation
                         monster.Level = Convert.ToInt32(values[3]);
@@ -96,33 +96,6 @@ namespace RelayServer.Database.Monsters
                     {
                         string exception = ee.ToString();
                     }
-                }
-            }
-        }
-
-        public void saveItem(string dir, string file)
-        {
-            Type itemType = typeof(Monster);
-            var props = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                .OrderBy(p => p.Name);
-
-            using (var writer = new StreamWriter(Path.Combine(dir, file)))
-            {
-                // writer.WriteLine(string.Join("; ", props.Select(p => p.Name)));
-
-                foreach (var monster in monster_list)
-                {
-                    foreach (PropertyInfo propertyInfo in monster.GetType().GetProperties())
-                    {
-                        if (propertyInfo.Name != "itemID")
-                            writer.Write("; ");
-
-                        var getvalue = propertyInfo.GetValue(monster, null);
-
-                        writer.Write(getvalue.ToString());
-                    }
-
-                    writer.WriteLine(";");
                 }
             }
         }
