@@ -15,6 +15,9 @@ using RelayServer.WorldObjects.Entities;
 using RelayServer.WorldObjects.Effects;
 using Microsoft.Xna.Framework;
 using RelayServer.Database.Accounts;
+using RelayServer.Database.Players;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RelayServer
 {
@@ -31,7 +34,7 @@ namespace RelayServer
         }
 
         //Array of clients
-        Client[] client;
+        public Client[] client;
 
         //number of connected clients
         int connectedClients = 0;
@@ -97,18 +100,6 @@ namespace RelayServer
 
             //Add to the client array
             client[user.id] = user;
-
-            // send monsters
-            foreach (var entity in GameWorld.Instance.listEntity)
-                if (entity is MonsterSprite)
-                {
-                    MonsterSprite monster = (MonsterSprite)entity;
-                    monster.sendtoClient(user);
-                }
-
-            // send players
-            foreach (var data in PlayerStore.Instance.playerStore)
-                SendObject(data);
         }
 
         /// <summary>
@@ -134,18 +125,13 @@ namespace RelayServer
             }
 
             //Print the removed player message to the server window.
-            OutputManager.WriteLine("Player: " + PlayerStore.Instance.playerStore.Find(p => p.AccountID == user.AccountID).Name +
-                                    "\t IP: " + user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
+            //OutputManager.WriteLine("Player: " + PlayerStore.Instance.playerStore.Find(p => p.AccountID == user.AccountID).Name +
+            //                        "\t IP: " + user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
             
             // Set player offline
-            PlayerStore.Instance.playerStore.Find(p => p.AccountID == user.AccountID).Online = false;
-
-            // send remove player command to other clients
-            SendObject(new playerData() 
-            { 
-                AccountID = user.AccountID, 
-                Action = "Remove" 
-            });
+            if (PlayerStore.Instance.playerStore.FindAll(p => p.AccountID == user.AccountID).Count > 0)
+                foreach (var player in PlayerStore.Instance.playerStore.Where(p => p.AccountID == user.AccountID))
+                    player.Online = false;
 
             //Clear the array's index
             client[user.id] = null;
@@ -174,14 +160,10 @@ namespace RelayServer
                 ReadAccountData(data, sender);
 
             //If we want the original sender to receive the same message it sent, we call a different method
-            if (Properties.Settings.Default.SendBackToOriginalClient)
-            {
-                SendData(data);
-            }
-            else
-            {
-                SendData(data, sender);
-            }
+            //if (Properties.Settings.Default.SendBackToOriginalClient)
+            //    SendData(data);
+            //else
+            //    SendData(data, sender);
         }
 
         /// <summary>
@@ -271,10 +253,15 @@ namespace RelayServer
             writeStream.Position = 0;
         }
 
+        /// <summery>
+        /// Wouter's methods
+        /// </summery>
         #region Wouter's Methods
-        // Wouter's methods
 
-        // Send object to all clients
+        /// <summery>
+        /// Send Objects to all Clients
+        /// </summery>
+        /// <param name="data">Data to send</param>
         public void SendObject(Object obj)
         {
             foreach (Client c in client)
@@ -287,7 +274,10 @@ namespace RelayServer
             // writeStream.Position = 0;
         }
 
-        // Send object to one client
+        /// <summery>
+        /// Send Object to one Client
+        /// </summery>
+        /// <param name="data">Data to send</param>
         public void SendObject(Object obj, Client user)
         {
             if (user != null)
@@ -297,19 +287,30 @@ namespace RelayServer
             // writeStream.Position = 0;
         }
 
-        // Read incoming client objects
+        /// <summery>
+        /// Read incoming client data
+        /// </summery>
+        /// <param name="data">Data to read</param>
         private void ReadUserData(byte[] byteArray, Client sender)
         {
             //message has successfully been received
             ASCIIEncoding encoder = new ASCIIEncoding();
             System.Diagnostics.Debug.WriteLine(encoder.GetString(byteArray, 0, byteArray.Length));
-            
-            string xmlDoc = encoder.GetString(byteArray, 0, byteArray.Length).ToString();
-            XDocument doc = XDocument.Parse(xmlDoc);
-            string rootelement = doc.Root.Name.ToString();
-            Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
+            Object obj = null;
 
-            Object obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);
+            try
+            {
+                string xmlDoc = encoder.GetString(byteArray, 0, byteArray.Length).ToString();
+                XDocument doc = XDocument.Parse(xmlDoc);
+                string rootelement = doc.Root.Name.ToString();
+                Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
+
+                obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);
+            }
+            catch
+            {
+                OutputManager.WriteLine("Error bad package from client {0} - {1}", new string[]{ sender.IP, sender.AccountID.ToString() });
+            }
 
             if (obj is playerData)
             {
@@ -325,6 +326,22 @@ namespace RelayServer
                             found = true; // update existing player
                             entry.Position.X = player.PositionX;
                             entry.Position.Y = player.PositionY;
+
+                            if (player.Action == "Online")
+                            {
+                                entry.Online = true;
+                                GameWorld.Instance.newEntity.Add(PlayerSprite.PlayerToSprite(player));
+                            }
+                            else
+                            {
+                                if (GameWorld.Instance.listEntity.FindAll(x => x.EntityName == player.Name).Count > 0)
+                                {
+                                    PlayerSprite sprite = (PlayerSprite)GameWorld.Instance.listEntity.Find(x => x.EntityName == player.Name);
+                                    sprite.fromClientToServer(player); // update server
+                                }
+
+                                SendObject(player);
+                            }
                         }
                     }
                 }
@@ -334,15 +351,20 @@ namespace RelayServer
                     player.IP = sender.IP.ToString();
                     player.AccountID = sender.AccountID;
                     PlayerStore.Instance.addPlayer(player);
+                    
+                    if (sender.MainScreenName == "charselect")
+                        SendObject(PlayerStore.Instance.toPlayerData(
+                            PlayerStore.Instance.playerStore.Find(x => x.Name == player.Name)), sender);
                 }
 
-                OutputManager.Write(player.Name + "'s Position X:" + player.PositionX.ToString() + "\t");
-                OutputManager.Write("Position Y:" + player.PositionY.ToString() + "\n");
+                //OutputManager.Write(player.Name + "'s Position X:" + player.PositionX.ToString() + "\t");
+                //OutputManager.Write("Position Y:" + player.PositionY.ToString() + "\n");
             }
             else if (obj is ChatData)
             {
                 ChatData chatdata = (ChatData)obj;
                 OutputManager.Write(chatdata.Name + "'s says:" + chatdata.Text + "\n");
+                SendObject(chatdata);
             }
             else if (obj is DmgAreaData)
             {
@@ -358,9 +380,34 @@ namespace RelayServer
                         dmgarea.Timer, 
                         dmgarea.DmgPercent));
             }
+            else if (obj is ScreenData)
+            {
+                ScreenData screen = (ScreenData)obj;
+
+                if (screen.MainScreenName == "charselect")
+                {
+                    sender.MainScreenName = "charselect"; // set screenname
+
+                    if(PlayerStore.Instance.playerStore.FindAll(x=>x.AccountID == sender.AccountID).Count > 0)
+                    {
+                        foreach(var player in PlayerStore.Instance.playerStore.Where(x=>x.AccountID == sender.AccountID))
+                        {
+                            SendObject(PlayerStore.Instance.toPlayerData(player), sender);
+                        }
+                    }
+                }
+                else if (screen.MainScreenName == "worldmap")
+                {
+                    sender.MainScreenName = "worldmap"; // set screenname
+                    clientfunction.loadmap(sender);
+                }
+            }
         }
 
-        // Authentication method
+        /// <summery>
+        /// Authentication Method
+        /// </summery>
+        /// <param name="data">Data to read</param>
         private void ReadAccountData(byte[] byteArray, Client sender)
         {
             //message has successfully been received
@@ -404,7 +451,10 @@ namespace RelayServer
             }
         }
 
-        // XML Deserialization
+        /// <summery>
+        /// public Deserialization Method for XML to objects
+        /// </summery>
+        /// <param name="data">Data to read</param>
         public static T DeserializeFromXml<T>(string xml, Type type)
         {
             T result;

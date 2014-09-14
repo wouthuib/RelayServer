@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using RelayServer.WorldObjects.Structures;
@@ -8,13 +7,12 @@ using System.Xml.Serialization;
 using RelayServer.ClientObjects;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using System.Threading;
 using System.Xml;
-using System.Xml.Linq;
+using RelayServer.Database.Players;
 
 namespace RelayServer
 {
-    public class Client
+    public class Client : ClientFunctions
     {
         //Encapsulated 
         private TcpClient client;
@@ -35,20 +33,13 @@ namespace RelayServer
         //IP of the connected client
         public string IP;
 
-        //Account Autentication
-        public long AccountID;
-        public bool Autenticated = false;
-
-        //Is this client disconnected?
-        bool connected = false;
-        int logoutput = 0;
-
         /// <summary>
         /// Create a new client
         /// </summary>
         /// <param name="client">TcpClient object to use</param>
         /// <param name="id">ID to give to the client</param>
         public Client(TcpClient client, byte id)
+            : base()
         {
             readBuffer = new byte[1024];
             this.id = id;
@@ -56,10 +47,10 @@ namespace RelayServer
             IP = client.Client.RemoteEndPoint.ToString();
             //client.NoDelay = true;
 
+            this.user = this;
             networkstream = client.GetStream();
 
             StartListening();
-            connected = true;
         }
 
         /// <summary>
@@ -68,6 +59,7 @@ namespace RelayServer
         /// <param name="ip">IP to give to the client</param>
         /// <param name="port">Port to connect</param>
         public Client(string ip, int port)
+            : base()
         {
             readBuffer = new byte[Properties.Settings.Default.ReadBufferSize];
             id = byte.MaxValue;
@@ -75,8 +67,8 @@ namespace RelayServer
             client.NoDelay = true;
             client.Connect(ip, port);
 
+            this.user = this;
             StartListening();
-            connected = true;
         }
 
         /// <summary>
@@ -87,6 +79,13 @@ namespace RelayServer
             if (connected)
             {
                 connected = false;
+
+                foreach (var player in PlayerStore.Instance.playerStore.FindAll(x => x.AccountID == AccountID))
+                {
+                    player.Online = false;
+                    SendObject(new playerData(){ Name = player.Name, Action = "Remove"});
+                }
+
                 client.Close();
 
                 //Call all delegates
@@ -124,7 +123,7 @@ namespace RelayServer
             if (bytesRead == 0)
             {
                 Disconnect();
-                OutputManager.WriteLine("Error! Client {0}:  {1}\n{2}", new string[]{IP, "Bad data", "Disconnecting"});
+                OutputManager.WriteLine("Error! Client {0}: {1} {2}", new string[]{IP, "link broken!", "Disconnecting"});
                 return;
             }
 
@@ -154,7 +153,8 @@ namespace RelayServer
             {
                 lock (networkstream)
                 {
-                    networkstream.BeginWrite(b, 0, b.Length, null, null);
+                    if (networkstream.CanWrite)
+                        networkstream.BeginWrite(b, 0, b.Length, null, null);
                 }
             }
             catch (Exception e)
@@ -192,56 +192,93 @@ namespace RelayServer
                 lock (networkstream)
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(Object));
+                    bool getobject = false;
 
                     if (obj is MonsterData)
-                        xmlSerializer = new XmlSerializer(typeof(MonsterData));
+                    {
+                        if (MainScreenName == "worldmap")
+                        {
+                            xmlSerializer = new XmlSerializer(typeof(MonsterData));
+                            getobject = true;
+                        }
+                    }
                     else if (obj is playerData)
+                    {
                         xmlSerializer = new XmlSerializer(typeof(playerData));
+                        getobject = true;
+                    }
                     else if (obj is AccountData)
+                    {
                         xmlSerializer = new XmlSerializer(typeof(AccountData));
+                        getobject = true;
+                    }
+                    else if (obj is PlayerInfo)
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(PlayerInfo));
+                        //obj = PlayerStore.Instance.toPlayerData((PlayerInfo)obj);
+                        getobject = false;
+                    }
+                    else if (obj is List<PlayerInfo>)
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(List<PlayerInfo>));
+                        getobject = false;
+                    }
 
                     // Send NetworkStream with XML data
-                    if (networkstream.CanWrite && obj != null)
-                        xmlSerializer.Serialize(networkstream, obj);
+                    //if (networkstream.CanWrite && obj != null)
+                    //    xmlSerializer.Serialize(networkstream, obj);
 
-                    networkstream.Flush();
-
-                    // start stringwriter, xmlwriter and serialize
-                    StringWriter sww = new StringWriter();
-                    XmlWriter writer = XmlWriter.Create(sww);
-                    xmlSerializer.Serialize(writer, obj);
-
-                    // new send encrypted message (in process) !!!
-                    string encrypted = RijndaelSimple.Encrypt(
-                        sww.ToString(),
-                        "Pas5pr@se",
-                        "s@1tValue",
-                        "SHA1",
-                        2,
-                        "@1B2c3D4e5F6g7H8",
-                        256);
-
-                    //SendData(StringToBytes(encrypted));
-
-                    if (logoutput == 1)
+                    if (getobject)
                     {
-                        if (obj is MonsterData)
-                        {
-                            MonsterData monster = (MonsterData)obj; // cast
+                        StringWriter stringwriter = new StringWriter();
+                        XmlWriter xmlwriter = XmlWriter.Create(stringwriter);
+                        xmlSerializer.Serialize(xmlwriter, obj);
 
-                            // write xml output
-                            OutputManager.WriteLine("- Monster {0} : ", new string[] { monster.InstanceID });
-                            OutputManager.WriteLine(" ");
-                            OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
-                        }
-                        else if (obj is playerData)
-                        {
-                            playerData player = (playerData)obj; // cast
+                        byte[] myWriteBuffer = Encoding.ASCII.GetBytes(stringwriter.ToString());
 
-                            // write xml output
-                            OutputManager.WriteLine("- Player {0} : ", new string[] { player.Name });
-                            OutputManager.WriteLine(" ");
-                            OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                        if (networkstream.CanWrite)
+                            networkstream.Write(myWriteBuffer, 0, myWriteBuffer.Length);
+
+                        // flush streams
+                        networkstream.Flush();
+
+                        // start stringwriter, xmlwriter and serialize
+                        StringWriter sww = new StringWriter();
+                        XmlWriter writer = XmlWriter.Create(sww);
+                        xmlSerializer.Serialize(writer, obj);
+
+                        // new send encrypted message (in process) !!!
+                        string encrypted = RijndaelSimple.Encrypt(
+                            sww.ToString(),
+                            "Pas5pr@se",
+                            "s@1tValue",
+                            "SHA1",
+                            2,
+                            "@1B2c3D4e5F6g7H8",
+                            256);
+
+                        //SendData(StringToBytes(encrypted));
+
+                        if (logoutput == 1)
+                        {
+                            if (obj is MonsterData)
+                            {
+                                MonsterData monster = (MonsterData)obj; // cast
+
+                                // write xml output
+                                OutputManager.WriteLine("- Monster {0} : ", new string[] { monster.InstanceID });
+                                OutputManager.WriteLine(" ");
+                                OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                            }
+                            else if (obj is playerData)
+                            {
+                                playerData player = (playerData)obj; // cast
+
+                                // write xml output
+                                OutputManager.WriteLine("- Player {0} : ", new string[] { player.Name });
+                                OutputManager.WriteLine(" ");
+                                OutputManager.WriteLine("{0} \n", new string[] { sww.ToString() });
+                            }
                         }
                     }
 

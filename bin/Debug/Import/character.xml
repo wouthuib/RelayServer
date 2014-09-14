@@ -1,0 +1,480 @@
+<?xml version="1.0"?>
+<ArrayOfPlayerInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PlayerInfo>
+    <AccountID>1000000</AccountID>
+    <CharacterID>2000000</CharacterID>
+    <Online>false</Online>
+    <equipment>
+      <item_list>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName> Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1200</itemID>
+          <itemName> Knife</itemName>
+          <DEF>0</DEF>
+          <ATK>17</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>50</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>All</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Dagger</WeaponType>
+          <Script>{}</Script>
+        </Item>
+      </item_list>
+    </equipment>
+    <inventory>
+      <item_list />
+    </inventory>
+    <quickslotbar>
+      <quickslot>
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+      </quickslot>
+      <visible>true</visible>
+    </quickslotbar>
+    <skilltree>
+      <skill_list />
+    </skilltree>
+    <head_sprite>gfx\player\body\head\</head_sprite>
+    <body_sprite>gfx\player\body\torso\</body_sprite>
+    <hands_sprite>gfx\player\body\hands\</hands_sprite>
+    <hair_sprite>gfx\player\hairset\hair0\</hair_sprite>
+    <faceset_sprite>gfx\player\faceset\face0\</faceset_sprite>
+    <spriteOfset>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+    </spriteOfset>
+    <list_offsets />
+    <hair_color>
+      <R>255</R>
+      <G>0</G>
+      <B>0</B>
+      <A>255</A>
+      <PackedValue>4278190335</PackedValue>
+    </hair_color>
+    <skin_color>
+      <R>255</R>
+      <G>229</G>
+      <B>200</B>
+      <A>255</A>
+      <PackedValue>4291356159</PackedValue>
+    </skin_color>
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+    </Position>
+    <Name>New Player</Name>
+    <Jobclass>Archer</Jobclass>
+    <Exp>0</Exp>
+    <NextLevelExp>1005</NextLevelExp>
+    <Level>1</Level>
+    <Gold>0</Gold>
+    <HP>2000</HP>
+    <MAXHP>2000</MAXHP>
+    <SP>500</SP>
+    <MAXSP>500</MAXSP>
+    <b_def>0</b_def>
+    <b_atk>0</b_atk>
+    <b_matk>0</b_matk>
+    <b_mdef>0</b_mdef>
+    <b_flee>0</b_flee>
+    <b_aspd>0</b_aspd>
+    <b_hit>0</b_hit>
+    <Statpoints>20</Statpoints>
+    <Skillpoints>20</Skillpoints>
+    <Strength>10</Strength>
+    <Agility>10</Agility>
+    <Vitality>0</Vitality>
+    <Intelligence>0</Intelligence>
+    <Dexterity>10</Dexterity>
+    <Luck>1</Luck>
+  </PlayerInfo>
+  <PlayerInfo>
+    <AccountID>1000000</AccountID>
+    <CharacterID>2000001</CharacterID>
+    <Online>false</Online>
+    <equipment>
+      <item_list>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName> Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1200</itemID>
+          <itemName> Knife</itemName>
+          <DEF>0</DEF>
+          <ATK>17</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>50</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>All</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Dagger</WeaponType>
+          <Script>{}</Script>
+        </Item>
+      </item_list>
+    </equipment>
+    <inventory>
+      <item_list />
+    </inventory>
+    <quickslotbar>
+      <quickslot>
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+      </quickslot>
+      <visible>true</visible>
+    </quickslotbar>
+    <skilltree>
+      <skill_list />
+    </skilltree>
+    <head_sprite>gfx\player\body\head\</head_sprite>
+    <body_sprite>gfx\player\body\torso\</body_sprite>
+    <hands_sprite>gfx\player\body\hands\</hands_sprite>
+    <hair_sprite>gfx\player\hairset\hair4\</hair_sprite>
+    <faceset_sprite>gfx\player\faceset\face4\</faceset_sprite>
+    <spriteOfset>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+    </spriteOfset>
+    <list_offsets />
+    <hair_color>
+      <R>165</R>
+      <G>42</G>
+      <B>42</B>
+      <A>255</A>
+      <PackedValue>4280953509</PackedValue>
+    </hair_color>
+    <skin_color>
+      <R>255</R>
+      <G>206</G>
+      <B>180</B>
+      <A>255</A>
+      <PackedValue>4290039551</PackedValue>
+    </skin_color>
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+    </Position>
+    <Name>Wouter</Name>
+    <Jobclass>Archer</Jobclass>
+    <Exp>0</Exp>
+    <NextLevelExp>1005</NextLevelExp>
+    <Level>1</Level>
+    <Gold>0</Gold>
+    <HP>2000</HP>
+    <MAXHP>2000</MAXHP>
+    <SP>500</SP>
+    <MAXSP>500</MAXSP>
+    <b_def>0</b_def>
+    <b_atk>0</b_atk>
+    <b_matk>0</b_matk>
+    <b_mdef>0</b_mdef>
+    <b_flee>0</b_flee>
+    <b_aspd>0</b_aspd>
+    <b_hit>0</b_hit>
+    <Statpoints>20</Statpoints>
+    <Skillpoints>20</Skillpoints>
+    <Strength>10</Strength>
+    <Agility>10</Agility>
+    <Vitality>0</Vitality>
+    <Intelligence>0</Intelligence>
+    <Dexterity>10</Dexterity>
+    <Luck>1</Luck>
+  </PlayerInfo>
+  <PlayerInfo>
+    <AccountID>1000001</AccountID>
+    <CharacterID>2000002</CharacterID>
+    <Online>false</Online>
+    <equipment>
+      <item_list>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName> Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1200</itemID>
+          <itemName> Knife</itemName>
+          <DEF>0</DEF>
+          <ATK>17</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>50</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>All</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Dagger</WeaponType>
+          <Script>{}</Script>
+        </Item>
+      </item_list>
+    </equipment>
+    <inventory>
+      <item_list />
+    </inventory>
+    <quickslotbar>
+      <quickslot>
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+        <anyType xsi:nil="true" />
+      </quickslot>
+      <visible>true</visible>
+    </quickslotbar>
+    <skilltree>
+      <skill_list />
+    </skilltree>
+    <head_sprite>gfx\player\body\head\</head_sprite>
+    <body_sprite>gfx\player\body\torso\</body_sprite>
+    <hands_sprite>gfx\player\body\hands\</hands_sprite>
+    <hair_sprite>gfx\player\hairset\hair8\</hair_sprite>
+    <faceset_sprite>gfx\player\faceset\face4\</faceset_sprite>
+    <spriteOfset>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+      <Vector2>
+        <X>0</X>
+        <Y>0</Y>
+      </Vector2>
+    </spriteOfset>
+    <list_offsets />
+    <hair_color>
+      <R>0</R>
+      <G>0</G>
+      <B>255</B>
+      <A>255</A>
+      <PackedValue>4294901760</PackedValue>
+    </hair_color>
+    <skin_color>
+      <R>135</R>
+      <G>206</G>
+      <B>250</B>
+      <A>255</A>
+      <PackedValue>4294626951</PackedValue>
+    </skin_color>
+    <Position>
+      <X>0</X>
+      <Y>0</Y>
+    </Position>
+    <Name>Morca</Name>
+    <Jobclass>Archer</Jobclass>
+    <Exp>0</Exp>
+    <NextLevelExp>1005</NextLevelExp>
+    <Level>1</Level>
+    <Gold>0</Gold>
+    <HP>2000</HP>
+    <MAXHP>2000</MAXHP>
+    <SP>500</SP>
+    <MAXSP>500</MAXSP>
+    <b_def>0</b_def>
+    <b_atk>0</b_atk>
+    <b_matk>0</b_matk>
+    <b_mdef>0</b_mdef>
+    <b_flee>0</b_flee>
+    <b_aspd>0</b_aspd>
+    <b_hit>0</b_hit>
+    <Statpoints>20</Statpoints>
+    <Skillpoints>20</Skillpoints>
+    <Strength>10</Strength>
+    <Agility>10</Agility>
+    <Vitality>0</Vitality>
+    <Intelligence>0</Intelligence>
+    <Dexterity>10</Dexterity>
+    <Luck>1</Luck>
+  </PlayerInfo>
+</ArrayOfPlayerInfo>

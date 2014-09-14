@@ -7,6 +7,7 @@ namespace RelayServer.ClientObjects
     [Serializable]
     public class EffectData : ISerializable
     {
+        public string Name { get; set; }
         public string Path { get; set; }
         public int FrameCount { get; set; }
         public int OffsetX { get; set; }
@@ -22,6 +23,7 @@ namespace RelayServer.ClientObjects
         {
             if (info == null)
                 throw new System.ArgumentNullException("info");
+            Name = (string)info.GetValue("Name", typeof(string));
             Path = (string)info.GetValue("Path", typeof(string));
             FrameCount = (int)info.GetValue("FrameCount", typeof(int));
             OffsetX = (int)info.GetValue("OffsetX", typeof(int));

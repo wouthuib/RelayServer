@@ -72,12 +72,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="ClientFunctions.cs" />
     <Compile Include="ClientObjects\AccountData.cs" />
     <Compile Include="ClientObjects\CharacterData.cs" />
     <Compile Include="ClientObjects\ChatData.cs" />
     <Compile Include="ClientObjects\DmgAreaData.cs" />
     <Compile Include="ClientObjects\EffectData.cs" />
     <Compile Include="ClientObjects\MonsterData.cs" />
+    <Compile Include="ClientObjects\ScreenData.cs" />
     <Compile Include="Database\Accounts\Account.cs" />
     <Compile Include="Database\Accounts\AccountStore.cs" />
     <Compile Include="Database\Items\Item.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="Database\Players\Equipment.cs" />
     <Compile Include="Database\Players\Inventory.cs" />
     <Compile Include="Database\Players\PlayerInfo.cs" />
-    <Compile Include="Database\Players\PlayerStore.cs" />
     <Compile Include="Database\Players\QuickSlotBar.cs" />
     <Compile Include="Database\Players\SkillTree.cs" />
     <Compile Include="Database\Skills\Skill.cs" />
@@ -95,7 +96,7 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="ClientObjects\PlayerData.cs" />
-    <Compile Include="ClientObjects\PlayerStore.cs" />
+    <Compile Include="Database\Players\PlayerStore.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -105,10 +106,12 @@
     </Compile>
     <Compile Include="RijndaelSimple.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="Static\XMLSerializerFactory.cs" />
     <Compile Include="WorldObjects\Effects\DamageArea.cs" />
     <Compile Include="WorldObjects\Effects\GameEffect.cs" />
     <Compile Include="WorldObjects\Entities\Entity.cs" />
     <Compile Include="WorldObjects\Entities\MonsterSprite.cs" />
+    <Compile Include="WorldObjects\Entities\PlayerSprite.cs" />
     <Compile Include="WorldObjects\GameWorld.cs" />
     <Compile Include="WorldObjects\Structures\Battle.cs" />
     <Compile Include="WorldObjects\Structures\OutputManager.cs" />
@@ -121,9 +124,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Import\accounttable.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Import\character.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Import\itemtable.csv">

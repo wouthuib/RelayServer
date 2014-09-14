@@ -79,6 +79,7 @@ namespace RelayServer.Database.Items
         public int Price { get; set; }
         public int WeaponLevel { get; set; }
         public int RefinementLevel { get; set; }
+        public string equipSpritePath { get; set; }
 
         public ItemType Type { get; set; }
         public ItemClass Class { get; set; }

@@ -75,6 +75,8 @@ namespace RelayServer.Database.Items
                             item.Slot = (ItemSlot)Enum.Parse(typeof(ItemSlot), values[11]);
                             item.WeaponType = (WeaponType)Enum.Parse(typeof(WeaponType), values[12]);
                             item.Script = Regex.Replace(values[13], "\"", "");
+                            item.equipSpritePath = @"" + Regex.Replace(values[14], "\"", "");
+                            item.equipSpritePath = Regex.Replace(item.equipSpritePath, " ", "");
                             //item.list_offsets = loadoffsetfromXML(item);
                         }
                     }

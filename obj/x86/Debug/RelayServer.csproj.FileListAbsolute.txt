@@ -21,4 +21,3 @@ C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\item
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\monstertable.csv
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\skilltable.csv
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\accounttable.csv
-C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\character.xml

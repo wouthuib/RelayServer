@@ -11,6 +11,7 @@ using RelayServer.Database.Monsters;
 using RelayServer.WorldObjects.Structures;
 using System.Timers;
 using RelayServer.ClientObjects;
+using RelayServer.Database.Players;
 
 namespace RelayServer.WorldObjects.Entities
 {
@@ -39,7 +40,7 @@ namespace RelayServer.WorldObjects.Entities
         private float Speed;                                                                        // Speed used in functions
 
         // Movement properties
-        const int WALK_SPEED = 100;                                                                 // The actual speed of the entity
+        const int WALK_SPEED = 110;                                                                 // The actual speed of the entity
         const int ANIMATION_SPEED = 120;                                                            // Animation speed, 120 = default
         const int IDLE_TIME = 10;                                                                   // idle time until next movement
         Border Borders = new Border(0, 0);                                                          // max tiles to walk from center (avoid falling)
@@ -118,7 +119,7 @@ namespace RelayServer.WorldObjects.Entities
 
                 update_movement(gameTime);
                 update_animation(gameTime);
-                // update_collision(gameTime);
+                update_collision(gameTime);
 
                 if (previousState != state)
                     sendtoClient();
@@ -392,51 +393,60 @@ namespace RelayServer.WorldObjects.Entities
         {
             // Monster attacks the player method
 
-            // Check of world instance is created
-            if (world == null)
-                world = GameWorld.Instance;
-
             previousAttackTimeSec = currentAttackTimeSec;
 
-            //Entity player = world.Player;
+            foreach (var entity in GameWorld.Instance.listEntity)
+            {
+                if (entity is PlayerSprite)
+                {
+                    PlayerSprite sprite = (PlayerSprite)entity;
+                    PlayerInfo player = PlayerStore.Instance.playerStore.Find(x => x.Name == sprite.Name);
 
-            //if (player is PlayerSprite)
-            //{
-            //    if (player.SpriteFrame.Intersects(SpriteBoundries))
-            //    {
-            //        // player + monster state not equal to hit or frozen
-            //        if (this.State != EntityState.Hit &&
-            //            this.State != EntityState.Died &&
-            //            this.State != EntityState.Spawn &&
-            //            player.State != EntityState.Hit &&
-            //            player.State != EntityState.Frozen)
-            //        {
-            //            // activate timer
-            //            currentAttackTimeSec += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Rectangle playerBounds = new Rectangle(
+                        (int)sprite.Position.X,
+                        (int)sprite.Position.Y,
+                        sprite.SpriteFrame.Width,
+                        sprite.SpriteFrame.Height);
 
-            //            // we now use 500 msec, but this should get a ASPD timer
-            //            if (currentAttackTimeSec >= 0.5f)
-            //            {
-            //                // reset the attach timer
-            //                currentAttackTimeSec = 0;
+                    if (playerBounds.Intersects(SpriteBoundries))
+                    {
+                        // player + monster state not equal to hit or frozen
+                        if (this.State != EntityState.Hit &&
+                            this.State != EntityState.Died &&
+                            this.State != EntityState.Spawn &&
+                            sprite.State != EntityState.Hit &&
+                            sprite.State != EntityState.Frozen)
+                        {
+                            // activate timer
+                            currentAttackTimeSec += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            //                // Start damage controll
-            //                //int damage = (int)Battle.battle_calc_damage_mob(this, PlayerStore.Instance.activePlayer);
-            //                //PlayerStore.Instance.activePlayer.HP -= damage;
+                            // we now use 500 msec, but this should get a ASPD timer
+                            if (currentAttackTimeSec >= 0.5f)
+                            {
+                                // reset the attach timer
+                                currentAttackTimeSec = 0;
 
-            //                // Hit the player
-            //                //if (damage > 0)
-            //                //    player.State = EntityState.Hit;
+                                // Start damage controll
+                                int damage = (int)Battle.battle_calc_damage_mob(this, player);
+                                player.HP -= damage;
 
-            //                //world.newEffect.Add(new DamageBaloon(
-            //                //    ResourceManager.GetInstance.Content.Load<Texture2D>(@"gfx\effects\damage_counter2"),
-            //                //    new Vector2((player.Position.X + player.SpriteFrame.Width * 0.45f) - damage.ToString().Length * 5,
-            //                //                 player.Position.Y + player.SpriteFrame.Height * 0.20f),
-            //                //        damage));
-            //            }
-            //        }
-            //    }
-            //}
+                                // Hit the player
+                                if (damage > 0)
+                                {
+                                    sprite.State = EntityState.Hit;
+                                    sprite.fromServerToClient();
+                                }
+
+                                //world.newEffect.Add(new DamageBaloon(
+                                //    ResourceManager.GetInstance.Content.Load<Texture2D>(@"gfx\effects\damage_counter2"),
+                                //    new Vector2((player.Position.X + player.SpriteFrame.Width * 0.45f) - damage.ToString().Length * 5,
+                                //                 player.Position.Y + player.SpriteFrame.Height * 0.20f),
+                                //        damage));
+                            }
+                        }
+                    }
+                }
+            }
 
             // reset timer when no player collision
             if (currentAttackTimeSec == previousAttackTimeSec)

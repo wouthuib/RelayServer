@@ -54,6 +54,52 @@ namespace RelayServer.Database.Players
         public Color hair_color = Color.Red;
         public Color skin_color = new Color(255, 206, 180);
 
+        public string headgear_sprite
+        {
+            get
+            {
+                string equip = null;
+
+                if (equipment.item_list.FindAll(delegate(Item item) { return item.Slot == ItemSlot.Headgear; }).Count > 0)
+                    equip = equipment.item_list.Find(delegate(Item item) { return item.Slot == ItemSlot.Headgear; }).equipSpritePath;
+
+                if (equip != null)
+                    return equip;
+                else
+                    return null;
+            }
+        }
+        public string costume_sprite
+        {
+            get
+            {
+                string equip = null;
+
+                if (equipment.item_list.FindAll(delegate(Item item) { return item.Slot == ItemSlot.Bodygear; }).Count > 0)
+                    equip = equipment.item_list.Find(delegate(Item item) { return item.Slot == ItemSlot.Bodygear; }).equipSpritePath;
+
+                if (equip != null)
+                    return equip;
+                else
+                    return null;
+            }
+        }
+        public string weapon_sprite
+        {
+            get
+            {
+                string equip = null;
+
+                if (equipment.item_list.FindAll(delegate(Item item) { return item.Slot == ItemSlot.Weapon; }).Count > 0)
+                    equip = equipment.item_list.Find(delegate(Item item) { return item.Slot == ItemSlot.Weapon; }).equipSpritePath;
+
+                if (equip != null)
+                    return equip;
+                else
+                    return null;
+            }
+        }
+
         public Vector2 Position;
 
         #endregion
@@ -106,13 +152,9 @@ namespace RelayServer.Database.Players
         #region battleinfo
         // Battle Info
         // for more info http://irowiki.org/wiki/ATK#Status_ATK
-        //public int ATK
-        //{
-        //    get { return (int)(StatusATK * 2 + WeaponATK + EquipATK + MasteryATK) + b_atk; }
-        //}
         public int ATK
         {
-            get { return 2; }
+            get { return (int)(StatusATK * 2 + WeaponATK + EquipATK + MasteryATK) + b_atk; }
         }
 
         public int MATK

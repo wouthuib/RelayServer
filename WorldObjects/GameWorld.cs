@@ -13,6 +13,9 @@ using System.Windows.Forms;
 using RelayServer.WorldObjects.Effects;
 using RelayServer.Database.Items;
 using RelayServer.Database.Skills;
+using RelayServer.Database.Accounts;
+using RelayServer.ClientObjects;
+using RelayServer.Database.Players;
 
 namespace RelayServer.WorldObjects
 {
@@ -59,6 +62,27 @@ namespace RelayServer.WorldObjects
                 OutputManager.WriteLine("\t Loaded map {0}", new string[] { map.Name });
             }
 
+            OutputManager.WriteLine("- Loading Account and Characters:");
+            try
+            {
+                AccountStore.Instance.loadAccounts(Directory.GetCurrentDirectory() + @"\Import\", "accounttable.csv");
+                OutputManager.WriteLine("\t Account table '\\Import\\accounttable.csv' loaded!");
+            }
+            catch
+            {
+                OutputManager.Write("\t ");
+                OutputManager.WriteLine("Error in Account table '\\Import\\accounttable.csv', unable to load!");
+            }
+            try
+            {
+                PlayerStore.Instance.loadPlayerStore();
+                OutputManager.WriteLine("\t Character table '\\Import\\character.xml' loaded!");
+            }
+            catch
+            {
+                OutputManager.Write("\t ");
+                OutputManager.WriteLine("Error in Character table '\\Import\\character.xml', unable to load!");
+            }
             OutputManager.WriteLine("- Loading Import tables:");
             try
             {
@@ -134,6 +158,11 @@ namespace RelayServer.WorldObjects
                         MonsterSprite monster = (MonsterSprite)entity;
                         monster.Update(gameTime);
                     }
+                    if (entity is PlayerSprite)
+                    {
+                        PlayerSprite player = (PlayerSprite)entity;
+                        player.Update(gameTime);
+                    }
                 }
 
                 // Update Effect objects (Warps, items, damage)
@@ -175,6 +204,9 @@ namespace RelayServer.WorldObjects
                 {
                     foreach (Entity entity in listEntity)
                     {
+                        //if (entity is PlayerSprite)
+                        //    entity.SIZE = "small";
+
                         // start with the collision check
                         if (entity.Position != entity.OldPosition)
                         {

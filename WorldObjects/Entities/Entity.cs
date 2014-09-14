@@ -52,6 +52,7 @@ namespace RelayServer.WorldObjects.Entities
         public string MapName
         {
             get { return mapName; }
+            set { mapName = value; }
         }
 
         public Texture2D EntityFace

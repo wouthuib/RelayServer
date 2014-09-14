@@ -1,0 +1,789 @@
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using RelayServer.Database.Players;
+using RelayServer.ClientObjects;
+using System.Collections.Generic;
+using RelayServer.Database.Items;
+
+namespace RelayServer.WorldObjects.Entities
+{
+    public class PlayerSprite : Entity
+    {
+        #region properties and constructor
+
+        public string Name;
+        private Vector2 previousPosition;
+        private float previousGameTimeMsec;
+
+        private const int PLAYER_SPEED = 215;                                                     // The network player is a bit slower
+        private const int ANIMATION_SPEED = 120;                                                  // Animation speed, 120 = default 
+        private const int MOVE_UP = -1;                                                           // player moving directions
+        private const int MOVE_DOWN = 1;                                                          // player moving directions
+        private const int MOVE_LEFT = -1;                                                         // player moving directions
+        private const int MOVE_RIGHT = 1;                                                         // player moving directions
+
+        private string
+            armor_name,                 // Armor and Costume Sprite (4)
+            //accessorry_top_name,        // Accessory top Sprite (Sunglasses, Ear rings) (5)
+            //accessorry_bottom_name,     // Accessory bottom Sprite (mouth items, capes) (6)
+            headgear_name,              // Headgear Sprite (Hats, Helmets) (7)
+            weapon_name;                // Weapon Sprite (8)
+            //hands_name;                 // Hands Sprite (9)        
+
+        public Vector2 Direction, previousDirection;                                              // Sprite Move direction
+        protected float Speed;                                                                    // Speed used in functions
+        protected Vector2 Velocity = new Vector2(0, 1);                                           // speed used in jump
+        protected bool landed = false;
+
+        // Player properties
+        public SpriteEffects spriteEffect = SpriteEffects.None,
+                             previousSpriteEffect;
+        protected float transperancy = 1;
+        protected bool debug = false;
+
+        // new Texture properties
+        public int spriteframe = 0, prevspriteframe = 0, maxspriteframe = 0;
+        public string spritename = "stand1_0", attackSprite;
+        public string[] spritepath = new string[] 
+        { 
+            @"gfx\player\body\head\",                                                               // Head Sprite  (0)
+            @"gfx\player\body\torso\",                                                              // Body Sprite (1)
+            @"gfx\player\faceset\face1\",                                                           // Faceset Sprite (2)
+            @"gfx\player\hairset\hair1\",                                                           // Hairset Sprite (3)
+            "",                                                                                     // Armor and Costume Sprite (4)
+            "",                                                                                     // Accessory top Sprite (Sunglasses, Ear rings) (5)
+            "",                                                                                     // Accessory bottom Sprite (mouth items, capes) (6)
+            "",                                                                                     // Headgear Sprite (Hats, Helmets) (7)
+            "",                                                                                     // Weapon Sprite (8)
+            @"gfx\player\body\hands\",                                                              // Hands Sprite (9)
+        };
+        
+        public PlayerInfo Player { get; set; }
+
+        string Client_action;
+
+        public PlayerSprite(
+            string name,
+            string ip,
+            int positionX,
+            int positionY,
+            string _spritename,
+            string _spritestate,
+            int _prevspriteframe,
+            int _maxspriteframe,
+            string _attackSprite,
+            string _spriteEffect,
+            string mapName,
+            string skincolor,
+            string facesprite,
+            string hairsprite,
+            string haircolor,
+            string armor,
+            string headgear,
+            string weapon
+            )
+            : base()
+        {
+            Name = name;
+            entityName = name; // used by removing instance in worldmap!!
+            Position = new Vector2(positionX, positionY);
+            if (_spritename != null)
+                spritename = _spritename;
+            if (_spritestate != null)
+                state = (EntityState)Enum.Parse(typeof(EntityState), _spritestate);
+            prevspriteframe = _prevspriteframe;
+            maxspriteframe = _maxspriteframe;
+            attackSprite = _attackSprite;
+            if (_spriteEffect != null)
+                spriteEffect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), _spriteEffect);
+            else
+                spriteEffect = SpriteEffects.FlipHorizontally;
+            MapName = mapName;
+
+            this.spriteFrame = new Rectangle(0, 0, 50, 70); // default for collision detection
+
+            this.Player = PlayerStore.Instance.playerStore.Find(x => x.Name == this.Name);
+
+            this.Player.skin_color = getColor(skincolor);
+            this.Player.faceset_sprite = facesprite;
+            this.Player.hair_sprite = hairsprite;
+            this.Player.hair_color = getColor(haircolor);
+            this.armor_name = armor;
+            this.headgear_name = headgear;
+            this.weapon_name = weapon;
+        }
+        #endregion
+
+        public override void Update(GameTime gameTime)
+        {
+            previousPosition = this.position;   // save previous postion
+            previousState = this.state;         // save previous state before
+            previousDirection = this.Direction; // save previous direction
+
+            switch (state)
+            {
+                #region state skillactive
+                case EntityState.Skill:
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // lock player at position
+                    this.Direction.X = 0;
+
+                    // Walk speed
+                    Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    break;
+
+                #endregion
+                #region state cooldown
+                case EntityState.Cooldown:
+                    break;
+
+                #endregion
+                #region state swinging
+                case EntityState.Swing:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // reduce timer
+                    previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    // Player animation
+                    if (prevspriteframe != spriteframe)
+                    {
+                        prevspriteframe = spriteframe;
+                        for (int i = 0; i < spritepath.Length; i++)
+                        {
+                            spritename = attackSprite + spriteframe.ToString();
+                        }
+                    }
+
+                    if (previousGameTimeMsec < 0)
+                    {
+                        previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+
+                        // set sprite frames
+                        spriteframe++;
+
+                        if (spriteframe > maxspriteframe)
+                        {
+                            spriteframe = maxspriteframe;
+                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+
+                            // create swing effect
+                            if (spriteEffect == SpriteEffects.FlipHorizontally)
+                            {
+                                Vector2 pos = new Vector2(this.Position.X + this.SpriteFrame.Width * 1.6f, this.Position.Y + this.SpriteFrame.Height * 0.7f);
+
+                                //world.newEffect.Add(new WeaponSwing(pos, WeaponSwingType.Swing01, spriteEffect));
+                            }
+                            else
+                            {
+                                Vector2 pos = new Vector2(this.Position.X - this.SpriteFrame.Width * 0.6f, this.Position.Y + this.SpriteFrame.Height * 0.7f);
+
+                                //world.newEffect.Add(new WeaponSwing(pos, WeaponSwingType.Swing01, spriteEffect));
+                            }
+
+                            //state = EntityState.Cooldown;
+                        }
+                    }
+
+                    break;
+                #endregion
+                #region state stabbing
+                case EntityState.Stab:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // reduce timer
+                    previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    // Player animation
+                    if (prevspriteframe != spriteframe)
+                    {
+                        prevspriteframe = spriteframe;
+                        for (int i = 0; i < spritepath.Length; i++)
+                        {
+                            spritename = attackSprite + spriteframe.ToString();
+                        }
+                    }
+
+                    if (previousGameTimeMsec < 0)
+                    {
+                        previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+
+                        // set sprite frames
+                        spriteframe++;
+
+                        if (spriteframe > maxspriteframe)
+                        {
+                            spriteframe = maxspriteframe;
+                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+
+                            // create stab effect
+                            if (spriteEffect == SpriteEffects.FlipHorizontally)
+                            {
+                                Vector2 pos = new Vector2(this.Position.X + this.SpriteFrame.Width * 0.3f, this.Position.Y + this.SpriteFrame.Height * 0.7f);
+                                //world.newEffect.Add(new WeaponSwing(pos, WeaponSwingType.Stab01, spriteEffect));
+                            }
+                            else
+                            {
+                                Vector2 pos = new Vector2(this.Position.X - this.SpriteFrame.Width * 0.7f, this.Position.Y + this.SpriteFrame.Height * 0.7f);
+                                //world.newEffect.Add(new WeaponSwing(pos, WeaponSwingType.Stab01, spriteEffect));
+                            }
+
+                            //state = EntityState.Cooldown;
+                        }
+                    }
+
+                    // Apply Gravity 
+                    // Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    break;
+                #endregion
+                #region state shooting
+                case EntityState.Shoot:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // reduce timer
+                    previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    // Player animation
+                    if (prevspriteframe != spriteframe)
+                    {
+                        prevspriteframe = spriteframe;
+                        for (int i = 0; i < spritepath.Length; i++)
+                        {
+                            spritename = "shoot1_" + spriteframe.ToString();
+                        }
+                    }
+
+                    if (previousGameTimeMsec < 0)
+                    {
+                        spriteframe++;
+
+                        if (spriteframe > 1)
+                        {
+                            // Set the timer for cooldown
+                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+                            spriteframe = 1;
+                        }
+                    }
+
+                    break;
+                #endregion
+                #region state sit
+                case EntityState.Sit:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+                        
+                    if (Client_action == "Stand")
+                        state = EntityState.Stand;
+
+                    // Move the Character
+                    OldPosition = Position;
+                    
+                    // Apply Gravity 
+                    Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    break;
+                #endregion
+                #region state Rope
+                case EntityState.Rope:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+                    spriteEffect = SpriteEffects.None;
+
+                    if (previousPosition.Y < position.Y)
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.Y = MOVE_DOWN;
+                        this.Speed = PLAYER_SPEED * 0.75f;
+
+                        // reduce timer
+                        previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        if (previousGameTimeMsec < 0)
+                        {
+                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+                            spriteframe++;
+                        }
+
+                        // double check frame if previous state has higher X
+                        if (spriteframe > 1)
+                            spriteframe = 0;
+                    }
+                    else if (previousPosition.Y > position.Y)
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.Y = MOVE_UP;
+                        this.Speed = PLAYER_SPEED * 0.75f;
+
+                        // reduce timer
+                        previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        if (previousGameTimeMsec < 0)
+                        {
+                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
+                            spriteframe++;
+                        }
+
+                        // double check frame if previous state has higher X
+                        if (spriteframe > 1)
+                            spriteframe = 0;
+                    }
+
+                    // Player animation
+                    if (prevspriteframe != spriteframe)
+                    {
+                        prevspriteframe = spriteframe;
+                        for (int i = 0; i < spritepath.Length; i++)
+                        {
+                            spritename = "rope_" + spriteframe.ToString();
+                        }
+                    }
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // Climb speed
+                    Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    break;
+                #endregion
+                #region state Ladder
+                case EntityState.Ladder:
+
+                    Velocity = Vector2.Zero;
+                    spriteEffect = SpriteEffects.None;
+
+                    if (Position.Y != previousPosition.Y)
+                    {
+                        spriteframe++;
+
+                        // double check frame if previous state has higher X
+
+                        if (spriteframe > 1)
+                            spriteframe = 0;
+                    }
+
+                    // Player animation
+                    if (prevspriteframe != spriteframe || !spritename.StartsWith("ladder_"))
+                    {
+                        prevspriteframe = spriteframe;
+                        for (int i = 0; i < spritepath.Length; i++)
+                        {
+                            spritename = "ladder_" + spriteframe.ToString();
+                        }
+                    }
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // Climb speed
+                    Position += Direction * (PLAYER_SPEED * 0.75f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    break;
+                #endregion
+                #region state stand
+                case EntityState.Stand:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    if (Client_action == "Right")
+                    {
+                        state = EntityState.Walk;
+                        spriteEffect = SpriteEffects.FlipHorizontally;
+                    }
+                    else if (Client_action == "Left")
+                    {
+                        state = EntityState.Walk;
+                        spriteEffect = SpriteEffects.None;
+                    }
+                    else if (Client_action == "Jump")
+                    {
+                        if (!collideNPC)
+                        {
+                            Velocity += new Vector2(0, -1.6f); // Add an upward impulse
+                            state = EntityState.Jump;
+                        }
+                    }
+                    else if (Client_action == "Sit")
+                    {
+                        state = EntityState.Sit;
+                    }
+                    else if (Client_action == "Up")
+                    {
+                        if (this.collideLadder)
+                            state = EntityState.Ladder;
+                        else if (this.collideRope)
+                            state = EntityState.Rope;
+                    }
+
+                    // Check if monster is steady standing
+                    if (Position.Y > OldPosition.Y && collideSlope == false)
+                        state = EntityState.Falling;
+                    
+                    // Apply Gravity
+                    Position += new Vector2(0, 1) * PLAYER_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    
+                    break;
+                #endregion
+                #region state walk
+                case EntityState.Walk:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+                    Velocity = Vector2.Zero;
+
+                    if (spriteEffect == SpriteEffects.FlipHorizontally)
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.X = MOVE_RIGHT;
+                        this.Speed = PLAYER_SPEED;
+                    }
+                    else if (spriteEffect == SpriteEffects.None)
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.X = MOVE_LEFT;
+                        this.Speed = PLAYER_SPEED;
+                    }
+
+                    if (Client_action == "Stop")
+                    {
+                        state = EntityState.Stand;
+                    }
+                    else if (Client_action == "Jump")
+                    {
+                        if (!collideNPC)
+                        {
+                            Velocity += new Vector2(0, -1.6f); // Add an upward impulse
+                            state = EntityState.Jump;
+                        }
+                    }
+
+                    // Check if monster is steady standing
+                    if (Position.Y > OldPosition.Y && collideSlope == false)
+                        state = EntityState.Falling;
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // Walk speed
+                    Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    
+                    // Apply Gravity 
+                    Position += new Vector2(0, 1) * PLAYER_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    break;
+                #endregion
+                #region state jump
+                case EntityState.Jump:
+
+                    if (previousState != this.state)
+                        Velocity = new Vector2(0, -1.5f);
+                    else
+                        Velocity.Y += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (Client_action == "Left")
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.X += MOVE_LEFT * 0.1f * ((float)gameTime.ElapsedGameTime.TotalSeconds * 10f);
+                        this.Speed = PLAYER_SPEED;
+
+                        if (this.Direction.X < -1)
+                            this.Direction.X = -1;
+                        else if (this.Direction.X < 0)
+                            this.Direction.X = 0;
+                    }
+                    else if (Client_action == "Right")
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.X += MOVE_RIGHT * 0.1f * ((float)gameTime.ElapsedGameTime.TotalSeconds * 10f);
+                        this.Speed = PLAYER_SPEED;
+
+                        if (this.Direction.X > 1)
+                            this.Direction.X = 1;
+                        else if (this.Direction.X > 0)
+                            this.Direction.X = 0;
+                    }
+                    else if (Client_action == "Down")
+                    {
+                        if (this.collideLadder)
+                            state = EntityState.Ladder;
+                        else if (this.collideRope)
+                            state = EntityState.Rope;
+                        else
+                            state = EntityState.Sit;
+                    }
+                    else if (Client_action == "Up")
+                    {
+                        if (this.collideLadder)
+                            state = EntityState.Ladder;
+                        else if (this.collideRope)
+                            state = EntityState.Rope;
+                    }
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // Apply Gravity + jumping
+                    if (Velocity.Y < -1.2f)
+                    {
+                        // Apply jumping
+                        Position += Velocity * 350 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Apply Gravity 
+                        Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Walk / Jump speed
+                        Position += Direction * (Speed / 2) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+                    else
+                    {
+                        landed = false;
+                        state = EntityState.Falling;
+                    }
+
+                    break;
+                #endregion
+                #region state falling
+                case EntityState.Falling:
+
+                    if (Client_action == "Left")
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.X += MOVE_LEFT * 0.1f * ((float)gameTime.ElapsedGameTime.TotalSeconds * 10f);
+                        this.Speed = PLAYER_SPEED;
+
+                        if (this.Direction.X < -1)
+                            this.Direction.X = -1;
+                        else if (this.Direction.X < 0)
+                            this.Direction.X = 0;
+                    }
+                    else if (Client_action == "Right")
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.X += MOVE_RIGHT * 0.1f * ((float)gameTime.ElapsedGameTime.TotalSeconds * 10f);
+                        this.Speed = PLAYER_SPEED;
+
+                        if (this.Direction.X > 1)
+                            this.Direction.X = 1;
+                        else if (this.Direction.X > 0)
+                            this.Direction.X = 0;
+                    }
+
+                    if (OldPosition.Y < position.Y)
+                    {
+                        // Move the Character
+                        OldPosition = Position;
+
+                        Velocity.Y += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Apply Gravity 
+                        Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Walk / Jump speed
+                        Position += Direction * (Speed / 2) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+                    else
+                    {
+                        // reduce timer
+                        previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        if (previousGameTimeMsec < 0)
+                        {
+                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.02f;
+
+                            if (landed == true)
+                                state = EntityState.Stand;
+                            else
+                                landed = true;
+                        }
+
+                        // Move the Character
+                        OldPosition = Position;
+
+                        // Apply Gravity 
+                        Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Walk / Jump speed
+                        Position += Direction * (Speed / 2) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+
+                    break;
+                #endregion
+                #region state hit
+                case EntityState.Hit:
+
+                    // Add an upward impulse
+                    Velocity = new Vector2(0, -1.5f);
+
+                    // Add an sideward pulse
+                    if (spriteEffect == SpriteEffects.None)
+                        Direction = new Vector2(1.6f, 0);
+                    else
+                        Direction = new Vector2(-1.6f, 0);
+
+                    // Damage controll and balloon is triggered in monster-sprite Class
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // Set new state
+                    state = EntityState.Frozen;
+
+                    break;
+                #endregion
+                #region state frozen
+                case EntityState.Frozen:
+
+                    // Upward Position
+                    Velocity.Y += (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+
+                    // Move the Character
+                    OldPosition = Position;
+
+                    // Apply Gravity + jumping
+                    if (Velocity.Y < -1.2f && OldPosition.Y != Position.Y)
+                    {
+                        // Apply jumping
+                        Position += Velocity * 350 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Apply Gravity 
+                        Position += new Vector2(0, 1) * 250 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        // Walk / Jump speed
+                        Position += Direction * 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+                    else
+                    {
+                        landed = false;
+                        state = EntityState.Falling;
+                        Direction = Vector2.Zero;
+                        Velocity = Vector2.Zero;
+                        this.transperancy = 1;
+                    }
+
+                    break;
+                #endregion
+            }
+
+            if (previousState != State)
+                fromServerToClient();
+            
+            previousState = this.state;
+
+            // reset client actions
+            Client_action = "";
+        }
+
+        public void fromServerToClient()
+        {
+            playerData playerSprite = PlayerStore.Instance.toPlayerData(
+                    PlayerStore.Instance.playerStore.Find(x => x.Name == this.Name));
+
+            Client client = Array.Find(Server.singleton.client, x => x.AccountID == playerSprite.AccountID);
+
+            playerSprite.Action = "Sprite_Update";
+            playerSprite.PositionX = (int)this.Position.X;
+            playerSprite.PositionY = (int)this.Position.Y;
+            playerSprite.spritestate = this.State.ToString();
+
+            Server.singleton.SendObject(playerSprite, client);
+        }
+
+        public void fromClientToServer(playerData player)
+        {
+            Client_action = player.Action;
+        }
+
+        private Color getColor(string colorcode)
+        {
+            string[] values = colorcode.Split(':');
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = values[i].Trim(new char[] { ' ', 'R', 'G', 'B', 'A', '{', '}' });
+            }
+
+            return new Color(
+                Convert.ToInt32(values[1]),
+                Convert.ToInt32(values[2]),
+                Convert.ToInt32(values[3]));
+        }
+
+        private Vector2 getVector(string vectorstr)
+        {
+            string[] values = vectorstr.Split(':');
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                values[i] = values[i].Trim(new char[] { ' ', 'X', 'Y', '{', '}' });
+                values[i] = values[i].Replace('.', '&')
+                                     .Replace(',', '.')
+                                     .Replace('&', ',');
+            }
+
+            return new Vector2(
+                float.Parse(values[1]),
+                float.Parse(values[2]));
+        }
+
+        public static PlayerSprite PlayerToSprite(playerData player)
+        {
+            PlayerSprite sprite = new PlayerSprite
+                (
+                player.Name,
+                player.IP,
+                player.PositionX,
+                player.PositionY,
+                player.spritename,
+                player.spritestate,
+                player.prevspriteframe,
+                player.maxspriteframe,
+                player.attackSprite,
+                player.spriteEffect,
+                player.mapName,
+                player.skincol,
+                player.facespr,
+                player.hairspr,
+                player.hailcol,
+                player.armor,
+                player.headgear,
+                player.weapon
+                );
+
+            return sprite;
+        }
+
+    }
+}
