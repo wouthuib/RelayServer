@@ -57,7 +57,7 @@ namespace RelayServer.Database.Items
                     {
                         if (values[0] != "atkModifier")
                         {
-                            this.addItem(Item.create(Convert.ToInt32(values[0]), values[1], (ItemType)Enum.Parse(typeof(ItemType), values[9])));
+                            this.addItem(Item.create(Convert.ToInt32(values[0]), values[1].Trim(), (ItemType)Enum.Parse(typeof(ItemType), values[9])));
 
                             // Link item to item database
                             Item item = this.getItem(Convert.ToInt32(values[0]));

@@ -10,8 +10,8 @@ namespace RelayServer.ClientObjects
         public int MonsterID { get; set; }
         public string InstanceID { get; set; }
         public string MapName { get; set; }
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
         public int BorderMin { get; set; }
         public int BorderMax { get; set; }
         public string spritestate { get; set; }
@@ -27,8 +27,8 @@ namespace RelayServer.ClientObjects
             MonsterID = (int)info.GetValue("MonsterID", typeof(int));
             InstanceID = (string)info.GetValue("InstanceID", typeof(string));
             MapName = (string)info.GetValue("MapName", typeof(string));
-            PositionX = (int)info.GetValue("PositionX", typeof(int));
-            PositionY = (int)info.GetValue("PositionY", typeof(int));
+            PositionX = (float)info.GetValue("PositionX", typeof(float));
+            PositionY = (float)info.GetValue("PositionY", typeof(float));
             BorderMin = (int)info.GetValue("BorderMin", typeof(int));
             BorderMax = (int)info.GetValue("BorderMax", typeof(int));
             spritestate = (string)info.GetValue("spritestate", typeof(string));

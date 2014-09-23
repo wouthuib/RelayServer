@@ -15,8 +15,8 @@ namespace RelayServer.ClientObjects
         public long AccountID { get; set; }
         public long CharacterID { get; set; }
         public string Action { get; set; }
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
         public string spritename { get; set; }
         public string spritestate { get; set; }
         public string direction { get; set; }
@@ -44,8 +44,8 @@ namespace RelayServer.ClientObjects
             AccountID = (long)info.GetValue("AccountID", typeof(long));
             CharacterID = (long)info.GetValue("CharacterID", typeof(long));
             Action = (string)info.GetValue("Action", typeof(string));
-            PositionX = (int)info.GetValue("PositionX", typeof(int));
-            PositionX = (int)info.GetValue("PositionY", typeof(int));
+            PositionX = (float)info.GetValue("PositionX", typeof(float));
+            PositionX = (float)info.GetValue("PositionY", typeof(float));
             spritename = (string)info.GetValue("spritename", typeof(string));
             spritestate = (string)info.GetValue("spritestate", typeof(string));
             direction = (string)info.GetValue("direction", typeof(string));

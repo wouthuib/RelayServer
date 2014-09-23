@@ -80,12 +80,6 @@ namespace RelayServer
             {
                 connected = false;
 
-                foreach (var player in PlayerStore.Instance.playerStore.FindAll(x => x.AccountID == AccountID))
-                {
-                    player.Online = false;
-                    SendObject(new playerData(){ Name = player.Name, Action = "Remove"});
-                }
-
                 client.Close();
 
                 //Call all delegates
@@ -210,6 +204,16 @@ namespace RelayServer
                     else if (obj is AccountData)
                     {
                         xmlSerializer = new XmlSerializer(typeof(AccountData));
+                        getobject = true;
+                    }
+                    else if (obj is EffectData)
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(EffectData));
+                        getobject = true;
+                    }
+                    else if (obj is ChatData)
+                    {
+                        xmlSerializer = new XmlSerializer(typeof(ChatData));
                         getobject = true;
                     }
                     else if (obj is PlayerInfo)

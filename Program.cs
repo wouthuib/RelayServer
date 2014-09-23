@@ -36,7 +36,7 @@ namespace RelayServer
                     }
                 }
 
-                while (true) { Thread.Sleep(1000); }
+                //while (true) { Thread.Sleep(100); }
             }
             catch (Exception e)
             {

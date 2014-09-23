@@ -9,7 +9,7 @@
         <Item>
           <list_offsets />
           <itemID>2301</itemID>
-          <itemName> Beginner Clothes</itemName>
+          <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
           <ATK>0</ATK>
           <Magic>0</Magic>
@@ -27,7 +27,7 @@
         <Item>
           <list_offsets />
           <itemID>1200</itemID>
-          <itemName> Knife</itemName>
+          <itemName>Knife</itemName>
           <DEF>0</DEF>
           <ATK>17</ATK>
           <Magic>0</Magic>
@@ -168,7 +168,7 @@
         <Item>
           <list_offsets />
           <itemID>2301</itemID>
-          <itemName> Beginner Clothes</itemName>
+          <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
           <ATK>0</ATK>
           <Magic>0</Magic>
@@ -186,7 +186,7 @@
         <Item>
           <list_offsets />
           <itemID>1200</itemID>
-          <itemName> Knife</itemName>
+          <itemName>Knife</itemName>
           <DEF>0</DEF>
           <ATK>17</ATK>
           <Magic>0</Magic>
@@ -327,7 +327,7 @@
         <Item>
           <list_offsets />
           <itemID>2301</itemID>
-          <itemName> Beginner Clothes</itemName>
+          <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
           <ATK>0</ATK>
           <Magic>0</Magic>
@@ -345,7 +345,7 @@
         <Item>
           <list_offsets />
           <itemID>1200</itemID>
-          <itemName> Knife</itemName>
+          <itemName>Knife</itemName>
           <DEF>0</DEF>
           <ATK>17</ATK>
           <Magic>0</Magic>

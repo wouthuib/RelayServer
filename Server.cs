@@ -124,14 +124,20 @@ namespace RelayServer
                 SendData(GetDataFromMemoryStream(writeStream), user);
             }
 
-            //Print the removed player message to the server window.
-            //OutputManager.WriteLine("Player: " + PlayerStore.Instance.playerStore.Find(p => p.AccountID == user.AccountID).Name +
-            //                        "\t IP: " + user.ToString() + " disconnected\tConnected Clients:  " + connectedClients + "\n");
-            
             // Set player offline
             if (PlayerStore.Instance.playerStore.FindAll(p => p.AccountID == user.AccountID).Count > 0)
                 foreach (var player in PlayerStore.Instance.playerStore.Where(p => p.AccountID == user.AccountID))
+                {
                     player.Online = false;
+                    SendObject(new playerData() { Name = player.Name, Action = "Remove" });
+                    
+                    //remove existing sprites on server
+                    if (GameWorld.Instance.listEntity.FindAll(s => s.EntityName == player.Name).Count > 0)
+                        foreach (var sprite in GameWorld.Instance.listEntity.Where(s => s.EntityName == player.Name))
+                        {
+                            sprite.KeepAliveTime = 0;
+                        }
+                }
 
             //Clear the array's index
             client[user.id] = null;
@@ -340,7 +346,7 @@ namespace RelayServer
                                     sprite.fromClientToServer(player); // update server
                                 }
 
-                                SendObject(player);
+                                //SendObject(player);
                             }
                         }
                     }

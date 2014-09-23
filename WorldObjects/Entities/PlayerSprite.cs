@@ -5,6 +5,7 @@ using RelayServer.Database.Players;
 using RelayServer.ClientObjects;
 using System.Collections.Generic;
 using RelayServer.Database.Items;
+using RelayServer.WorldObjects.Structures;
 
 namespace RelayServer.WorldObjects.Entities
 {
@@ -15,8 +16,9 @@ namespace RelayServer.WorldObjects.Entities
         public string Name;
         private Vector2 previousPosition;
         private float previousGameTimeMsec;
+        private float displayTimer = 0;
 
-        private const int PLAYER_SPEED = 215;                                                     // The network player is a bit slower
+        private const int PLAYER_SPEED = 200;                                                     // The network player is a bit slower
         private const int ANIMATION_SPEED = 120;                                                  // Animation speed, 120 = default 
         private const int MOVE_UP = -1;                                                           // player moving directions
         private const int MOVE_DOWN = 1;                                                          // player moving directions
@@ -66,8 +68,8 @@ namespace RelayServer.WorldObjects.Entities
         public PlayerSprite(
             string name,
             string ip,
-            int positionX,
-            int positionY,
+            float positionX,
+            float positionY,
             string _spritename,
             string _spritestate,
             int _prevspriteframe,
@@ -312,58 +314,26 @@ namespace RelayServer.WorldObjects.Entities
                 #region state Rope
                 case EntityState.Rope:
 
-                    Speed = 0;
+                   Speed = 0;
                     Direction = Vector2.Zero;
                     Velocity = Vector2.Zero;
                     spriteEffect = SpriteEffects.None;
 
-                    if (previousPosition.Y < position.Y)
+                    // double check collision
+                    if (this.collideRope == false)
+                        this.state = EntityState.Falling;
+
+                    if (Client_action == "Down")
                     {
                         // move player location (make ActiveMap tile check here in the future)
                         this.Direction.Y = MOVE_DOWN;
                         this.Speed = PLAYER_SPEED * 0.75f;
-
-                        // reduce timer
-                        previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                        if (previousGameTimeMsec < 0)
-                        {
-                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
-                            spriteframe++;
-                        }
-
-                        // double check frame if previous state has higher X
-                        if (spriteframe > 1)
-                            spriteframe = 0;
                     }
-                    else if (previousPosition.Y > position.Y)
+                    else if (Client_action == "Up")
                     {
                         // move player location (make ActiveMap tile check here in the future)
                         this.Direction.Y = MOVE_UP;
                         this.Speed = PLAYER_SPEED * 0.75f;
-
-                        // reduce timer
-                        previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                        if (previousGameTimeMsec < 0)
-                        {
-                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
-                            spriteframe++;
-                        }
-
-                        // double check frame if previous state has higher X
-                        if (spriteframe > 1)
-                            spriteframe = 0;
-                    }
-
-                    // Player animation
-                    if (prevspriteframe != spriteframe)
-                    {
-                        prevspriteframe = spriteframe;
-                        for (int i = 0; i < spritepath.Length; i++)
-                        {
-                            spritename = "rope_" + spriteframe.ToString();
-                        }
                     }
 
                     // Move the Character
@@ -377,34 +347,33 @@ namespace RelayServer.WorldObjects.Entities
                 #region state Ladder
                 case EntityState.Ladder:
 
+                    Speed = 0;
+                    Direction = Vector2.Zero;
                     Velocity = Vector2.Zero;
                     spriteEffect = SpriteEffects.None;
 
-                    if (Position.Y != previousPosition.Y)
+                    // double check collision
+                    if (this.collideLadder == false)
+                        this.state = EntityState.Falling;
+
+                    if (Client_action == "Down")
                     {
-                        spriteframe++;
-
-                        // double check frame if previous state has higher X
-
-                        if (spriteframe > 1)
-                            spriteframe = 0;
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.Y = MOVE_DOWN;
+                        this.Speed = PLAYER_SPEED * 0.75f;
                     }
-
-                    // Player animation
-                    if (prevspriteframe != spriteframe || !spritename.StartsWith("ladder_"))
+                    else if (Client_action == "Up")
                     {
-                        prevspriteframe = spriteframe;
-                        for (int i = 0; i < spritepath.Length; i++)
-                        {
-                            spritename = "ladder_" + spriteframe.ToString();
-                        }
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.Y = MOVE_UP;
+                        this.Speed = PLAYER_SPEED * 0.75f;
                     }
 
                     // Move the Character
                     OldPosition = Position;
 
                     // Climb speed
-                    Position += Direction * (PLAYER_SPEED * 0.75f) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     break;
                 #endregion
@@ -697,8 +666,19 @@ namespace RelayServer.WorldObjects.Entities
                 #endregion
             }
 
-            if (previousState != State)
+            if (previousState != State || previousDirection != Direction)
                 fromServerToClient();
+
+            // Timebased Server update, to avoid lag
+            displayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (displayTimer <= 0)
+            {
+                displayTimer = (float)gameTime.ElapsedGameTime.TotalSeconds + 1;
+
+                if(state == EntityState.Walk)
+                    fromServerToClient();
+            }
             
             previousState = this.state;
 
@@ -711,19 +691,55 @@ namespace RelayServer.WorldObjects.Entities
             playerData playerSprite = PlayerStore.Instance.toPlayerData(
                     PlayerStore.Instance.playerStore.Find(x => x.Name == this.Name));
 
+            // sometimes dumps in next array.find statement
+            // due to logged of client and remaining sprite ... to be investigate
             Client client = Array.Find(Server.singleton.client, x => x.AccountID == playerSprite.AccountID);
 
             playerSprite.Action = "Sprite_Update";
-            playerSprite.PositionX = (int)this.Position.X;
-            playerSprite.PositionY = (int)this.Position.Y;
-            playerSprite.spritestate = this.State.ToString();
 
-            Server.singleton.SendObject(playerSprite, client);
+            playerSprite.PositionX = (float)this.Position.X;
+            playerSprite.PositionY = (float)this.Position.Y;
+            playerSprite.spritestate = this.State.ToString();
+            playerSprite.mapName = this.mapName.ToString();
+
+            playerSprite.prevspriteframe = this.prevspriteframe;
+            playerSprite.maxspriteframe = this.maxspriteframe;
+            playerSprite.attackSprite = this.attackSprite;
+            playerSprite.spriteEffect = this.spriteEffect.ToString();
+            playerSprite.direction = this.Direction.ToString();
+
+            playerSprite.skincol = this.Player.skin_color.ToString();
+            playerSprite.hailcol = this.Player.hair_color.ToString();
+            playerSprite.facespr = this.Player.faceset_sprite.ToString();
+            playerSprite.hairspr = this.Player.hair_sprite.ToString();
+
+            playerSprite.armor = this.armor_name;
+            playerSprite.headgear = this.headgear_name;
+            playerSprite.weapon = this.weapon_name;
+
+            Server.singleton.SendObject(playerSprite);
         }
 
         public void fromClientToServer(playerData player)
         {
             Client_action = player.Action;
+            
+            prevspriteframe = player.prevspriteframe;
+            maxspriteframe = player.maxspriteframe;
+            attackSprite = player.attackSprite;
+            spriteEffect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), player.spriteEffect);
+            MapName = player.mapName;
+            state = (EntityState)Enum.Parse(typeof(EntityState), player.spritestate);
+            Direction = getVector(player.direction);
+
+            this.Player.skin_color = getColor(player.skincol);
+            this.Player.faceset_sprite = player.facespr;
+            this.Player.hair_sprite = player.hairspr;
+            this.Player.hair_color = getColor(player.hailcol);
+
+            this.armor_name = player.armor;
+            this.headgear_name = player.headgear;
+            this.weapon_name = player.weapon;
         }
 
         private Color getColor(string colorcode)

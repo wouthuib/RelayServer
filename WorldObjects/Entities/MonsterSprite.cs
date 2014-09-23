@@ -374,8 +374,8 @@ namespace RelayServer.WorldObjects.Entities
                 MonsterID = this.MonsterID,
                 InstanceID = (string)this.InstanceID.ToString(),
                 MapName = (string)this.MapName,
-                PositionX = (int)this.Position.X,
-                PositionY = (int)this.Position.Y,
+                PositionX = (float)this.Position.X,
+                PositionY = (float)this.Position.Y,
                 BorderMin = (int)this.Borders.Min,
                 BorderMax = (int)this.Borders.Max,
                 spritestate = (string)this.State.ToString(),
@@ -437,11 +437,16 @@ namespace RelayServer.WorldObjects.Entities
                                     sprite.fromServerToClient();
                                 }
 
-                                //world.newEffect.Add(new DamageBaloon(
-                                //    ResourceManager.GetInstance.Content.Load<Texture2D>(@"gfx\effects\damage_counter2"),
-                                //    new Vector2((player.Position.X + player.SpriteFrame.Width * 0.45f) - damage.ToString().Length * 5,
-                                //                 player.Position.Y + player.SpriteFrame.Height * 0.20f),
-                                //        damage));
+                                EffectData effect = new EffectData
+                                {
+                                    Name = "DamageBaloon",
+                                    Path = @"gfx\effects\damage_counter2",
+                                    PositionX = (int)((sprite.Position.X + sprite.SpriteFrame.Width * 0.45f) - damage.ToString().Length * 5),
+                                    PositionY = (int)(player.Position.Y + sprite.SpriteFrame.Height * 0.20f),
+                                    Value_01 = damage
+                                };
+
+                                Server.singleton.SendObject(effect);
                             }
                         }
                     }

@@ -16,6 +16,7 @@ namespace RelayServer.ClientObjects
         public int PositionY { get; set; }
         public string PlayerLockName { get; set; }
         public string InstanceLockName { get; set; }
+        public int Value_01 { get; set; }
 
         public EffectData() { }
 
@@ -32,6 +33,7 @@ namespace RelayServer.ClientObjects
             PositionX = (int)info.GetValue("PositionY", typeof(int));
             PlayerLockName = (string)info.GetValue("PlayerLockName", typeof(string));
             InstanceLockName = (string)info.GetValue("InstanceLockName", typeof(string));
+            Value_01 = (int)info.GetValue("Value_01", typeof(int));
         }
 
         [SecurityPermissionAttribute(SecurityAction.LinkDemand,
@@ -48,6 +50,7 @@ namespace RelayServer.ClientObjects
             info.AddValue("PositionY", PositionY);
             info.AddValue("PlayerLockName", PlayerLockName);
             info.AddValue("InstanceLockName", InstanceLockName);
+            info.AddValue("Value_01", Value_01);
         }
     }
 }
