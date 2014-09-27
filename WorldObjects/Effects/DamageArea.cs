@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RelayServer.WorldObjects.Entities;
+using RelayServer.ClientObjects;
+using RelayServer.Database.Players;
+using RelayServer.WorldObjects.Structures;
 
 namespace RelayServer.WorldObjects.Effects
 {
@@ -66,8 +69,12 @@ namespace RelayServer.WorldObjects.Effects
                    )
                 {
                     MonsterSprite monster = entity as MonsterSprite;
+                    PlayerInfo player = null;
 
-                    if (monster != null)
+                    if (PlayerStore.Instance.playerStore.FindAll(x => x.Name == Owner).Count > 0)
+                        player = PlayerStore.Instance.playerStore.Find(x => x.Name == Owner);
+
+                    if (monster != null && player != null)
 
                         if (monster.SpriteBoundries.Intersects(
                             new Rectangle(
@@ -88,23 +95,37 @@ namespace RelayServer.WorldObjects.Effects
                                     KeepAliveTimer = 0;
 
                                 // Start damage controll
-                                // int damage = (int)Battle.battle_calc_damage(PlayerStore.Instance.activePlayer, (MonsterSprite)monster, DamagePercent);
-                                // monster.HP -= damage;
+                                int damage = (int)Battle.battle_calc_damage(player, (MonsterSprite)monster, DamagePercent);
+                                monster.HP -= damage;
 
                                 // start skill hit effect
                                 if (this.hiteffect)
                                 {
-                                    //GameWorld.Instance.newEffect.Add(new WeaponHitEffect(this.hitsprpath, monster.Position, this.hitsprframes));
-
                                     // send effect to clients
+                                    EffectData effect = new EffectData
+                                    {
+                                        Name = "DamageEffect",
+                                        Path = hitsprpath,
+                                        PositionX = (int)(monster.Position.X),
+                                        PositionY = (int)(monster.Position.Y)
+                                    };
+
+                                    Server.singleton.SendObject(effect);
                                 }
 
                                 // create damage balloon
-                                //GameWorld.GetInstance.newEffect.Add(new DamageBaloon(
-                                //        ResourceManager.GetInstance.Content.Load<Texture2D>(@"gfx\effects\damage_counter1"),
-                                //        new Vector2((monster.Position.X + monster.SpriteFrame.Width * 0.45f) - damage.ToString().Length * 5,
-                                //        monster.Position.Y + monster.SpriteFrame.Height * 0.20f), damage));
+                                EffectData baloon = new EffectData
+                                {
+                                    Name = "DamageBaloon",
+                                    Path = @"gfx\effects\damage_counter1",
+                                    PositionX = (int)((monster.Position.X + monster.SpriteFrame.Width * 0.45f) - damage.ToString().Length * 5),
+                                    PositionY = (int)(monster.Position.Y + monster.SpriteFrame.Height * 0.20f),
+                                    Value_01 = damage
+                                };
 
+                                Server.singleton.SendObject(baloon);
+
+                                // change monster hit
                                 monster.State = EntityState.Hit;
                             }
                         }

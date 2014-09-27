@@ -9,6 +9,7 @@ namespace RelayServer.ClientObjects
     {
         public int MonsterID { get; set; }
         public string InstanceID { get; set; }
+        public string Action { get; set; }
         public string MapName { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
@@ -26,6 +27,7 @@ namespace RelayServer.ClientObjects
                 throw new System.ArgumentNullException("info");
             MonsterID = (int)info.GetValue("MonsterID", typeof(int));
             InstanceID = (string)info.GetValue("InstanceID", typeof(string));
+            Action = (string)info.GetValue("Action", typeof(string));
             MapName = (string)info.GetValue("MapName", typeof(string));
             PositionX = (float)info.GetValue("PositionX", typeof(float));
             PositionY = (float)info.GetValue("PositionY", typeof(float));
@@ -44,6 +46,7 @@ namespace RelayServer.ClientObjects
                 throw new System.ArgumentNullException("info");
             info.AddValue("MonsterID", MonsterID);
             info.AddValue("InstanceID", InstanceID);
+            info.AddValue("Action", Action);
             info.AddValue("MapName", MapName);
             info.AddValue("PositionX", PositionX);
             info.AddValue("PositionY", PositionY);

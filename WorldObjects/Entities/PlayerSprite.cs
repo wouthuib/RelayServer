@@ -18,12 +18,12 @@ namespace RelayServer.WorldObjects.Entities
         private float previousGameTimeMsec;
         private float displayTimer = 0;
 
-        private const int PLAYER_SPEED = 200;                                                     // The network player is a bit slower
-        private const int ANIMATION_SPEED = 120;                                                  // Animation speed, 120 = default 
-        private const int MOVE_UP = -1;                                                           // player moving directions
-        private const int MOVE_DOWN = 1;                                                          // player moving directions
-        private const int MOVE_LEFT = -1;                                                         // player moving directions
-        private const int MOVE_RIGHT = 1;                                                         // player moving directions
+        private const int PLAYER_SPEED = 200;                                                       // The network player is a bit slower
+        private const int ANIMATION_SPEED = 120;                                                    // Animation speed, 120 = default 
+        private const int MOVE_UP = -1;                                                             // player moving directions
+        private const int MOVE_DOWN = 1;                                                            // player moving directions
+        private const int MOVE_LEFT = -1;                                                           // player moving directions
+        private const int MOVE_RIGHT = 1;                                                           // player moving directions
 
         private string
             armor_name,                 // Armor and Costume Sprite (4)
@@ -33,10 +33,11 @@ namespace RelayServer.WorldObjects.Entities
             weapon_name;                // Weapon Sprite (8)
             //hands_name;                 // Hands Sprite (9)        
 
-        public Vector2 Direction, previousDirection;                                              // Sprite Move direction
-        protected float Speed;                                                                    // Speed used in functions
-        protected Vector2 Velocity = new Vector2(0, 1);                                           // speed used in jump
-        protected bool landed = false;
+        public Vector2 Direction, previousDirection;                                                // Sprite Move direction
+        protected float Speed;                                                                      // Speed used in functions
+        protected Vector2 Velocity = new Vector2(0, 1);                                             // speed used in jump
+        protected bool landed = false;                                                              // landed sprite
+        protected Vector2 Climbing;
 
         // Player properties
         public SpriteEffects spriteEffect = SpriteEffects.None,
@@ -314,26 +315,30 @@ namespace RelayServer.WorldObjects.Entities
                 #region state Rope
                 case EntityState.Rope:
 
-                   Speed = 0;
-                    Direction = Vector2.Zero;
                     Velocity = Vector2.Zero;
                     spriteEffect = SpriteEffects.None;
 
                     // double check collision
-                    if (this.collideRope == false)
+                    if (this.collideLadder == false)
                         this.state = EntityState.Falling;
 
                     if (Client_action == "Down")
                     {
                         // move player location (make ActiveMap tile check here in the future)
                         this.Direction.Y = MOVE_DOWN;
-                        this.Speed = PLAYER_SPEED * 0.75f;
+                        this.Speed = PLAYER_SPEED * 0.80f;
                     }
                     else if (Client_action == "Up")
                     {
                         // move player location (make ActiveMap tile check here in the future)
                         this.Direction.Y = MOVE_UP;
-                        this.Speed = PLAYER_SPEED * 0.75f;
+                        this.Speed = PLAYER_SPEED * 0.80f;
+                    }
+                    else if (Client_action == "Stop")
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.Y = 0;
+                        this.Speed = 0;
                     }
 
                     // Move the Character
@@ -347,8 +352,6 @@ namespace RelayServer.WorldObjects.Entities
                 #region state Ladder
                 case EntityState.Ladder:
 
-                    Speed = 0;
-                    Direction = Vector2.Zero;
                     Velocity = Vector2.Zero;
                     spriteEffect = SpriteEffects.None;
 
@@ -360,13 +363,19 @@ namespace RelayServer.WorldObjects.Entities
                     {
                         // move player location (make ActiveMap tile check here in the future)
                         this.Direction.Y = MOVE_DOWN;
-                        this.Speed = PLAYER_SPEED * 0.75f;
+                        this.Speed = PLAYER_SPEED * 0.80f;
                     }
                     else if (Client_action == "Up")
                     {
                         // move player location (make ActiveMap tile check here in the future)
                         this.Direction.Y = MOVE_UP;
-                        this.Speed = PLAYER_SPEED * 0.75f;
+                        this.Speed = PLAYER_SPEED * 0.80f;
+                    }
+                    else if (Client_action == "Stop")
+                    {
+                        // move player location (make ActiveMap tile check here in the future)
+                        this.Direction.Y = 0;
+                        this.Speed = 0;
                     }
 
                     // Move the Character
@@ -412,17 +421,28 @@ namespace RelayServer.WorldObjects.Entities
                     else if (Client_action == "Up")
                     {
                         if (this.collideLadder)
+                        {
                             state = EntityState.Ladder;
+                            this.Direction.Y = MOVE_UP;
+                            this.Speed = PLAYER_SPEED * 0.80f;
+                        }
                         else if (this.collideRope)
+                        {
                             state = EntityState.Rope;
-                    }
-
-                    // Check if monster is steady standing
-                    if (Position.Y > OldPosition.Y && collideSlope == false)
-                        state = EntityState.Falling;
+                            this.Direction.Y = MOVE_UP;
+                            this.Speed = PLAYER_SPEED * 0.80f;
+                        }
+                    }                                                         
                     
-                    // Apply Gravity
-                    Position += new Vector2(0, 1) * PLAYER_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (state != EntityState.Ladder && state != EntityState.Rope)
+                    {
+                        // Check if player is steady standing
+                        if (Position.Y > OldPosition.Y && collideSlope == false)
+                            state = EntityState.Falling;
+
+                        // Apply Gravity
+                        Position += new Vector2(0, 1) * PLAYER_SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
                     
                     break;
                 #endregion
@@ -667,7 +687,9 @@ namespace RelayServer.WorldObjects.Entities
             }
 
             if (previousState != State || previousDirection != Direction)
+            {
                 fromServerToClient();
+            }
 
             // Timebased Server update, to avoid lag
             displayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -676,11 +698,11 @@ namespace RelayServer.WorldObjects.Entities
             {
                 displayTimer = (float)gameTime.ElapsedGameTime.TotalSeconds + 1;
 
-                if(state == EntityState.Walk)
+                if (state == EntityState.Walk || 
+                    state == EntityState.Ladder || 
+                    state == EntityState.Rope)
                     fromServerToClient();
             }
-            
-            previousState = this.state;
 
             // reset client actions
             Client_action = "";
@@ -729,8 +751,8 @@ namespace RelayServer.WorldObjects.Entities
             attackSprite = player.attackSprite;
             spriteEffect = (SpriteEffects)Enum.Parse(typeof(SpriteEffects), player.spriteEffect);
             MapName = player.mapName;
-            state = (EntityState)Enum.Parse(typeof(EntityState), player.spritestate);
-            Direction = getVector(player.direction);
+            //state = (EntityState)Enum.Parse(typeof(EntityState), player.spritestate);
+            //Direction = getVector(player.direction);
 
             this.Player.skin_color = getColor(player.skincol);
             this.Player.faceset_sprite = player.facespr;

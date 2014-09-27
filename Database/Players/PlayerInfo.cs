@@ -379,7 +379,7 @@ namespace RelayServer.Database.Players
             this.NextLevelExp = (int)(Level ^ 4 + (1000 * Level));
             this.Strength = 10;
             this.Dexterity = 10;
-            this.Luck = 1;
+            this.Luck = 10;
             this.Agility = 10;
 
             this.Skillpoints = 20;

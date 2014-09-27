@@ -19,7 +19,8 @@ namespace RelayServer.WorldObjects.Structures
 
             int finalDamage = 0,
                 bDamage = 0,
-                wDamage = 0;
+                wDamage = 0,
+                luck = 0;
 
             int dodgerate = 100 - (playerinfo.HIT - monsterinfo.FLEE);
 
@@ -27,7 +28,8 @@ namespace RelayServer.WorldObjects.Structures
             {
                 bDamage = (playerinfo.ATK * 2) - monsterinfo.DEF;
                 wDamage = playerinfo.WeaponATK - monsterinfo.DEF;
-                finalDamage = (int)((bDamage + wDamage) * (percent * 0.01f) * (WeaponPenalty(Weapon, monsterinfo) * 0.01f));
+                luck = Randomizer.generateRandom(0, playerinfo.Luck);
+                finalDamage = (int)((bDamage + wDamage) * (percent * 0.01f) * (WeaponPenalty(Weapon, monsterinfo) * 0.01f) + luck);
             }
             else
                 finalDamage = 0;
@@ -59,7 +61,10 @@ namespace RelayServer.WorldObjects.Structures
             if (finalDamage < 0)
                 return 0;
             else
+            {
+                finalDamage += Randomizer.generateRandom(0, 10); // static luck 
                 return finalDamage;
+            }
         }
 
         // size penalty weapons

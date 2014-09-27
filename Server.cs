@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using System.Security.Cryptography;
-using System.Runtime.Serialization.Formatters.Binary;
 using RelayServer.ClientObjects;
 using System.Xml.Serialization;
-using System.Xml;
 using System.Xml.Linq;
 using RelayServer.WorldObjects.Structures;
 using RelayServer.WorldObjects;
@@ -16,8 +12,6 @@ using RelayServer.WorldObjects.Effects;
 using Microsoft.Xna.Framework;
 using RelayServer.Database.Accounts;
 using RelayServer.Database.Players;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RelayServer
 {
@@ -25,6 +19,9 @@ namespace RelayServer
     {
         //Singleton in case we need to access this object without a reference (call <Class_Name>.singleton)
         public static Server singleton;
+
+        //Encryption Enabled
+        public bool encryption = false;
 
         //Create an object of the Listener class.
         Listener listener;

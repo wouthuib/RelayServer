@@ -53,7 +53,8 @@ namespace RelayServer.WorldObjects.Entities
               previousDiedTimeSec,                                                                  // IdleTime in Seconds
               previousSpawnTimeSec,                                                                 // IdleTime in Seconds
               previousAttackTimeSec = 0,                                                            // IdleTime in Seconds
-              currentAttackTimeSec = 0;                                                             // IdleTime in Seconds
+              currentAttackTimeSec = 0,                                                             // IdleTime in Seconds
+              previousClientUpdate = 0;                                                             // Network Updates in Seconds
 
         #endregion
 
@@ -108,6 +109,9 @@ namespace RelayServer.WorldObjects.Entities
             Direction = new Vector2();                                                              // Move direction
             state = EntityState.Spawn;                                                              // Player state
             Borders = new Border(borders.X, borders.Y);                                             // Max Tiles from center
+
+            // Send new monster to clients
+            sendtoClient();
         }
 
         #region update
@@ -120,9 +124,7 @@ namespace RelayServer.WorldObjects.Entities
                 update_movement(gameTime);
                 update_animation(gameTime);
                 update_collision(gameTime);
-
-                if (previousState != state)
-                    sendtoClient();
+                update_network(gameTime);
             }
         }
 
@@ -322,12 +324,8 @@ namespace RelayServer.WorldObjects.Entities
                     // removing counter
                     if (previousDiedTimeSec <= 0)
                     {
-                        // link to world
-                        if (world == null)
-                            world = GameWorld.Instance;
-
                         // respawn a new monster
-                        world.newEntity.Add(new MonsterSprite(
+                        GameWorld.Instance.newEntity.Add(new MonsterSprite(
                                     MonsterID,
                                     MapName,
                                     resp_pos,
@@ -336,6 +334,9 @@ namespace RelayServer.WorldObjects.Entities
 
                         // remove monster from map
                         this.keepAliveTime = 0;
+
+                        // remove from clients
+                        this.sendtoClient("Died");
                     }
                     break;
                 #endregion
@@ -364,6 +365,24 @@ namespace RelayServer.WorldObjects.Entities
 
                     break;
                 #endregion
+            }            
+        }
+
+        private void update_network(GameTime gameTime)
+        {
+            // if state changes
+            if (previousState != state)
+                sendtoClient();
+
+            // Timebased Server update, to avoid lag
+            previousClientUpdate -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (previousClientUpdate <= 0)
+            {
+                previousClientUpdate = (float)gameTime.ElapsedGameTime.TotalSeconds + 1;
+
+                if (state == EntityState.Walk)
+                    sendtoClient("Sprite_Update");
             }
         }
 
@@ -386,7 +405,25 @@ namespace RelayServer.WorldObjects.Entities
                 Server.singleton.SendObject(p); // to all
             else
                 Server.singleton.SendObject(p, user); // to one user
+        }
 
+        public void sendtoClient(string action)
+        {
+            MonsterData p = new MonsterData()
+            {
+                MonsterID = this.MonsterID,
+                InstanceID = (string)this.InstanceID.ToString(),
+                Action = action,
+                MapName = (string)this.MapName,
+                PositionX = (float)this.Position.X,
+                PositionY = (float)this.Position.Y,
+                BorderMin = (int)this.Borders.Min,
+                BorderMax = (int)this.Borders.Max,
+                spritestate = (string)this.State.ToString(),
+                spriteEffect = (string)this.spriteEffect.ToString(),
+            };
+
+            Server.singleton.SendObject(p);
         }
 
         private void update_collision(GameTime gameTime)

@@ -157,7 +157,7 @@
     <Vitality>0</Vitality>
     <Intelligence>0</Intelligence>
     <Dexterity>10</Dexterity>
-    <Luck>1</Luck>
+    <Luck>10</Luck>
   </PlayerInfo>
   <PlayerInfo>
     <AccountID>1000000</AccountID>
@@ -316,7 +316,7 @@
     <Vitality>0</Vitality>
     <Intelligence>0</Intelligence>
     <Dexterity>10</Dexterity>
-    <Luck>1</Luck>
+    <Luck>10</Luck>
   </PlayerInfo>
   <PlayerInfo>
     <AccountID>1000001</AccountID>
@@ -475,6 +475,6 @@
     <Vitality>0</Vitality>
     <Intelligence>0</Intelligence>
     <Dexterity>10</Dexterity>
-    <Luck>1</Luck>
+    <Luck>10</Luck>
   </PlayerInfo>
 </ArrayOfPlayerInfo>
