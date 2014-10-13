@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using System.IO;
-using RelayServer.ClientObjects;
 using System.Xml.Serialization;
 using System.Xml.Linq;
 using RelayServer.WorldObjects.Structures;
@@ -12,6 +11,10 @@ using RelayServer.WorldObjects.Effects;
 using Microsoft.Xna.Framework;
 using RelayServer.Database.Accounts;
 using RelayServer.Database.Players;
+using RelayServer.Static;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using MapleLibrary;
 
 namespace RelayServer
 {
@@ -19,6 +22,7 @@ namespace RelayServer
     {
         //Singleton in case we need to access this object without a reference (call <Class_Name>.singleton)
         public static Server singleton;
+        private Object thisLock = new Object();
 
         //Encryption Enabled
         public bool encryption = false;
@@ -157,10 +161,15 @@ namespace RelayServer
                 data = CombineData(data, writeStream);
             }
 
-            if (sender.Autenticated)
-                ReadUserData(data, sender);
-            else
-                ReadAccountData(data, sender);
+            if (data.Length > 100)
+            {
+                if (sender.Autenticated)
+                    lock (thisLock)
+                        ReadUserData(data, sender);
+                else
+                    lock (thisLock)
+                        ReadAccountDataStream(data, sender);
+            }
 
             //If we want the original sender to receive the same message it sent, we call a different method
             //if (Properties.Settings.Default.SendBackToOriginalClient)
@@ -270,7 +279,7 @@ namespace RelayServer
             foreach (Client c in client)
             {
                 if (c != null)
-                    c.SendObject(obj);
+                    c.SendObjectStream(obj);
             }
 
             //Reset the writestream's position
@@ -284,7 +293,7 @@ namespace RelayServer
         public void SendObject(Object obj, Client user)
         {
             if (user != null)
-                client[user.id].SendObject(obj);
+                client[user.id].SendObjectStream(obj);
 
             //Reset the writestream's position
             // writeStream.Position = 0;
@@ -297,23 +306,29 @@ namespace RelayServer
         private void ReadUserData(byte[] byteArray, Client sender)
         {
             //message has successfully been received
-            ASCIIEncoding encoder = new ASCIIEncoding();
-            System.Diagnostics.Debug.WriteLine(encoder.GetString(byteArray, 0, byteArray.Length));
-            Object obj = null;
+            //ASCIIEncoding encoder = new ASCIIEncoding();
+            //System.Diagnostics.Debug.WriteLine(encoder.GetString(byteArray, 0, byteArray.Length));
+            //Object obj = null;                     
 
-            try
-            {
-                string xmlDoc = encoder.GetString(byteArray, 0, byteArray.Length).ToString();
-                XDocument doc = XDocument.Parse(xmlDoc);
-                string rootelement = doc.Root.Name.ToString();
-                Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
+            //try
+            //{
+            //    string xmlDoc = encoder.GetString(byteArray, 0, byteArray.Length).ToString();
+            //    XDocument doc = XDocument.Parse(xmlDoc);
+            //    string rootelement = doc.Root.Name.ToString();
+            //    Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
+            //    obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);              
 
-                obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);
-            }
-            catch
-            {
-                OutputManager.WriteLine("Error bad package from client {0} - {1}", new string[]{ sender.IP, sender.AccountID.ToString() });
-            }
+            //}
+            //catch(Exception exception)
+            //{
+            //    OutputManager.WriteLine("Error bad package from client {0} - {1}", new string[]{ sender.IP, sender.AccountID.ToString() });
+            //    OutputManager.Instance.WriteLog(exception.ToString() + "\n");
+            //    OutputManager.Instance.WriteLog(encoder.GetString(byteArray, 0, byteArray.Length).ToString() + "\n");
+            //}
+
+            //message has successfully been received
+            MemoryStream ms = new MemoryStream(byteArray);
+            object obj = DeserializeFromStream(ms);
 
             if (obj is playerData)
             {
@@ -411,7 +426,7 @@ namespace RelayServer
         /// Authentication Method
         /// </summery>
         /// <param name="data">Data to read</param>
-        private void ReadAccountData(byte[] byteArray, Client sender)
+        private void ReadAccountDataXml(byte[] byteArray, Client sender)
         {
             //message has successfully been received
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -423,6 +438,46 @@ namespace RelayServer
             Type elementType = Type.GetType("RelayServer.ClientObjects." + rootelement);
 
             Object obj = DeserializeFromXml<Object>(encoder.GetString(byteArray, 0, byteArray.Length), elementType);
+
+            if (obj is AccountData)
+            {
+                AccountData account = (AccountData)obj;
+
+                AccountData a = new AccountData()
+                {
+                    Username = account.Username,
+                    Password = account.Password
+                };
+
+                if (AccountStore.Instance.FindAccount(account.Username, account.Password) != 0)
+                {
+                    sender.AccountID = AccountStore.Instance.FindAccount(account.Username, account.Password);
+                    sender.Autenticated = true;
+                    a.Connected = "true";
+                    SendObject(a, sender);
+                }
+                else
+                {
+                    a.Connected = "false";
+                    SendObject(a, sender);
+                }
+
+                if (!sender.Autenticated)
+                    OutputManager.WriteLine(account.Username + ", with IP " + sender.IP + " cannot be autenticated.");
+                else
+                    OutputManager.WriteLine(account.Username + ", with IP " + sender.IP + " autenticated! \t Account ID: " + sender.AccountID.ToString());
+            }
+        }
+
+        /// <summery>
+        /// Authentication Method
+        /// </summery>
+        /// <param name="data">Data to read</param>
+        private void ReadAccountDataStream(byte[] byteArray, Client sender)
+        {
+            //message has successfully been received
+            MemoryStream ms = new MemoryStream(byteArray);
+            object obj = DeserializeFromStream(ms);
 
             if (obj is AccountData)
             {
@@ -467,6 +522,36 @@ namespace RelayServer
                 result = (T)ser.Deserialize(tr);
             }
             return result;
+        }
+
+        /// <summery>
+        /// public Deserialization Method for Memorystream to objects
+        /// </summery>
+        /// <param name="data">Data to read</param>
+        public static object DeserializeFromStream(MemoryStream stream)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            stream.Seek(0, SeekOrigin.Begin);
+
+            // Allows us to manually control type-casting based on assembly/version and type name
+            // formatter.Binder = new OverrideBinder();
+
+            stream.Seek(0, SeekOrigin.Begin);
+            object o = formatter.Deserialize(stream); // Unable to find assembly
+
+            return o;
+        }
+
+        /// <summery>
+        /// public Serialization Method for Memorystream to objects
+        /// </summery>
+        /// <param name="data">Data to read</param>
+        public static MemoryStream SerializeToStream(object o)
+        {
+            MemoryStream stream = new MemoryStream();
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, o);
+            return stream;
         }
         #endregion
     }

@@ -3,11 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO;
 
-namespace RelayServer.WorldObjects.Structures
+namespace RelayServer.Static
 {
     public class OutputManager
     {
+        private static OutputManager instance;
+
+        private Object thisLock = new Object();
+
+        private OutputManager()
+        {
+        }
+
+        public static OutputManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new OutputManager();
+
+                return instance;
+            }
+        }
+
         public static void WriteLine(string text, string[] args = null)
         {
             string strip = Regex.Replace(text, "\t", "");
@@ -50,6 +70,24 @@ namespace RelayServer.WorldObjects.Structures
                 Console.Write(text);
 
             Console.ResetColor();
+        }
+
+        public void WriteLog(string logMessage)
+        {
+            lock (thisLock)
+            {
+                using (StreamWriter logwriter = File.AppendText("log.txt"))
+                {
+                    logwriter.Write("\r\nLog Entry : ");
+                    logwriter.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
+                        DateTime.Now.ToLongDateString());
+                    logwriter.WriteLine("\n");
+                    logwriter.WriteLine("{0} \n", logMessage);
+                    logwriter.WriteLine("-------------------------------");
+                    logwriter.Flush();
+                    logwriter.Close();
+                }
+            }
         }
     }
 }

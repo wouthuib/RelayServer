@@ -14,8 +14,8 @@ using RelayServer.WorldObjects.Effects;
 using RelayServer.Database.Items;
 using RelayServer.Database.Skills;
 using RelayServer.Database.Accounts;
-using RelayServer.ClientObjects;
 using RelayServer.Database.Players;
+using RelayServer.Static;
 
 namespace RelayServer.WorldObjects
 {

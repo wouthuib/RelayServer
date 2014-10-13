@@ -10,18 +10,14 @@ using System.Text.RegularExpressions;
 using RelayServer.Database.Monsters;
 using RelayServer.WorldObjects.Structures;
 using System.Timers;
-using RelayServer.ClientObjects;
 using RelayServer.Database.Players;
+using MapleLibrary;
 
 namespace RelayServer.WorldObjects.Entities
 {
     public class MonsterSprite : Entity
     {
         #region properties
-
-        // static and singletons
-        //PlayerStore PlayerInfo = PlayerStore.Instance;                                              // get battle information of player
-        GameWorld world;
 
         // Monster Store ID
         public int MonsterID = 0;

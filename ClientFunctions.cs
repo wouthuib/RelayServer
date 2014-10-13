@@ -4,7 +4,6 @@ using System.Text;
 using System.Net.Sockets;
 using RelayServer.WorldObjects.Structures;
 using System.Xml.Serialization;
-using RelayServer.ClientObjects;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Xml;

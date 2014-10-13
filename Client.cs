@@ -4,13 +4,15 @@ using System.Text;
 using System.Net.Sockets;
 using RelayServer.WorldObjects.Structures;
 using System.Xml.Serialization;
-using RelayServer.ClientObjects;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Xml;
 using RelayServer.Database.Players;
 using RelayServer.Database.Accounts;
 using System.Security.Cryptography;
+using RelayServer.Static;
+using System.Runtime.Serialization;
+using MapleLibrary;
 
 namespace RelayServer
 {
@@ -43,7 +45,7 @@ namespace RelayServer
         public Client(TcpClient client, byte id)
             : base()
         {
-            readBuffer = new byte[1024];
+            readBuffer = new byte[10000];
             this.id = id;
             this.client = client;
             IP = client.Client.RemoteEndPoint.ToString();
@@ -180,7 +182,7 @@ namespace RelayServer
         /// By Wouter Code to actually send the Object to the client
         /// </summary>
         /// <param name="b">Data to send</param>
-        public void SendObject(Object obj)
+        public void SendObjectXml(Object obj)
         {
             // Try to send the data.  If an exception is thrown, disconnect the client
             try
@@ -237,22 +239,19 @@ namespace RelayServer
                         xmlSerializer.Serialize(xmlwriter, obj);
 
                         // new send encrypted message (in process) !!!
-                        //var bytes = Encoding.UTF8.GetBytes(stringwriter.ToString());
-                        //var base64 = Convert.ToBase64String(bytes);
-
-                        //string encrypted = RijndaelSimple.Encrypt(
-                        //    stringwriter.ToString(),
-                        //    "Pas5pr@se",
-                        //    "s@1tValue",
-                        //    "SHA1",
-                        //    2,
-                        //    "@1B2c3D4e5F6g7H8",
-                        //    256);
+                        string encrypted = RijndaelSimple.Encrypt(
+                            stringwriter.ToString(),
+                            "Pas5pr@se",
+                            "s@1tValue",
+                            "SHA1",
+                            2,
+                            "@1B2c3D4e5F6g7H8",
+                            256);
 
                         byte[] myWriteBuffer = null;
 
                         if (Server.singleton.encryption)
-                            myWriteBuffer = Encoding.ASCII.GetBytes(encryptString(stringwriter.ToString(), "Assesjode"));
+                            myWriteBuffer = Encoding.ASCII.GetBytes(encrypted);
                         else
                             myWriteBuffer = Encoding.ASCII.GetBytes(stringwriter.ToString());
                         
@@ -277,6 +276,61 @@ namespace RelayServer
                         xmlSerializer.Serialize(writer, obj);                        
 
                         //SendData(StringToBytes(encrypted));
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                OutputManager.WriteLine("Error! Sending data to Client {0}: \n\n {1}", new string[] { IP, e.ToString() });
+            }
+        }
+
+        public void SendObjectStream(Object obj)
+        {
+            IFormatter formatter = new BinaryFormatter();
+
+            // Try to send the data.  If an exception is thrown, disconnect the client
+            try
+            {
+                lock (networkstream)
+                {
+                    bool getobject = false;
+
+                    if (obj is MonsterData)
+                    {
+                        if (MainScreenName == "worldmap")
+                            getobject = true;
+                    }
+                    else if (obj is playerData)
+                        getobject = true;
+                    else if (obj is AccountData)
+                        getobject = true;
+                    else if (obj is EffectData)
+                        getobject = true;
+                    else if (obj is ChatData)
+                        getobject = true;
+                    else if (obj is PlayerInfo)
+                        getobject = false;
+                    else if (obj is List<PlayerInfo>)
+                        getobject = false;
+
+                    if (getobject)
+                    {                        
+                        try
+                        {
+                            if (networkstream.CanWrite)
+                                formatter.Serialize(networkstream, obj);
+
+                            // flush streams
+                            networkstream.Flush();
+                        }
+                        catch
+                        {
+                            OutputManager.WriteLine("Error! Unable to send data to client {0}, {1}, {2}",
+                                new string[] { this.IP, this.AccountID.ToString(), 
+                                    AccountStore.Instance.account_list.Find(x=>x.AccountID == this.AccountID).Username});
+                        }
                     }
 
                 }
@@ -322,44 +376,6 @@ namespace RelayServer
         {
             return IP;
         }
-
-        // create and initialize a crypto algorithm
-        private static SymmetricAlgorithm getAlgorithm(string password)
-        {
-            SymmetricAlgorithm algorithm = Rijndael.Create();
-            Rfc2898DeriveBytes rdb = new Rfc2898DeriveBytes(
-                password, new byte[] {
-            0x53,0x6f,0x64,0x69,0x75,0x6d,0x20,             // salty goodness
-            0x43,0x68,0x6c,0x6f,0x72,0x69,0x64,0x65
-        }
-            );
-            algorithm.Padding = PaddingMode.ISO10126;
-            algorithm.Key = rdb.GetBytes(32);
-            algorithm.IV = rdb.GetBytes(16);
-            return algorithm;
-        }
-
-        public static string encryptString(string clearText, string password)
-        {
-            SymmetricAlgorithm algorithm = getAlgorithm(password);
-            byte[] clearBytes = System.Text.Encoding.Unicode.GetBytes(clearText);
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, algorithm.CreateEncryptor(), CryptoStreamMode.Write);
-            cs.Write(clearBytes, 0, clearBytes.Length);
-            cs.Close();
-            return Convert.ToBase64String(ms.ToArray());
-        }
-
-        public static string decryptString(string cipherText, string password)
-        {
-            SymmetricAlgorithm algorithm = getAlgorithm(password);
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, algorithm.CreateDecryptor(), CryptoStreamMode.Write);
-            cs.Write(cipherBytes, 0, cipherBytes.Length);
-            cs.Close();
-            return System.Text.Encoding.Unicode.GetString(ms.ToArray());
-        }
     }
 
     public class StateObject
@@ -367,7 +383,7 @@ namespace RelayServer
         // Client  socket.
         public Socket workSocket = null;
         // Size of receive buffer.
-        public const int BufferSize = 1024;
+        public const int BufferSize = 10000;
         // Receive buffer.
         public byte[] buffer = new byte[BufferSize];
         // Received data string.

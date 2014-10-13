@@ -6,7 +6,7 @@ using RelayServer.Database.Items;
 using System.IO;
 using System.Xml.Serialization;
 using RelayServer.Database.Accounts;
-using RelayServer.ClientObjects;
+using MapleLibrary;
 
 namespace RelayServer.Database.Players
 {

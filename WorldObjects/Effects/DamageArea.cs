@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RelayServer.WorldObjects.Entities;
-using RelayServer.ClientObjects;
 using RelayServer.Database.Players;
 using RelayServer.WorldObjects.Structures;
+using MapleLibrary;
 
 namespace RelayServer.WorldObjects.Effects
 {

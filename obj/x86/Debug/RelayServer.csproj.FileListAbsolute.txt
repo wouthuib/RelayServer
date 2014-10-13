@@ -25,3 +25,5 @@ C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\RelayServer
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\RelayServer.application
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\obj\x86\Debug\RelayServer.exe.manifest
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\obj\x86\Debug\RelayServer.application
+C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\MapleLibrary.dll
+C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\MapleLibrary.pdb
