@@ -6,17 +6,25 @@ using System.Net.Sockets;
 using System.Net;
 using RelayServer.WorldObjects.Structures;
 using RelayServer.Static;
+using System.Threading;
 
 namespace RelayServer
 {
+    
+    /// <summary>
+    /// Server socket Example, The listener process
+    /// </summary>
+    /// <param name="portNr">http://msdn.microsoft.com/en-us/library/fx6588te(v=vs.110).aspx</param>
     public class Listener
     {
-        private TcpListener listener;
+        // Thread signal.
+        public static ManualResetEvent allDone = new ManualResetEvent(false);
+
+        private Socket listener;
         public bool Active;
 
         //send an even once we receive a user
         public event ConnectionEvent userAdded;
-
 
         //a variable to keep track of how many users we've added
         private bool[] usedUserID;
@@ -31,7 +39,9 @@ namespace RelayServer
             usedUserID = new bool[Properties.Settings.Default.MaxNumberOfClients];
 
             //Create the internal TcpListener
-            listener = new TcpListener(IPAddress.Any, portNr);
+            //listener = new TcpListener(IPAddress.Any, portNr);
+            listener = new Socket(AddressFamily.InterNetwork,
+                SocketType.Stream, ProtocolType.Tcp );
         }
 
         /// <summary>
@@ -39,8 +49,8 @@ namespace RelayServer
         /// </summary>
         public void Start()
         {
-            listener.Start();
-            ListenForNewClient();
+            //listener.Start();
+            StartListening();
             Active = true;
         }
 
@@ -49,16 +59,49 @@ namespace RelayServer
         /// </summary>
         public void Stop()
         {
-            listener.Stop();
+            //listener.Stop();
             Active = false;
         }
 
         /// <summary>
         /// Used for allowing new users to connect
         /// </summary>
-        private void ListenForNewClient()
+        private void StartListening()
         {
-            listener.BeginAcceptTcpClient(AcceptClient, null);
+            //listener.BeginAcceptTcpClient(AcceptClient, null);
+
+            // Data buffer for incoming data.
+            byte[] bytes = new Byte[1024];
+
+            // Establish the local endpoint for the socket.
+            // The DNS name of the computer
+            // running the listener is "host.contoso.com".
+            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 1490);
+
+            // Create a TCP/IP socket.
+            Socket listener = new Socket(AddressFamily.InterNetwork,
+                SocketType.Stream, ProtocolType.Tcp);
+
+            // Bind the socket to the local endpoint and listen for incoming connections.
+            try
+            {
+                listener.Bind(localEndPoint);
+                listener.Listen(100);
+
+                // Set the event to nonsignaled state.
+                allDone.Reset();
+
+                listener.BeginAccept(
+                    new AsyncCallback(AcceptClient),
+                    listener);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         /// <summary>
@@ -67,8 +110,12 @@ namespace RelayServer
         /// <param name="ar">Status of the Async method</param>
         private void AcceptClient(IAsyncResult ar)
         {
-            //We need to end the Async method of accepting new clients
-            TcpClient client = listener.EndAcceptTcpClient(ar);
+            // Signal the main thread to continue.
+            allDone.Set();
+
+            // Get the socket that handles the client request.
+            Socket listener = (Socket)ar.AsyncState;
+            Socket client = listener.EndAccept(ar);
 
             //id is originally -1 which means a user cannot connect
             int id = -1;
@@ -84,7 +131,7 @@ namespace RelayServer
             //If the id is still -1, the client what wants to connect cannot (probably because we have reached the maximum number of clients
             if (id == -1)
             {
-                OutputManager.WriteLine("Client " + client.Client.RemoteEndPoint.ToString() + " cannot connect. ");
+                OutputManager.WriteLine("Client " + client.RemoteEndPoint.ToString() + " cannot connect. ");
                 return;
             }
 
@@ -100,7 +147,7 @@ namespace RelayServer
                 userAdded(this, newClient);
 
             //Begin listening for new clients
-            ListenForNewClient();
+            StartListening();
         }
 
         /// <summary>

@@ -13,19 +13,34 @@ using System.Security.Cryptography;
 using RelayServer.Static;
 using System.Runtime.Serialization;
 using MapleLibrary;
+using System.Threading;
+using System.Net;
 
 namespace RelayServer
 {
+    /// <summary>
+    /// Server socket Example, The client send and receive processes
+    /// </summary>
+    /// <param name="portNr">http://msdn.microsoft.com/en-us/library/fx6588te(v=vs.110).aspx</param>
     public class Client : ClientFunctions
     {
-        //Encapsulated 
-        private TcpClient client;
+        Socket client;
+
+        // ManualResetEvent instances signal completion.
+        private static ManualResetEvent connectDone =
+            new ManualResetEvent(false);
+        private static ManualResetEvent sendDone =
+            new ManualResetEvent(false);
+        private static ManualResetEvent receiveDone =
+            new ManualResetEvent(false);
 
         //Byte array that is populated when a user receives data
-        private byte[] readBuffer;
+        private byte[] readBuffer = new byte[StateObject.BufferSize];
 
-        // client stream
-        private NetworkStream networkstream;
+        private object lockstream = new Object();
+
+        public bool Connected = false;
+        public bool encryption = false;
 
         //Create the events
         public event ConnectionEvent UserDisconnected;
@@ -42,17 +57,19 @@ namespace RelayServer
         /// </summary>
         /// <param name="client">TcpClient object to use</param>
         /// <param name="id">ID to give to the client</param>
-        public Client(TcpClient client, byte id)
+        public Client(Socket client, byte id)
             : base()
         {
             readBuffer = new byte[10000];
             this.id = id;
             this.client = client;
-            IP = client.Client.RemoteEndPoint.ToString();
+            //IP = client.Client.RemoteEndPoint.ToString();
+            IP = client.RemoteEndPoint.ToString();
+
             //client.NoDelay = true;
 
             this.user = this;
-            networkstream = client.GetStream();
+            //networkstream = client.GetStream();
 
             StartListening();
         }
@@ -67,9 +84,14 @@ namespace RelayServer
         {
             readBuffer = new byte[Properties.Settings.Default.ReadBufferSize];
             id = byte.MaxValue;
-            client = new TcpClient();
+            client = new Socket(AddressFamily.InterNetwork,
+                    SocketType.Stream, ProtocolType.Tcp);
             client.NoDelay = true;
-            client.Connect(ip, port);
+                        
+            // Connect to the remote endpoint.
+            client.BeginConnect(client.RemoteEndPoint,
+                new AsyncCallback(ConnectCallback), client);
+            connectDone.WaitOne();
 
             this.user = this;
             StartListening();
@@ -97,67 +119,128 @@ namespace RelayServer
         /// </summary>
         private void StartListening()
         {
-            networkstream.BeginRead(readBuffer, 0, StateObject.BufferSize, StreamReceived, null);
+            // Create the state object.
+            StateObject state = new StateObject();
+            state.workSocket = client;
+
+            // Begin receiving the data from the remote device.
+            client.BeginReceive(readBuffer, 0, StateObject.BufferSize, 0,
+                new AsyncCallback(ReceiveCallback), state);
         }
 
         /// <summary>
         /// Data was received
         /// </summary>
         /// <param name="ar">Async status</param>
-        private void StreamReceived(IAsyncResult ar)
+        private void ReceiveCallback(IAsyncResult ar)
         {
-            int bytesRead = 0;
             try
             {
-                lock (networkstream)
+                // Retrieve the state object and the client socket 
+                // from the asynchronous state object.
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket client = state.workSocket;
+
+                // Read data from the remote device.
+                int bytesRead = client.EndReceive(ar);
+
+                //An error happened that created bad data
+                if (bytesRead == 0)
                 {
-                    bytesRead = networkstream.EndRead(ar);
+                    Disconnect();
+                    OutputManager.WriteLine("Error! Client {0}: {1} {2}", new string[] { IP, "link broken!", "Disconnecting" });
+                    return;
                 }
+
+                //Create the byte array with the number of bytes read
+                byte[] data = new byte[bytesRead];
+
+                //Populate the array
+                for (int i = 0; i < bytesRead; i++)
+                    data[i] = readBuffer[i];
+
+                // start new listener
+                StartListening();
+
+                //Call all delegates
+                if (DataReceived != null)
+                    DataReceived(this, data);
             }
-
-            catch (Exception e) { string error = e.ToString(); }
-
-            //An error happened that created bad data
-            if (bytesRead == 0)
+            catch (Exception e)
             {
-                Disconnect();
-                OutputManager.WriteLine("Error! Client {0}: {1} {2}", new string[]{IP, "link broken!", "Disconnecting"});
-                return;
+                Console.WriteLine(e.ToString());
             }
-
-            //Create the byte array with the number of bytes read
-            byte[] data = new byte[bytesRead];
-
-            //Populate the array
-            for (int i = 0; i < bytesRead; i++)
-                data[i] = readBuffer[i];
-
-            //Listen for new data
-            StartListening();
-
-            //Call all delegates
-            if (DataReceived != null)
-                DataReceived(this, data);
         }
 
         /// <summary>
         /// Code to actually send the data to the client
         /// </summary>
         /// <param name="b">Data to send</param>
-        public void SendData(byte[] b)
+        public void SendData(byte[] byteData)
         {
             //Try to send the data.  If an exception is thrown, disconnect the client
             try
             {
-                lock (networkstream)
+                lock (lockstream)
                 {
-                    if (networkstream.CanWrite)
-                        networkstream.BeginWrite(b, 0, b.Length, null, null);
+                    // Begin sending the data to the remote device.
+                    client.BeginSend(byteData, 0, byteData.Length, 0,
+                        new AsyncCallback(SendCallback), client);
                 }
             }
             catch (Exception e)
             {
                 OutputManager.WriteLine("Error! Sending data to Client {0}:  {1}", new string[] { IP, e.ToString() });
+            }
+        }
+
+        /// <summary>
+        /// Code to actually send the data to the client
+        /// </summary>
+        /// <param name="b">Data to send</param>
+        private void ConnectCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete the connection.
+                client.EndConnect(ar);
+
+                Console.WriteLine("Socket connected to {0}",
+                    client.RemoteEndPoint.ToString());
+
+                // Signal that the connection has been made.
+                connectDone.Set();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Code to actually send the data to the client
+        /// </summary>
+        /// <param name="b">Confirm Send Data</param>
+        private void SendCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete sending the data to the remote device.
+                int bytesSent = client.EndSend(ar);
+                //Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+
+                // Signal that all bytes have been sent.
+                sendDone.Set();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
 
@@ -187,7 +270,7 @@ namespace RelayServer
             // Try to send the data.  If an exception is thrown, disconnect the client
             try
             {
-                lock (networkstream)
+                lock (lockstream)
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(Object));
                     bool getobject = false;
@@ -257,11 +340,11 @@ namespace RelayServer
                         
                         try
                         {
-                            if (networkstream.CanWrite)
-                                networkstream.Write(myWriteBuffer, 0, myWriteBuffer.Length);
+                            //if (networkstream.CanWrite)
+                            //    networkstream.Write(myWriteBuffer, 0, myWriteBuffer.Length);
 
-                            // flush streams
-                            networkstream.Flush();
+                            //// flush streams
+                            //networkstream.Flush();
                         }
                         catch
                         {
@@ -293,7 +376,7 @@ namespace RelayServer
             // Try to send the data.  If an exception is thrown, disconnect the client
             try
             {
-                lock (networkstream)
+                lock (lockstream)
                 {
                     bool getobject = false;
 
@@ -319,11 +402,7 @@ namespace RelayServer
                     {                        
                         try
                         {
-                            if (networkstream.CanWrite)
-                                formatter.Serialize(networkstream, obj);
-
-                            // flush streams
-                            networkstream.Flush();
+                            SendData(SerializeToStream(obj).ToArray());
                         }
                         catch
                         {
@@ -358,14 +437,26 @@ namespace RelayServer
             return bytes;
         }
 
-        public System.IO.MemoryStream ObjectToMemoryStream(Object obj)
+        // memory stream serializations
+        public static MemoryStream SerializeToStream(object o)
         {
-            if (obj == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream();
-            bf.Serialize(ms, obj);
-            return ms;
+            MemoryStream stream = new MemoryStream();
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, o);
+            return stream;
+        }
+        public static object DeserializeFromStream(MemoryStream stream)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            stream.Seek(0, SeekOrigin.Begin);
+
+            // Allows us to manually control type-casting based on assembly/version and type name
+            // formatter.Binder = new OverrideBinder();
+
+            stream.Seek(0, SeekOrigin.Begin);
+            object o = formatter.Deserialize(stream); // Unable to find assembly
+
+            return o;
         }
 
         /// <summary>

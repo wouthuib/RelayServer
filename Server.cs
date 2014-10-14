@@ -241,7 +241,7 @@ namespace RelayServer
             {
                 if (c != null && c != sender)
                 {
-                    c.SendData(data);
+                    c.SendData( data);
                 }
             }
 
