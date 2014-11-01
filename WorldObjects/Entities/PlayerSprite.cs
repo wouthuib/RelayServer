@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using RelayServer.Database.Items;
 using RelayServer.WorldObjects.Structures;
 using MapleLibrary;
+using RelayServer.WorldObjects.Effects;
 
 namespace RelayServer.WorldObjects.Entities
 {
@@ -18,7 +19,7 @@ namespace RelayServer.WorldObjects.Entities
         private float previousGameTimeMsec;
         private float displayTimer = 0;
 
-        private const int PLAYER_SPEED = 200;                                                       // The network player is a bit slower
+        private const int PLAYER_SPEED = 215;                                                       // The network player is a bit slower due to latency
         private const int ANIMATION_SPEED = 120;                                                    // Animation speed, 120 = default 
         private const int MOVE_UP = -1;                                                             // player moving directions
         private const int MOVE_DOWN = 1;                                                            // player moving directions
@@ -62,7 +63,17 @@ namespace RelayServer.WorldObjects.Entities
             @"gfx\player\body\hands\",                                                              // Hands Sprite (9)
         };
         
-        public PlayerInfo Player { get; set; }
+        public PlayerInfo Player 
+        {
+            get
+            {
+                if (this.Name != null)
+                    return PlayerStore.Instance.playerStore.Find(x => x.Name == this.Name);
+                else
+                    return null;
+            }
+        }
+
 
         string Client_action;
 
@@ -106,8 +117,6 @@ namespace RelayServer.WorldObjects.Entities
 
             this.spriteFrame = new Rectangle(0, 0, 50, 70); // default for collision detection
 
-            this.Player = PlayerStore.Instance.playerStore.Find(x => x.Name == this.Name);
-
             this.Player.skin_color = getColor(skincolor);
             this.Player.faceset_sprite = facesprite;
             this.Player.hair_sprite = hairsprite;
@@ -123,6 +132,8 @@ namespace RelayServer.WorldObjects.Entities
             previousPosition = this.position;   // save previous postion
             previousState = this.state;         // save previous state before
             previousDirection = this.Direction; // save previous direction
+
+            //this.PLAYER_SPEED = Randomizer.Instance.generateRandom(105, 315); // for debugging only!!!!
 
             switch (state)
             {
@@ -267,29 +278,22 @@ namespace RelayServer.WorldObjects.Entities
                     // Move the Character
                     OldPosition = Position;
 
-                    // reduce timer
-                    previousGameTimeMsec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    // Player animation
-                    if (prevspriteframe != spriteframe)
+                    if (Client_action == "Release")
                     {
-                        prevspriteframe = spriteframe;
-                        for (int i = 0; i < spritepath.Length; i++)
-                        {
-                            spritename = "shoot1_" + spriteframe.ToString();
-                        }
-                    }
+                        // create and release an arrow
+                        if (spriteEffect == SpriteEffects.FlipHorizontally)
+                            GameWorld.Instance.newEffect.Add(
+                                new Arrow(Player.Name,
+                                    new Vector2(this.Position.X, this.Position.Y + this.SpriteFrame.Height * 0.6f),
+                                    800, new Vector2(1, 0), Vector2.Zero));
+                        else
+                            GameWorld.Instance.newEffect.Add(
+                                new Arrow(Player.Name,
+                                    new Vector2(this.Position.X, this.Position.Y + this.SpriteFrame.Height * 0.6f),
+                                    800, new Vector2(-1, 0), Vector2.Zero));
 
-                    if (previousGameTimeMsec < 0)
-                    {
-                        spriteframe++;
-
-                        if (spriteframe > 1)
-                        {
-                            // Set the timer for cooldown
-                            previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.10f;
-                            spriteframe = 1;
-                        }
+                        spriteFrame.X = 0;
+                        state = EntityState.Stand; // << was changed from cooldown
                     }
 
                     break;
@@ -432,7 +436,29 @@ namespace RelayServer.WorldObjects.Entities
                             this.Direction.Y = MOVE_UP;
                             this.Speed = PLAYER_SPEED * 0.80f;
                         }
-                    }                                                         
+                    }
+                    else if (Client_action == "Action")
+                    {
+                        // check if weapon is equiped
+                        if (Player.equipment.item_list.FindAll(delegate(Item item) { return item.Type == ItemType.Weapon; }).Count > 0)
+                        {
+                            WeaponType weapontype = Player.equipment.item_list.Find(delegate(Item item) { return item.Type == ItemType.Weapon; }).WeaponType;
+
+                            // check the weapon type
+                            if (weapontype == WeaponType.Dagger)
+                            {
+                                previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + (float)((350 - Player.ASPD * 12) * 0.0006f) + 0.05f;
+                                state = EntityState.Shoot;
+                            }
+                            //else
+                            //{
+                            //    previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + (float)((350 - Player.ASPD * 12) * 0.0006f) + 0.05f;
+
+                            //    spriteframe = 0;
+                            //    GetattackSprite(weapontype);
+                            //}
+                        }
+                    }
                     
                     if (state != EntityState.Ladder && state != EntityState.Rope)
                     {
@@ -696,7 +722,7 @@ namespace RelayServer.WorldObjects.Entities
 
             if (displayTimer <= 0)
             {
-                displayTimer = (float)gameTime.ElapsedGameTime.TotalSeconds + 1;
+                displayTimer = (float)gameTime.ElapsedGameTime.TotalSeconds + 0.25f;
 
                 if (state == EntityState.Walk || 
                     state == EntityState.Ladder || 

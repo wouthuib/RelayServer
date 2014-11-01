@@ -99,29 +99,20 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>p3J/jucAvWIfSse2tqu88wK0dao=</dsig:DigestValue>
+        <dsig:DigestValue>1VnFyPKClpJd+ADVDkn6djadxcM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RelayServer.exe" size="113664">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RelayServer.exe" size="120832">
       <assemblyIdentity name="RelayServer" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ylrN6kJVVzGKOl2SUJeeDDCrVzI=</dsig:DigestValue>
+        <dsig:DigestValue>Di1CWPsvq2XaXj2ZyKCmok3XKGA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="RelayServer.exe.config" size="1918">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>YkJKI38L9oJ5W+0YTqEc0Ru0kxU=</dsig:DigestValue>
-    </hash>
-  </file>
 </asmv1:assembly>

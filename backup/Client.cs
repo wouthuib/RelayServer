@@ -38,8 +38,6 @@ namespace RelayServer
         private byte[] readBuffer = new byte[StateObject.BufferSize];
 
         private object lockstream = new Object();
-        private List<byte[]> objectList = new List<byte[]>();
-        private bool Sending = false;
 
         public bool Connected = false;
         public bool encryption = false;
@@ -62,7 +60,7 @@ namespace RelayServer
         public Client(Socket client, byte id)
             : base()
         {
-            readBuffer = new byte[40000];
+            readBuffer = new byte[10000];
             this.id = id;
             this.client = client;
             //IP = client.Client.RemoteEndPoint.ToString();
@@ -73,11 +71,6 @@ namespace RelayServer
             this.user = this;
             //networkstream = client.GetStream();
 
-            // start send loop
-            Thread sendloop = new Thread(new ThreadStart(this.SendingLoop));
-            sendloop.Start();
-
-            // start client listener
             StartListening();
         }
 
@@ -100,14 +93,8 @@ namespace RelayServer
                 new AsyncCallback(ConnectCallback), client);
             connectDone.WaitOne();
 
-            // start send loop
-            Thread sendloop = new Thread(new ThreadStart(this.SendingLoop));
-            sendloop.Start();
-
-            // start client listener
             this.user = this;
             StartListening();
-
         }
 
         /// <summary>
@@ -161,7 +148,7 @@ namespace RelayServer
                 if (bytesRead == 0)
                 {
                     Disconnect();
-                    OutputManager.WriteLine("Error - Client {0}: {1} {2}", new string[] { IP, "link broken!", "Disconnecting" });
+                    OutputManager.WriteLine("Error! Client {0}: {1} {2}", new string[] { IP, "link broken!", "Disconnecting" });
                     return;
                 }
 
@@ -178,10 +165,6 @@ namespace RelayServer
                 //Call all delegates
                 if (DataReceived != null)
                     DataReceived(this, data);
-            }                
-            catch (SocketException ex)
-            {
-                this.SocketErrorHandler(ex.ErrorCode);
             }
             catch (Exception e)
             {
@@ -208,42 +191,12 @@ namespace RelayServer
                     }
                 }
             }
-            catch (SocketException ex)
-            {
-                SocketErrorHandler(ex.ErrorCode);
-            }
             catch (Exception e)
             {
                 OutputManager.WriteLine("Error! Sending data to Client {0}:  {1}", new string[] { IP, e.ToString() });
             }
         }
 
-        /// <summary>
-        /// Sending Loop which processes the bytestream List
-        /// </summary>
-        /// <param name="b">ByteStream List to Send</param>
-        public void SendingLoop()
-        {
-            while (true)
-            {
-                if (!Sending)
-                {
-                    if (objectList.Count > 0)
-                    {
-                        lock (lockstream)
-                        {
-                            Sending = true;
-                            byte[] bytestream = new byte[objectList[0].Length];
-                            bytestream = objectList[0];         //pick oldest from list
-                            objectList.Remove(bytestream);      //remove from list
-                            SendData(bytestream);
-                        }
-                    }
-                }
-                Thread.Sleep(10);
-            }
-        }
-        
         /// <summary>
         /// Code to actually send the data to the client
         /// </summary>
@@ -287,13 +240,6 @@ namespace RelayServer
 
                 // Signal that all bytes have been sent.
                 sendDone.Set();
-
-                //Sending Done
-                Sending = false;
-            }
-            catch (SocketException ex)
-            {
-                this.SocketErrorHandler(ex.ErrorCode);
             }
             catch (Exception e)
             {
@@ -315,28 +261,6 @@ namespace RelayServer
                 ms.Position = 0;
                 ms.Read(result, 0, bytesWritten);
                 SendData(result);
-            }
-        }
-
-        /// <summary>
-        /// Code to display Socket errors in Output manager
-        /// </summary>
-        /// <param name="ms">Display Socket error code</param>
-        private void SocketErrorHandler(int errorcode)
-        {
-            switch (errorcode)
-            {
-                case 10054:     // connection was forecely closed
-                    Disconnect();
-                    break;
-                case 10060:     // connection timeout
-                    OutputManager.WriteLine("Error - connection timeout - client {0}",
-                    new string[] { IP });
-                    break;
-                default:        // other socket exceptions
-                    OutputManager.WriteLine("Error - client {0}: socket exception code {1} ",
-                    new string[] { IP, errorcode.ToString() });
-                    break;
             }
         }
 
@@ -448,10 +372,6 @@ namespace RelayServer
             }
         }
 
-        /// <summary>
-        /// Code to send memory stream send bytestream list
-        /// </summary>
-        /// <param name="b">Object to BytestreamList</param>
         public void SendObjectStream(Object obj)
         {
             IFormatter formatter = new BinaryFormatter();
@@ -485,10 +405,7 @@ namespace RelayServer
                     {                        
                         try
                         {
-                            lock (lockstream)
-                            {
-                                objectList.Add(SerializeToStream(obj).ToArray());
-                            }
+                            SendData(SerializeToStream(obj).ToArray());
                         }
                         catch
                         {
@@ -526,12 +443,10 @@ namespace RelayServer
         // memory stream serializations
         public static MemoryStream SerializeToStream(object o)
         {
-            using (MemoryStream stream = new MemoryStream(new byte[2048]))
-            {
-                IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, o);
-                return stream;
-            }
+            MemoryStream stream = new MemoryStream();
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, o);
+            return stream;
         }
         public static object DeserializeFromStream(MemoryStream stream)
         {
@@ -562,7 +477,7 @@ namespace RelayServer
         // Client  socket.
         public Socket workSocket = null;
         // Size of receive buffer.
-        public const int BufferSize = 40000;
+        public const int BufferSize = 10000;
         // Receive buffer.
         public byte[] buffer = new byte[BufferSize];
         // Received data string.

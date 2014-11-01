@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Xml.Linq;
+using RelayServer.WorldObjects.Structures;
 using RelayServer.WorldObjects;
 using RelayServer.WorldObjects.Entities;
 using RelayServer.WorldObjects.Effects;
@@ -59,9 +60,6 @@ namespace RelayServer
             listener.userAdded += new ConnectionEvent(listener_userAdded);
             listener.Start();
 
-            OutputManager.WriteLine("\t Server listening on port: {0}:{1}", 
-                new string[]{listener.ipAddress.ToString(), port.ToString() });
-
             //Create the readers and writers.
             readStream = new MemoryStream();
             writeStream = new MemoryStream();
@@ -99,7 +97,7 @@ namespace RelayServer
             user.UserDisconnected += new ConnectionEvent(user_UserDisconnected);
 
             //Print the new player message to the server window.
-            OutputManager.WriteLine(user.ToString() + "\t connected! \t Connected Clients:  " + connectedClients);
+            OutputManager.WriteLine(user.ToString() + " connected\tConnected Clients:  " + connectedClients + "\n");
 
             //Add to the client array
             client[user.id] = user;
@@ -141,9 +139,6 @@ namespace RelayServer
                             sprite.KeepAliveTime = 0;
                         }
                 }
-
-            //Print the new player message to the server window.
-            OutputManager.WriteLine(user.ToString() + "\t disconnected! \t Connected Clients:  " + connectedClients);
 
             //Clear the array's index
             client[user.id] = null;
@@ -246,7 +241,7 @@ namespace RelayServer
             {
                 if (c != null && c != sender)
                 {
-                    c.SendData(data);
+                    c.SendData( data);
                 }
             }
 
@@ -262,7 +257,7 @@ namespace RelayServer
         {
             foreach (Client c in client)
             {
-                if (c != null)
+                if(c != null)
                     c.SendData(data);
             }
 
@@ -524,9 +519,9 @@ namespace RelayServer
                 }
 
                 if (!sender.Autenticated)
-                    OutputManager.WriteLine(sender.IP + "\t" + account.Username + "\t cannot be autenticated.");
+                    OutputManager.WriteLine(account.Username + ", with IP " + sender.IP + " cannot be autenticated.");
                 else
-                    OutputManager.WriteLine(sender.IP + "\t autenticated! \t Account ID: " + sender.AccountID.ToString());
+                    OutputManager.WriteLine(account.Username + ", with IP " + sender.IP + " autenticated! \t Account ID: " + sender.AccountID.ToString());
             }
         }
 

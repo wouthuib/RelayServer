@@ -38,13 +38,12 @@ namespace RelayServer
                 }
 
                 //while (true) { Thread.Sleep(100); }
+                Console.ReadKey();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-
-            Console.ReadKey();
         }
 
         /// <summary>

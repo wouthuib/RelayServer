@@ -64,6 +64,8 @@ namespace RelayServer.WorldObjects.Effects
         {
         }
 
+        public string instanceID { get; set; }
+
         public virtual void Update(GameTime gameTime)
         {
             if (keepAliveTimer <= 0)

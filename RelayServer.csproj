@@ -117,10 +117,13 @@
     </Compile>
     <Compile Include="RijndaelSimple.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="SocketAsyncEventArgsPool.cs" />
     <Compile Include="Static\SymmetricAlgorithm.cs" />
     <Compile Include="Static\XMLSerializerFactory.cs" />
+    <Compile Include="WorldObjects\Effects\Arrow.cs" />
     <Compile Include="WorldObjects\Effects\DamageArea.cs" />
     <Compile Include="WorldObjects\Effects\GameEffect.cs" />
+    <Compile Include="WorldObjects\Effects\ItemSprite.cs" />
     <Compile Include="WorldObjects\Entities\Entity.cs" />
     <Compile Include="WorldObjects\Entities\MonsterSprite.cs" />
     <Compile Include="WorldObjects\Entities\PlayerSprite.cs" />
@@ -132,9 +135,6 @@
     <Compile Include="WorldObjects\Tiled.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Import\accounttable.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

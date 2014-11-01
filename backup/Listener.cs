@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using RelayServer.WorldObjects.Structures;
 using RelayServer.Static;
 using System.Threading;
 
@@ -16,11 +20,8 @@ namespace RelayServer
         // Thread signal.
         public static ManualResetEvent allDone = new ManualResetEvent(false);
 
-        public IPAddress ipAddress = null;
-        IPEndPoint localEndPoint;
         private Socket listener;
         public bool Active;
-        private bool IPLOCAL = true;
 
         //send an even once we receive a user
         public event ConnectionEvent userAdded;
@@ -73,22 +74,9 @@ namespace RelayServer
             // Establish the local endpoint for the socket.
             // The DNS name of the computer
             // running the listener is "host.contoso.com".
-            // IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            // IPAddress ipAddress = ipHostInfo.AddressList[0];
-
-            if (!IPLOCAL)
-                for (int i = 0; i <= System.Net.Dns.GetHostEntry(Dns.GetHostName()).AddressList.Length - 1; i++)
-                {
-                    if (System.Net.Dns.GetHostEntry(Dns.GetHostName()).AddressList[i].IsIPv6LinkLocal == false)
-                    {
-                        if (ipAddress == null)
-                            ipAddress = IPAddress.Parse(System.Net.Dns.GetHostEntry(Dns.GetHostName()).AddressList[i].ToString());
-                    }
-                }
-            else
-                ipAddress = IPAddress.Parse("127.0.0.1");
-            
-            localEndPoint = new IPEndPoint(ipAddress, 1490);
+            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 1490);
 
             // Create a TCP/IP socket.
             Socket listener = new Socket(AddressFamily.InterNetwork,
@@ -99,32 +87,25 @@ namespace RelayServer
             // Bind the socket to the local endpoint and listen for incoming connections.
             try
             {
-                // Create the thread object, passing in the Alpha.Beta method
-                // via a ThreadStart delegate. This does not start the thread.
-                Thread Listen = new Thread(new ThreadStart(this.ListenLoop));
-                Listen.Start();
+                listener.Bind(localEndPoint);
+                listener.Listen(100);
+
+                while (true)
+                {
+                    // Set the event to nonsignaled state.
+                    allDone.Reset();
+
+                    listener.BeginAccept(
+                        new AsyncCallback(AcceptClient),
+                        listener);
+
+                    allDone.WaitOne();
+                }
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-            }
-        }
-
-        private void ListenLoop()
-        {
-            listener.Bind(localEndPoint);
-            listener.Listen(100);
-
-            while (true)
-            {
-                // Set the event to nonsignaled state.
-                allDone.Reset();
-
-                listener.BeginAccept(
-                    new AsyncCallback(AcceptClient),
-                    listener);
-
-                allDone.WaitOne();
             }
         }
 
@@ -134,12 +115,12 @@ namespace RelayServer
         /// <param name="ar">Status of the Async method</param>
         private void AcceptClient(IAsyncResult ar)
         {
-            // Signal the main thread to continue.
-            allDone.Set();
-
             // Get the socket that handles the client request.
             Socket listener = (Socket)ar.AsyncState;
             Socket client = listener.EndAccept(ar);
+
+            // Signal the main thread to continue.
+            allDone.Set();
 
             //id is originally -1 which means a user cannot connect
             int id = -1;
@@ -169,6 +150,9 @@ namespace RelayServer
             //We are now connected, so call all delegates of the UserAdded event.
             if (userAdded != null)
                 userAdded(this, newClient);
+
+            //Begin listening for new clients
+            //StartListening();
         }
 
         /// <summary>

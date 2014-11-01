@@ -12,6 +12,7 @@ using RelayServer.WorldObjects.Structures;
 using System.Timers;
 using RelayServer.Database.Players;
 using MapleLibrary;
+using RelayServer.WorldObjects.Effects;
 
 namespace RelayServer.WorldObjects.Entities
 {
@@ -21,6 +22,7 @@ namespace RelayServer.WorldObjects.Entities
 
         // Monster Store ID
         public int MonsterID = 0;
+        List<int[]> ItemDrop = new List<int[]>();
 
         // Drawing properties
         private SpriteEffects spriteEffect = SpriteEffects.None;
@@ -268,14 +270,14 @@ namespace RelayServer.WorldObjects.Entities
                             previousDiedTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + RESPAWN_TIME;
 
                             // Monster Item Drops
-                            //foreach (var drop in ItemDrop)
-                            //{
-                                // drop[0] = item, drop[1] = chance in %
-                                //if (Randomizer.Instance.generateRandom(0, 100) <= drop[1])
-                                //    GameWorld.Instance.newEffect.Add(new ItemSprite(
-                                //        new Vector2(Randomizer.Instance.generateRandom((int)this.position.X + 20, (int)this.position.X + this.spriteFrame.Width - 20),
-                                //            (int)(this.position.Y + this.spriteFrame.Height * 0.70f)), drop[0]));
-                            //}
+                            foreach (var drop in ItemDrop)
+                            {
+                                //drop[0] = item, drop[1] = chance in %
+                                if (Randomizer.Instance.generateRandom(0, 100) <= drop[1])
+                                    GameWorld.Instance.newEffect.Add(new ItemSprite(
+                                        new Vector2(Randomizer.Instance.generateRandom((int)this.position.X + 20, (int)this.position.X + this.spriteFrame.Width - 20),
+                                            (int)(this.position.Y + this.spriteFrame.Height * 0.70f)), drop[0]));
+                            }
 
                             // Give player EXP
                             // PlayerStore.Instance.activePlayer.Exp += this.EXP;
@@ -528,7 +530,7 @@ namespace RelayServer.WorldObjects.Entities
                 else if (propertyMonster.Name.StartsWith("drop") && propertyMonster.Name.EndsWith("Chance"))
                 {
                     itemdrop[index] = Convert.ToInt32(propertyMonster.GetValue(MonsterStore.Instance.getMonster(ID), null));
-                    //ItemDrop.Add(new int[] { itemdrop[0], itemdrop[1] });
+                    ItemDrop.Add(new int[] { itemdrop[0], itemdrop[1] });
                     index = 0;
                 }
             }
