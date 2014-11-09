@@ -445,7 +445,7 @@ namespace RelayServer.WorldObjects.Entities
                             WeaponType weapontype = Player.equipment.item_list.Find(delegate(Item item) { return item.Type == ItemType.Weapon; }).WeaponType;
 
                             // check the weapon type
-                            if (weapontype == WeaponType.Dagger)
+                            if (weapontype == WeaponType.Bow)
                             {
                                 previousGameTimeMsec = (float)gameTime.ElapsedGameTime.TotalSeconds + (float)((350 - Player.ASPD * 12) * 0.0006f) + 0.05f;
                                 state = EntityState.Shoot;

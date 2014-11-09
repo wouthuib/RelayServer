@@ -56,6 +56,14 @@ namespace RelayServer.WorldObjects.Effects
             // add item to inventory
             player.inventory.addItem(this.item);
 
+            ItemData itemdata = new ItemData
+            {
+                ID = this.item.itemID,
+                action = "AddInventory"
+            };
+
+            Server.singleton.SendObject(itemdata);
+
             // remove this sprite
             this.keepAliveTimer = 0;
 
