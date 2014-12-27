@@ -58,7 +58,7 @@ namespace RelayServer.Database.Monsters
                     {
                         string[] name_vals = values[1].Split('"');
 
-                        this.addMonster(Monster.create(Convert.ToInt32(values[0]), name_vals[1], values[2]));
+                        this.addMonster(Monster.create(Convert.ToInt32(values[0]), name_vals[0], values[2]));
 
                         // Link monster to monster database
                         Monster monster = this.getMonster(Convert.ToInt32(values[0]));
@@ -78,18 +78,19 @@ namespace RelayServer.Database.Monsters
                         monster.Magic = Convert.ToInt32(values[10]);
                         monster.Speed = Convert.ToInt32(values[11]);
                         monster.Size = Regex.Replace(values[12].ToString(), " ", "");
+                        monster.Mode = Regex.Replace(values[13].ToString(), " ", "");
 
                         // Monster Drops
-                        monster.drop01Item = Convert.ToInt32(values[13]);
-                        monster.drop01Chance = Convert.ToInt32(values[14]);
-                        monster.drop02Item = Convert.ToInt32(values[15]);
-                        monster.drop02Chance = Convert.ToInt32(values[16]);
-                        monster.drop03Item = Convert.ToInt32(values[17]);
-                        monster.drop03Chance = Convert.ToInt32(values[18]);
-                        monster.drop04Item = Convert.ToInt32(values[19]);
-                        monster.drop04Chance = Convert.ToInt32(values[20]);
-                        monster.drop05Item = Convert.ToInt32(values[21]);
-                        monster.drop05Chance = Convert.ToInt32(values[22]);
+                        monster.drop01Item = Convert.ToInt32(values[14]);
+                        monster.drop01Chance = Convert.ToInt32(values[15]);
+                        monster.drop02Item = Convert.ToInt32(values[16]);
+                        monster.drop02Chance = Convert.ToInt32(values[17]);
+                        monster.drop03Item = Convert.ToInt32(values[18]);
+                        monster.drop03Chance = Convert.ToInt32(values[19]);
+                        monster.drop04Item = Convert.ToInt32(values[20]);
+                        monster.drop04Chance = Convert.ToInt32(values[21]);
+                        monster.drop05Item = Convert.ToInt32(values[22]);
+                        monster.drop05Chance = Convert.ToInt32(values[23]);
 
                     }
                     catch (Exception ee)

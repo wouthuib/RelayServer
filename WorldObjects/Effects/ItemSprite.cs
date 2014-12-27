@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using RelayServer.Database.Items;
 using RelayServer.Database.Players;
 using RelayServer.WorldObjects.Entities;
 using MapleLibrary;
 using System;
+using RelayServer.Static;
 
 namespace RelayServer.WorldObjects.Effects
 {
@@ -53,6 +53,18 @@ namespace RelayServer.WorldObjects.Effects
 
         public void pickupItem(PlayerInfo player)
         {
+            Client user = null;
+
+            // bind user
+            try
+            {
+                user = Array.Find(Server.singleton.client, x => x.CharacterID == player.CharacterID);
+            }
+            catch
+            {
+                OutputManager.WriteLine("Error - ItemSprite.cs line 62: Unable to bind character!");
+            }
+
             // add item to inventory
             player.inventory.addItem(this.item);
 
@@ -62,7 +74,8 @@ namespace RelayServer.WorldObjects.Effects
                 action = "AddInventory"
             };
 
-            Server.singleton.SendObject(itemdata);
+            if (user != null)
+                Server.singleton.SendObject(itemdata, user);
 
             // remove this sprite
             this.keepAliveTimer = 0;

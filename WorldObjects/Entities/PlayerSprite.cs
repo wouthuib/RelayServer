@@ -2,9 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RelayServer.Database.Players;
-using System.Collections.Generic;
 using RelayServer.Database.Items;
-using RelayServer.WorldObjects.Structures;
 using MapleLibrary;
 using RelayServer.WorldObjects.Effects;
 

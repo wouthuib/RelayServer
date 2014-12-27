@@ -126,6 +126,7 @@ namespace RelayServer.WorldObjects.Effects
                                 Server.singleton.SendObject(baloon);
 
                                 // change monster hit
+                                monster.player_last_hit = player.Name;
                                 monster.State = EntityState.Hit;
                             }
                         }

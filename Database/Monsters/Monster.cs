@@ -22,6 +22,7 @@ namespace RelayServer.Database.Monsters
         public int Magic { get; set; }
         public int Speed { get; set; }
         public string Size { get; set; }
+        public string Mode { get; set; }
 
         public int drop01Item { get; set; }
         public int drop01Chance { get; set; }

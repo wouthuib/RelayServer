@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using RelayServer.Database.Players;
 using Microsoft.Xna.Framework;
 using RelayServer.Database.Items;
 using System.IO;
 using System.Xml.Serialization;
-using RelayServer.Database.Accounts;
 using MapleLibrary;
 
 namespace RelayServer.Database.Players
@@ -91,6 +89,16 @@ namespace RelayServer.Database.Players
                 XmlSerializer serializer = new XmlSerializer(typeof(List<PlayerInfo>));
                 playerStore = (List<PlayerInfo>)serializer.Deserialize(fs);
             }
+
+            ResetPlayerStore();
+        }
+
+        private void ResetPlayerStore()
+        {
+            // if the server crashes then characters are still active
+            // this method resets all online characters
+            foreach (var player in playerStore)
+                player.Online = false;
         }
 
         public playerData toPlayerData(PlayerInfo player)

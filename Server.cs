@@ -127,6 +127,9 @@ namespace RelayServer
                 SendData(GetDataFromMemoryStream(writeStream), user);
             }
 
+            // Save user on server
+            clientfunction.saveCharacter(user);
+
             // Set player offline
             if (PlayerStore.Instance.playerStore.FindAll(p => p.AccountID == user.AccountID).Count > 0)
                 foreach (var player in PlayerStore.Instance.playerStore.Where(p => p.AccountID == user.AccountID))
@@ -364,6 +367,8 @@ namespace RelayServer
                                 if (player.Action == "Online")
                                 {
                                     entry.Online = true;
+
+                                    sender.CharacterID = PlayerStore.Instance.playerStore.Find(x=>x.Name == player.Name).CharacterID;
                                     GameWorld.Instance.newEntity.Add(PlayerSprite.PlayerToSprite(player));
                                 }
                                 else
@@ -413,6 +418,23 @@ namespace RelayServer
                             dmgarea.MobHitCount,
                             dmgarea.Timer,
                             dmgarea.DmgPercent));
+                }
+                else if (obj is ItemData)
+                {
+                    ItemData item = (ItemData)obj;
+
+                    switch (item.action)
+                    {
+                        case "ReqInventory":
+                            clientfunction.updateInventory(sender);
+                            break;
+                        case "EquipItem":
+                            clientfunction.EquipItem(sender, item);
+                            break;
+                        case "AddItem":
+                            clientfunction.AddItem(sender, item);
+                            break;
+                    }
                 }
                 else if (obj is ScreenData)
                 {

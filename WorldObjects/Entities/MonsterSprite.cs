@@ -23,9 +23,11 @@ namespace RelayServer.WorldObjects.Entities
         // Monster Store ID
         public int MonsterID = 0;
         List<int[]> ItemDrop = new List<int[]>();
+        public string player_last_hit;
 
         // Drawing properties
-        private SpriteEffects spriteEffect = SpriteEffects.None;
+        private SpriteEffects spriteEffect = SpriteEffects.None,
+                              previousSpriteEffect;
 
         // Respawn properties
         private Vector2 resp_pos = Vector2.Zero,                                                    // Respawn Position
@@ -39,9 +41,13 @@ namespace RelayServer.WorldObjects.Entities
 
         // Movement properties
         const int WALK_SPEED = 110;                                                                 // The actual speed of the entity
-        const int ANIMATION_SPEED = 120;                                                            // Animation speed, 120 = default
+        const int RUN_SPEED = 150;                                                                  // The actual speed of the entity
         const int IDLE_TIME = 10;                                                                   // idle time until next movement
         Border Borders = new Border(0, 0);                                                          // max tiles to walk from center (avoid falling)
+
+        // Monster Aggressive and Attacking
+        PlayerInfo player_info = null;                                                              // get player info of player last hit
+        PlayerSprite player_sprite;                                                                 // get player sprite of player last hit
 
         // Clocks and Timers
         float previousWalkTimeSec,                                                                  // WalkTime in Seconds
@@ -78,8 +84,9 @@ namespace RelayServer.WorldObjects.Entities
                     size = 100;
                     break;
             }
-
+            
             SpriteFrame = new Rectangle(0, 0, size, size);
+            MODE = MonsterStore.Instance.getMonster(ID).Mode;
 
             // Save for respawning
             resp_pos = position;
@@ -118,6 +125,7 @@ namespace RelayServer.WorldObjects.Entities
             if (Active)
             {
                 previousState = state;
+                previousSpriteEffect = spriteEffect;
 
                 update_movement(gameTime);
                 update_animation(gameTime);
@@ -280,7 +288,14 @@ namespace RelayServer.WorldObjects.Entities
                             }
 
                             // Give player EXP
-                            // PlayerStore.Instance.activePlayer.Exp += this.EXP;
+                            PlayerInfo player = null;
+                            if (PlayerStore.Instance.playerStore.FindAll(x => x.Name == player_last_hit).Count > 0)
+                            {
+                                player = PlayerStore.Instance.playerStore.Find(x => x.Name == player_last_hit);
+                                player.Exp += this.EXP;
+                                clientfunction.updateHUD(player, 
+                                    new HudData() { action = "EXP", value = this.EXP, player_name = player.Name });
+                            }
 
                             // Change state monster
                             state = EntityState.Died;
@@ -306,7 +321,10 @@ namespace RelayServer.WorldObjects.Entities
                     if (previousFrozenTimeSec <= 0)
                     {
                         // reset sprite frame
-                        state = EntityState.Stand;
+                        if(MODE == "passive")
+                            state = EntityState.Stand;
+                        else if (MODE == "agressive")
+                            state = EntityState.Agressive;
                     }
                     break;
                 #endregion
@@ -359,6 +377,99 @@ namespace RelayServer.WorldObjects.Entities
                             spawn = true;
                             previousSpawnTimeSec = (float)gameTime.ElapsedGameTime.TotalSeconds + 1.1f;
                         }
+                    }
+
+                    break;
+                #endregion
+                #region agressive
+                    case EntityState.Agressive:
+
+                    Speed = 0;
+                    Direction = Vector2.Zero;
+
+                    if (PlayerStore.Instance.playerStore.Find(x => x.Name == player_last_hit).Online)
+                    {
+                        player_info = PlayerStore.Instance.playerStore.Find(x => x.Name == player_last_hit);
+                        player_sprite = GameWorld.Instance.listEntity.Find(x => x.EntityName == player_info.Name) as PlayerSprite;
+
+                        if (new Rectangle((int)player_sprite.Position.X, (int)player_sprite.Position.Y,
+                            player_sprite.SpriteFrame.Width, player_sprite.SpriteFrame.Height).Intersects(SpriteBoundries))
+                            state = EntityState.Attacking;
+                    }
+                    else
+                        state = EntityState.Stand;
+
+                    if (this.Position.X < player_sprite.Position.X &&
+                        (player_sprite.Position.X - this.Position.X) < 500)
+                    {
+                        // update client
+                        if (spriteEffect == SpriteEffects.None)
+                        {
+                            spriteEffect = SpriteEffects.FlipHorizontally;
+                            sendtoClient("Agressive_Update");
+                        }
+
+                        // walk right
+                        this.Direction.X = 1;
+                        this.Speed = RUN_SPEED;
+                    }
+                    else if (this.Position.X > player_sprite.Position.X &&
+                        (this.Position.X - player_sprite.Position.X) < 500)
+                    {
+                        // update client
+                        if (spriteEffect == SpriteEffects.FlipHorizontally)
+                        {
+                            spriteEffect = SpriteEffects.None;
+                            sendtoClient("Agressive_Update");
+                        }
+
+                        // walk left
+                        this.Direction.X = -1;
+                        this.Speed = RUN_SPEED;
+                    }
+                    else
+                        state = EntityState.Walk; // reset state when player out of range
+
+                    // Check if monster is steady standing
+                    if (Position.Y > OldPosition.Y && collideSlope == false)
+                        state = EntityState.Falling;
+
+                    // Update the Position Monster
+                    OldPosition = Position;
+
+                    // Walk speed
+                    Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    // Apply Gravity 
+                    Position += new Vector2(0, 1) * 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    // Walking Border for monster
+                    if (Position.X <= Borders.Min)
+                    {
+                        Position = OldPosition;
+                        spriteEffect = SpriteEffects.FlipHorizontally;
+                        state = EntityState.Walk;
+                    }
+                    else if (Position.X >= Borders.Max)
+                    {
+                        Position = OldPosition;
+                        spriteEffect = SpriteEffects.None;
+                        state = EntityState.Walk;
+                    }
+
+                    break;
+                #endregion
+                #region attacking
+                case EntityState.Attacking:
+
+                    if (PlayerStore.Instance.playerStore.Find(x => x.Name == player_last_hit).Online)
+                    {
+                        player_info = PlayerStore.Instance.playerStore.Find(x => x.Name == player_last_hit);
+                        player_sprite = GameWorld.Instance.listEntity.Find(x => x.EntityName == player_info.Name) as PlayerSprite;
+
+                        if (!new Rectangle((int)player_sprite.Position.X, (int)player_sprite.Position.Y,
+                            player_sprite.SpriteFrame.Width, player_sprite.SpriteFrame.Height).Intersects(SpriteBoundries))
+                            state = EntityState.Agressive;
                     }
 
                     break;
@@ -464,6 +575,10 @@ namespace RelayServer.WorldObjects.Entities
                                 // Start damage controll
                                 int damage = (int)Battle.battle_calc_damage_mob(this, player);
                                 player.HP -= damage;
+
+                                // update client HUD
+                                clientfunction.updateHUD(player, 
+                                    new HudData() { action = "HP", value = (damage * -1), player_name = player.Name });
 
                                 // Hit the player
                                 if (damage > 0)

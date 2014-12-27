@@ -92,26 +92,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MapleLibrary.dll" size="22016">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MapleLibrary.dll" size="23552">
       <assemblyIdentity name="MapleLibrary" version="1.0.0.0" publicKeyToken="DA803ECE9DA72BF6" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>1VnFyPKClpJd+ADVDkn6djadxcM=</dsig:DigestValue>
+        <dsig:DigestValue>XFopaDZfYXQTk/5Ty+YKyVcJSPA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RelayServer.exe" size="120832">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RelayServer.exe" size="128512">
       <assemblyIdentity name="RelayServer" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Di1CWPsvq2XaXj2ZyKCmok3XKGA=</dsig:DigestValue>
+        <dsig:DigestValue>ndPmsLGxAHWqOXG10+7UAFQY0Kw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

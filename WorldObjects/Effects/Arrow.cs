@@ -26,7 +26,7 @@ namespace RelayServer.WorldObjects.Effects
             // Derived properties
             SpriteFrame = new Rectangle(0, 0, 60, 10);
             Position = position;
-            Speed = speed;
+            Speed = speed + (int)(speed / 10); // slightly faster on server to avoid lag
             Direction = direction;
             this.size = new Vector2(0.5f, 0.5f);
             this.Curving = curving;
@@ -47,7 +47,7 @@ namespace RelayServer.WorldObjects.Effects
         public override void Update(GameTime gameTime)
         {
             if(keepAliveTimer == -1)
-                keepAliveTimer = gameTime.TotalGameTime.Seconds + 0.48f;
+                keepAliveTimer = gameTime.ElapsedGameTime.Seconds + 0.48f;
 
             // Arrow speed
             Position += (Direction + Curving) * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -91,6 +91,7 @@ namespace RelayServer.WorldObjects.Effects
                                 PlayerInfo player = PlayerStore.Instance.playerStore.Find(x => x.Name == this.Shooter);
                                 damage = (int)Battle.battle_calc_damage(player, (MonsterSprite)monster, 100);
                                 monster.HP -= damage;
+                                monster.player_last_hit = this.Shooter;
                             }
 
                             // start skill hit effect

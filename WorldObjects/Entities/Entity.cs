@@ -27,7 +27,10 @@ namespace RelayServer.WorldObjects.Entities
         Died,
         Frozen,
         Animate,
-        Spawn
+        Spawn,
+        Agressive,
+        Follow,
+        Attacking
     };
     //public enum EntityType { Player, Friend, Monster, NPC, Warp, Wall, Slope, Bullet, Arrow };
 
@@ -89,7 +92,7 @@ namespace RelayServer.WorldObjects.Entities
 
         #region health and Stat properties
         private int hp, mp, atk, def, exp, lvl, hit, flee;
-        private string size;
+        private string size, mode;
 
         public int HP
         {
@@ -135,6 +138,11 @@ namespace RelayServer.WorldObjects.Entities
         {
             get { return size; }
             set { size = value; }
+        }
+        public string MODE
+        {
+            get { return mode; }
+            set { mode = value; }
         }
         #endregion
 
