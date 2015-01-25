@@ -442,7 +442,7 @@ namespace RelayServer
 
                     if (screen.MainScreenName == "charselect")
                     {
-                        sender.MainScreenName = "charselect"; // set screenname
+                        sender.MainScreenName = "charselect"; // save screenname in client
 
                         if (PlayerStore.Instance.playerStore.FindAll(x => x.AccountID == sender.AccountID).Count > 0)
                         {
@@ -454,8 +454,26 @@ namespace RelayServer
                     }
                     else if (screen.MainScreenName == "worldmap")
                     {
-                        sender.MainScreenName = "worldmap"; // set screenname
-                        clientfunction.loadmap(sender);
+                        if (screen.MainScreenPhase == "loading")
+                        {
+                            sender.MainScreenName = "worldmap"; // save screenname in client
+
+                            clientfunction.updateInventory(sender); // update client inventory
+                            clientfunction.updateScreen(sender, // tell client to start the worldmap
+                                new ScreenData() { 
+                                    MainScreenName = "worldmap",
+                                    MainScreenPhase = "loading"
+                                }); 
+                        }
+                        else if (screen.MainScreenPhase == "finish")
+                        {
+                            clientfunction.loadmap(sender);
+                            clientfunction.updateScreen(sender, new ScreenData()
+                            {
+                                MainScreenName = "worldmap",
+                                MainScreenPhase = "finish"
+                            });
+                        }
                     }
                 }
             }

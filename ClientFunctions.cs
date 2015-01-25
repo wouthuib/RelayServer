@@ -75,6 +75,11 @@ namespace RelayServer
             Server.singleton.SendObject(huddata, user);
         }
 
+        public static void updateScreen(Client user, ScreenData screen)
+        {
+            Server.singleton.SendObject(screen, user);
+        }
+
         public static void updateInventory(Client user)
         {
             ItemData i = null;
@@ -196,21 +201,46 @@ namespace RelayServer
                         player.inventory.removeItem(item.itemID);
                         player.inventory.addItem(getequip);
 
-                        // send old equipment to client itemscreen
+                        // send old equipment to client inventory
                         Server.singleton.SendObject(
                             new ItemData()
                                 {
-                                    ID = item.itemID,
+                                    ID = getequip.itemID,
                                     action = "AddInventory"
                                 },
+                                user);
+
+                        // update client player inventory
+                        Server.singleton.SendObject(
+                            new ItemData()
+                            {
+                                ID = item.itemID,
+                                action = "AddEquipment"
+                            },
+                                user);
+
+                        // send old equipment to client inventory
+                        Server.singleton.SendObject(
+                            new ItemData()
+                            {
+                                ID = getequip.itemID,
+                                action = "DelEquipment"
+                            },
+                                user);
+
+                        // update client player inventory
+                        Server.singleton.SendObject(
+                            new ItemData()
+                            {
+                                ID = item.itemID,
+                                action = "DelInventory"
+                            },
                                 user);
                     }
 
                     // update client player equipment
                     clientfunction.updateEquipment(user);
 
-                    // update client player inventory
-                    clientfunction.updateInventory(user);
                 }
             }
         }

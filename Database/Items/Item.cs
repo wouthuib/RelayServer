@@ -5,6 +5,7 @@ namespace RelayServer.Database.Items
 {
     public enum ItemType
     {
+        Cash = 0,
         Collectable = 0,
         Consumable = 0,
         Weapon = 1,

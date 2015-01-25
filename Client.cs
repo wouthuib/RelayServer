@@ -480,6 +480,8 @@ namespace RelayServer
                         getobject = true;
                     else if (obj is HudData)
                         getobject = true;
+                    else if (obj is ScreenData)
+                        getobject = true;
                     else if (obj is PlayerInfo)
                         getobject = false;
                     else if (obj is List<PlayerInfo>)
