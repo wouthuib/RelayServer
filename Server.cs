@@ -431,6 +431,9 @@ namespace RelayServer
                         case "EquipItem":
                             clientfunction.EquipItem(sender, item);
                             break;
+                        case "UnEquipItem":
+                            clientfunction.UnEquipItem(sender, item);
+                            break;
                         case "AddItem":
                             clientfunction.AddItem(sender, item);
                             break;
@@ -459,6 +462,8 @@ namespace RelayServer
                             sender.MainScreenName = "worldmap"; // save screenname in client
 
                             clientfunction.updateInventory(sender); // update client inventory
+                            clientfunction.updateEquipment(sender); // update client equipment
+
                             clientfunction.updateScreen(sender, // tell client to start the worldmap
                                 new ScreenData() { 
                                     MainScreenName = "worldmap",

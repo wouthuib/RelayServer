@@ -220,13 +220,13 @@ namespace RelayServer
                                 user);
 
                         // send old equipment to client inventory
-                        Server.singleton.SendObject(
-                            new ItemData()
-                            {
-                                ID = getequip.itemID,
-                                action = "DelEquipment"
-                            },
-                                user);
+                        //Server.singleton.SendObject(
+                        //    new ItemData()
+                        //    {
+                        //        ID = getequip.itemID,
+                        //        action = "DelEquipment"
+                        //    },
+                        //        user);
 
                         // update client player inventory
                         Server.singleton.SendObject(
@@ -241,6 +241,61 @@ namespace RelayServer
                     // update client player equipment
                     clientfunction.updateEquipment(user);
 
+                }
+            }
+        }
+
+        public static void UnEquipItem(Client user, ItemData itemdata)
+        {
+            Item item = null;
+            PlayerInfo player = null;
+
+            // check item
+            if (ItemStore.Instance.item_list.FindAll(x => x.itemID == itemdata.ID).Count > 0)
+                item = ItemStore.Instance.item_list.Find(x => x.itemID == itemdata.ID);
+
+            // check player
+            if (PlayerStore.Instance.playerStore.FindAll(x => x.CharacterID == user.CharacterID).Count > 0)
+                player = PlayerStore.Instance.playerStore.Find(x => x.CharacterID == user.CharacterID);
+
+            // check equipment
+            if (PlayerStore.Instance.playerStore.Find(x => x.CharacterID == user.CharacterID).
+                equipment.item_list.FindAll(x => x.itemID == itemdata.ID).Count > 0 && item != null)
+            {
+                if ((int)item.Type > 0)
+                {
+                    if (player.equipment.getEquip(item.Slot) == null)
+                    {
+                        // something went wrong, nothing in equipment with that slot
+                    }
+                    else
+                    {
+                        Item getequip = player.equipment.getEquip(item.Slot);
+
+                        player.equipment.removeItem(item.Slot);
+                        player.inventory.addItem(getequip);
+
+                        // send old equipment to client inventory
+                        Server.singleton.SendObject(
+                            new ItemData()
+                            {
+                                ID = getequip.itemID,
+                                action = "AddInventory"
+                            },
+                                user);
+
+                        // send old equipment to client inventory
+                        Server.singleton.SendObject(
+                            new ItemData()
+                            {
+                                ID = getequip.itemID,
+                                action = "DelEquipment"
+                            },
+                                user);
+                    }
+
+                    // update client player equipment
+                    clientfunction.updateEquipment(user);
                 }
             }
         }
