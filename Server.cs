@@ -439,6 +439,17 @@ namespace RelayServer
                             break;
                     }
                 }
+                else if (obj is NPCData)
+                {
+                    NPCData npc = (NPCData)obj;
+
+                    switch (npc.action)
+                    {
+                        case "OpenShop": // for testing only, "openshop" will become server based
+                            clientfunction.OpenShop(sender, npc.shopID);
+                            break;
+                    }
+                }
                 else if (obj is ScreenData)
                 {
                     ScreenData screen = (ScreenData)obj;

@@ -98,6 +98,10 @@
     <Compile Include="Database\Items\ItemStore.cs" />
     <Compile Include="Database\Monsters\Monster.cs" />
     <Compile Include="Database\Monsters\MonsterStore.cs" />
+    <Compile Include="Database\NPC\NPC.cs" />
+    <Compile Include="Database\NPC\NPCStore.cs" />
+    <Compile Include="Database\NPC\Shop.cs" />
+    <Compile Include="Database\NPC\ShopStore.cs" />
     <Compile Include="Database\Players\Equipment.cs" />
     <Compile Include="Database\Players\Inventory.cs" />
     <Compile Include="Database\Players\PlayerInfo.cs" />
@@ -136,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Import\accounttable.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Import\shoptable.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Import\itemtable.csv">
@@ -187,6 +194,7 @@
       <Name>MapleLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

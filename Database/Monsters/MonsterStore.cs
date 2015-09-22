@@ -30,9 +30,9 @@ namespace RelayServer.Database.Monsters
             }
         }
 
-        public void addMonster(Monster addItem)
+        public void addMonster(Monster addMonster)
         {
-            monster_list.Add(addItem);
+            monster_list.Add(addMonster);
         }
 
         public void removeMonster(string name)

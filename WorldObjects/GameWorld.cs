@@ -11,6 +11,7 @@ using RelayServer.Database.Skills;
 using RelayServer.Database.Accounts;
 using RelayServer.Database.Players;
 using RelayServer.Static;
+using RelayServer.Database.NPC;
 
 namespace RelayServer.WorldObjects
 {
@@ -108,6 +109,16 @@ namespace RelayServer.WorldObjects
             {
                 OutputManager.Write("\t ");
                 OutputManager.WriteLine("Error in Skill table '\\Import\\skilltable.csv', unable to load!");
+            }
+            try
+            {
+                ShopStore.Instance.loadShop(Directory.GetCurrentDirectory() + @"\Import\", "shoptable.csv");
+                OutputManager.WriteLine("\t Shop table '\\Import\\shoptable.csv' loaded!");
+            }
+            catch
+            {
+                OutputManager.Write("\t ");
+                OutputManager.WriteLine("Error in Shop table '\\Import\\shoptable.csv', unable to load!");
             }
 
             OutputManager.WriteLine("- Loading Map Entities:");

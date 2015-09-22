@@ -15,6 +15,7 @@ using System.Threading;
 using RelayServer.Database.Accounts;
 using MapleLibrary;
 using RelayServer.Database.Items;
+using RelayServer.Database.NPC;
 
 namespace RelayServer
 {
@@ -78,6 +79,51 @@ namespace RelayServer
         public static void updateScreen(Client user, ScreenData screen)
         {
             Server.singleton.SendObject(screen, user);
+        }
+
+        public static void OpenShop(Client user, int shopID)
+        {
+            ItemData i = null;
+            Shop shop = null;
+            string playername = null;
+
+            if (ShopStore.Instance.shop_list.FindAll(x => x.ShopID == shopID).Count > 0)
+                shop = ShopStore.Instance.shop_list.Find(x => x.ShopID == shopID);
+
+            if (PlayerStore.Instance.playerStore.FindAll(x => x.CharacterID == user.CharacterID).Count > 0)
+                playername = PlayerStore.Instance.playerStore.Find(x => x.CharacterID == user.CharacterID).Name;
+
+            // reset shop at client
+            Server.singleton.SendObject(
+                new ItemData()
+                {
+                    ID = 0,
+                    action = "InitShop",
+                    player_name = playername
+                },
+                    user);
+
+            foreach (var item in shop.shop_list)
+            {
+                i = new ItemData()
+                {
+                    ID = item.itemID,
+                    action = "AddShopItem",
+                    player_name = playername
+                };
+
+                Server.singleton.SendObject(i, user);
+            }
+
+            // send finish shop to client
+            Server.singleton.SendObject(
+                new ItemData()
+                {
+                    ID = 0,
+                    action = "OpenShop",
+                    player_name = playername
+                },
+                    user);
         }
 
         public static void updateInventory(Client user)

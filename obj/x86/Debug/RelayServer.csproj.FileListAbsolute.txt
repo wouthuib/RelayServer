@@ -26,3 +26,4 @@ C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\obj\x86\Debug\RelaySe
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\obj\x86\Debug\RelayServer.application
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\MapleLibrary.dll
 C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\MapleLibrary.pdb
+C:\Users\cnlwhuib\Documents\GitHub\RelayServer\RelayServer\bin\Debug\Import\shoptable.csv

@@ -3,13 +3,13 @@
   <PlayerInfo>
     <AccountID>1000000</AccountID>
     <CharacterID>2000000</CharacterID>
-    <Online>false</Online>
+    <Online>true</Online>
     <equipment>
       <item_list>
         <Item>
           <list_offsets />
-          <itemID>2301</itemID>
-          <itemName>Beginner Clothes</itemName>
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
           <DEF>0</DEF>
           <ATK>0</ATK>
           <Magic>0</Magic>
@@ -17,35 +17,35 @@
           <Price>10</Price>
           <WeaponLevel>0</WeaponLevel>
           <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
           <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2305</itemID>
-          <itemName>Robin Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
+          <Class>Warrior</Class>
           <Slot>Headgear</Slot>
           <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
           <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1301</itemID>
+          <itemName>Gladius Sword</itemName>
           <DEF>0</DEF>
           <ATK>125</ATK>
           <Magic>0</Magic>
@@ -53,11 +53,11 @@
           <Price>64000</Price>
           <WeaponLevel>0</WeaponLevel>
           <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
           <Type>Weapon</Type>
-          <Class>Bowman</Class>
+          <Class>Warrior</Class>
           <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
+          <WeaponType>One_handed_Sword</WeaponType>
           <Script>{}</Script>
         </Item>
       </item_list>
@@ -174,24 +174,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>1301</itemID>
-          <itemName>Gladius Sword</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Warrior</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>One_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>1302</itemID>
           <itemName>Two Handed Sword</itemName>
           <DEF>0</DEF>
@@ -206,24 +188,6 @@
           <Class>Warrior</Class>
           <Slot>Weapon</Slot>
           <WeaponType>Two_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2304</itemID>
-          <itemName>Hawkeye Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
@@ -350,78 +314,6 @@
           <Class>Bowman</Class>
           <Slot>Weapon</Slot>
           <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2307</itemID>
-          <itemName>Steel Sharp Helm</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2301</itemID>
-          <itemName>Beginner Clothes</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2302</itemID>
-          <itemName>Cruseader Chainmail</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1200</itemID>
-          <itemName>Knife</itemName>
-          <DEF>0</DEF>
-          <ATK>17</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>50</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>All</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Dagger</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
@@ -476,6 +368,150 @@
           <Class>All</Class>
           <Slot>None</Slot>
           <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1200</itemID>
+          <itemName>Knife</itemName>
+          <DEF>0</DEF>
+          <ATK>17</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>50</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>All</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Dagger</WeaponType>
           <Script>{}</Script>
         </Item>
       </item_list>
@@ -563,8 +599,8 @@
       <PackedValue>4290039551</PackedValue>
     </skin_color>
     <Position>
-      <X>1750</X>
-      <Y>672</Y>
+      <X>2185.4187</X>
+      <Y>673</Y>
     </Position>
     <Name>New Player</Name>
     <Jobclass>Archer</Jobclass>
@@ -572,7 +608,7 @@
     <NextLevelExp>1005</NextLevelExp>
     <Level>1</Level>
     <Gold>0</Gold>
-    <HP>-6329</HP>
+    <HP>-6816</HP>
     <MAXHP>2000</MAXHP>
     <SP>500</SP>
     <MAXSP>500</MAXSP>
@@ -595,45 +631,9 @@
   <PlayerInfo>
     <AccountID>1000000</AccountID>
     <CharacterID>2000001</CharacterID>
-    <Online>true</Online>
+    <Online>false</Online>
     <equipment>
       <item_list>
-        <Item>
-          <list_offsets />
-          <itemID>2301</itemID>
-          <itemName>Beginner Clothes</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Bowman</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
         <Item>
           <list_offsets />
           <itemID>2306</itemID>
@@ -650,6 +650,42 @@
           <Class>Warrior</Class>
           <Slot>Headgear</Slot>
           <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1301</itemID>
+          <itemName>Gladius Sword</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Warrior</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>One_handed_Sword</WeaponType>
           <Script>{}</Script>
         </Item>
       </item_list>
@@ -7354,204 +7390,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>1301</itemID>
-          <itemName>Gladius Sword</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Warrior</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>One_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1301</itemID>
-          <itemName>Gladius Sword</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Warrior</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>One_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1301</itemID>
-          <itemName>Gladius Sword</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Warrior</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>One_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Bowman</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Bowman</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Bowman</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Bowman</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2301</itemID>
-          <itemName>Beginner Clothes</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1300</itemID>
-          <itemName>Hunter Bow</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Bowman</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Bow</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1301</itemID>
-          <itemName>Gladius Sword</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Warrior</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>One_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2305</itemID>
-          <itemName>Robin Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2301</itemID>
           <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
@@ -7678,24 +7516,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>1302</itemID>
-          <itemName>Two Handed Sword</itemName>
-          <DEF>0</DEF>
-          <ATK>125</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>64000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\2Hsword\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>Warrior</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Two_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>1301</itemID>
           <itemName>Gladius Sword</itemName>
           <DEF>0</DEF>
@@ -7732,24 +7552,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2305</itemID>
-          <itemName>Robin Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>1302</itemID>
           <itemName>Two Handed Sword</itemName>
           <DEF>0</DEF>
@@ -7822,24 +7624,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2307</itemID>
-          <itemName>Steel Sharp Helm</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2305</itemID>
           <itemName>Robin Hat</itemName>
           <DEF>0</DEF>
@@ -7890,24 +7674,6 @@
           <Class>Warrior</Class>
           <Slot>Weapon</Slot>
           <WeaponType>Two_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2307</itemID>
-          <itemName>Steel Sharp Helm</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
@@ -8106,24 +7872,6 @@
           <Class>Warrior</Class>
           <Slot>Weapon</Slot>
           <WeaponType>Two_handed_Sword</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2303</itemID>
-          <itemName>Feather Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
@@ -8218,24 +7966,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2307</itemID>
-          <itemName>Steel Sharp Helm</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>1300</itemID>
           <itemName>Hunter Bow</itemName>
           <DEF>0</DEF>
@@ -8254,42 +7984,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2302</itemID>
-          <itemName>Cruseader Chainmail</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>1200</itemID>
-          <itemName>Knife</itemName>
-          <DEF>0</DEF>
-          <ATK>17</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>50</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
-          <Type>Weapon</Type>
-          <Class>All</Class>
-          <Slot>Weapon</Slot>
-          <WeaponType>Dagger</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2307</itemID>
           <itemName>Steel Sharp Helm</itemName>
           <DEF>0</DEF>
@@ -8302,24 +7996,6 @@
           <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
           <Type>Armor</Type>
           <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2303</itemID>
-          <itemName>Feather Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
           <Slot>Headgear</Slot>
           <WeaponType>None</WeaponType>
           <Script>{}</Script>
@@ -8344,24 +8020,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2302</itemID>
-          <itemName>Cruseader Chainmail</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>1200</itemID>
           <itemName>Knife</itemName>
           <DEF>0</DEF>
@@ -8376,24 +8034,6 @@
           <Class>All</Class>
           <Slot>Weapon</Slot>
           <WeaponType>Dagger</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2302</itemID>
-          <itemName>Cruseader Chainmail</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
@@ -8650,24 +8290,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2306</itemID>
-          <itemName>Steel Helmet</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2302</itemID>
           <itemName>Cruseader Chainmail</itemName>
           <DEF>6</DEF>
@@ -8704,24 +8326,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2304</itemID>
-          <itemName>Hawkeye Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2301</itemID>
           <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
@@ -8735,24 +8339,6 @@
           <Type>Armor</Type>
           <Class>All</Class>
           <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2306</itemID>
-          <itemName>Steel Helmet</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
           <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
@@ -8830,42 +8416,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2300</itemID>
-          <itemName>Hunter Clothes</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Bowman</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2306</itemID>
-          <itemName>Steel Helmet</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Warrior</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2303</itemID>
           <itemName>Feather Hat</itemName>
           <DEF>0</DEF>
@@ -8916,24 +8466,6 @@
           <Class>All</Class>
           <Slot>Weapon</Slot>
           <WeaponType>Dagger</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2304</itemID>
-          <itemName>Hawkeye Hat</itemName>
-          <DEF>0</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>10</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>All</Class>
-          <Slot>Headgear</Slot>
-          <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
         <Item>
@@ -9100,24 +8632,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2300</itemID>
-          <itemName>Hunter Clothes</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Bowman</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2302</itemID>
           <itemName>Cruseader Chainmail</itemName>
           <DEF>6</DEF>
@@ -9208,24 +8722,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2300</itemID>
-          <itemName>Hunter Clothes</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Bowman</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2301</itemID>
           <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
@@ -9244,24 +8740,6 @@
         </Item>
         <Item>
           <list_offsets />
-          <itemID>2300</itemID>
-          <itemName>Hunter Clothes</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Bowman</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
           <itemID>2301</itemID>
           <itemName>Beginner Clothes</itemName>
           <DEF>0</DEF>
@@ -9274,24 +8752,6 @@
           <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
           <Type>Armor</Type>
           <Class>All</Class>
-          <Slot>Bodygear</Slot>
-          <WeaponType>None</WeaponType>
-          <Script>{}</Script>
-        </Item>
-        <Item>
-          <list_offsets />
-          <itemID>2300</itemID>
-          <itemName>Hunter Clothes</itemName>
-          <DEF>6</DEF>
-          <ATK>0</ATK>
-          <Magic>0</Magic>
-          <Speed>0</Speed>
-          <Price>71000</Price>
-          <WeaponLevel>0</WeaponLevel>
-          <RefinementLevel>0</RefinementLevel>
-          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
-          <Type>Armor</Type>
-          <Class>Bowman</Class>
           <Slot>Bodygear</Slot>
           <WeaponType>None</WeaponType>
           <Script>{}</Script>
@@ -9365,6 +8825,1536 @@
           <Type>Armor</Type>
           <Class>Warrior</Class>
           <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2303</itemID>
+          <itemName>Feather Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1200</itemID>
+          <itemName>Knife</itemName>
+          <DEF>0</DEF>
+          <ATK>17</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>50</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>All</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Dagger</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1100</itemID>
+          <itemName>Shell</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>20</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1103</itemID>
+          <itemName>Empty Bottle</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>26</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2303</itemID>
+          <itemName>Feather Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2303</itemID>
+          <itemName>Feather Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2303</itemID>
+          <itemName>Feather Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1110</itemID>
+          <itemName>Pearl</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>100</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1302</itemID>
+          <itemName>Two Handed Sword</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\2Hsword\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Warrior</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Two_handed_Sword</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1301</itemID>
+          <itemName>Gladius Sword</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Warrior</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>One_handed_Sword</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2307</itemID>
+          <itemName>Steel Sharp Helm</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelsharphelm\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2302</itemID>
+          <itemName>Cruseader Chainmail</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\crusaderchainmail\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1301</itemID>
+          <itemName>Gladius Sword</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Warrior</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>One_handed_Sword</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2305</itemID>
+          <itemName>Robin Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\robbinhood\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2301</itemID>
+          <itemName>Beginner Clothes</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal2\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2306</itemID>
+          <itemName>Steel Helmet</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\steelhelmet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Warrior</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1301</itemID>
+          <itemName>Gladius Sword</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\gladius\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Warrior</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>One_handed_Sword</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1100</itemID>
+          <itemName>Shell</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>20</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1102</itemID>
+          <itemName>Shoot</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>30</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1102</itemID>
+          <itemName>Shoot</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>30</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1100</itemID>
+          <itemName>Shell</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>20</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2303</itemID>
+          <itemName>Feather Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\featherberet\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1100</itemID>
+          <itemName>Shell</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>20</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1200</itemID>
+          <itemName>Knife</itemName>
+          <DEF>0</DEF>
+          <ATK>17</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>50</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\knife\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>All</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Dagger</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1102</itemID>
+          <itemName>Shoot</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>30</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1100</itemID>
+          <itemName>Shell</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>20</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1100</itemID>
+          <itemName>Shell</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>20</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2304</itemID>
+          <itemName>Hawkeye Hat</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\headgear\hawkeyehat\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>All</Class>
+          <Slot>Headgear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>2300</itemID>
+          <itemName>Hunter Clothes</itemName>
+          <DEF>6</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>71000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\costume\overal1\</equipSpritePath>
+          <Type>Armor</Type>
+          <Class>Bowman</Class>
+          <Slot>Bodygear</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1300</itemID>
+          <itemName>Hunter Bow</itemName>
+          <DEF>0</DEF>
+          <ATK>125</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>64000</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath>gfx\player\weapon\bow1\</equipSpritePath>
+          <Type>Weapon</Type>
+          <Class>Bowman</Class>
+          <Slot>Weapon</Slot>
+          <WeaponType>Bow</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1102</itemID>
+          <itemName>Shoot</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>30</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1114</itemID>
+          <itemName>Jellopy</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>10</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
+          <WeaponType>None</WeaponType>
+          <Script>{}</Script>
+        </Item>
+        <Item>
+          <list_offsets />
+          <itemID>1102</itemID>
+          <itemName>Shoot</itemName>
+          <DEF>0</DEF>
+          <ATK>0</ATK>
+          <Magic>0</Magic>
+          <Speed>0</Speed>
+          <Price>30</Price>
+          <WeaponLevel>0</WeaponLevel>
+          <RefinementLevel>0</RefinementLevel>
+          <equipSpritePath />
+          <Type>Cash</Type>
+          <Class>All</Class>
+          <Slot>None</Slot>
           <WeaponType>None</WeaponType>
           <Script>{}</Script>
         </Item>
@@ -9453,16 +10443,16 @@
       <PackedValue>4290039551</PackedValue>
     </skin_color>
     <Position>
-      <X>2170.94946</X>
+      <X>2131.43481</X>
       <Y>673</Y>
     </Position>
     <Name>Wouter</Name>
     <Jobclass>Archer</Jobclass>
-    <Exp>30720</Exp>
+    <Exp>34160</Exp>
     <NextLevelExp>1005</NextLevelExp>
     <Level>1</Level>
     <Gold>0</Gold>
-    <HP>-76670</HP>
+    <HP>-85869</HP>
     <MAXHP>2000</MAXHP>
     <SP>500</SP>
     <MAXSP>500</MAXSP>
